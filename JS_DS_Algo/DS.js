@@ -10,6 +10,16 @@ function findBiggest(array){
 	console.log("Biggest Number is ", array[k]);
 }
 
+function findSmallest(array){
+	let k = 0, len = array.length;
+	for(let i=0;i < len;i++){
+		if(array[k] > array[i]){
+			k = i;
+		}
+	}
+	console.log("Smallest Number is ", array[k]);
+}
+
 
 function fibo(N){
 	if(N==0 || N===1){
@@ -39,11 +49,6 @@ function fiboWithoutRecurssion(N){
 	return summation;
 }
 
-module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
-		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
-		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList
-		
-};
 
 
 
@@ -106,4 +111,36 @@ function printKNodesOfLinkedList(head, K){
 	}
 	return temp;
 }
+
+
+function stack(){
+  var stack = [];
+  
+  function pop(){
+	  return stack.pop();
+  }
+  function push(arg){
+	  stack.push(arg);
+  }
+  function isEmpty(){
+	  return stack.length == 0;
+  }
+  function top(){
+	  if(!isEmpty())
+	  return stack[stack.length-1];
+  }
+  return {
+	  pop, push, isEmpty, top
+  }
+}
+
+var stack = stack();
+
+
+
+module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
+		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
+		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest
+		
+};
 

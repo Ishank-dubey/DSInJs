@@ -1,6 +1,7 @@
 var DS = require('./DS');
 
 DS.findBiggest([81, 1,2,43,4, 80]);
+DS.findSmallest([1,2,3,0, -1,10]);
 
 
 /*DS.insertToLinkedList({data:1});
@@ -19,3 +20,9 @@ var head = DS.formCircularLinkedList(5);
 var lasttolast = DS.printKNodesOfLinkedList(head, 7);
 
 console.log(lasttolast.next.next.data, "lTl");
+
+
+DS.stack.push(1);
+DS.stack.push(2);
+DS.stack.pop(2);
+console.log(DS.stack.top());
