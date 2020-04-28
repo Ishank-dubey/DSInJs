@@ -129,8 +129,11 @@ function stackFunction(){
 	  if(!isEmpty())
 	  return stack[stack.length-1];
   }
+  function createNewStack(){
+	  stack = [];
+  }
   return {
-	  pop, push, isEmpty, top
+	  pop, push, isEmpty, top, createNewStack
   }
 }
 
