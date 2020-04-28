@@ -13,7 +13,6 @@ console.log("Count-->>",DS.countLinkedListItems());
 DS.printLinkedList();*/
 
 console.log(DS.fiboWithoutRecurssion(11), "<<-- FIBO w/o Recursion");
-
 console.log(DS.fibo(11), "<<-- FIBO");
 
 var head = DS.formCircularLinkedList(5);
@@ -25,4 +24,8 @@ console.log(lasttolast.next.next.data, "lTl");
 DS.stack.push(1);
 DS.stack.push(2);
 DS.stack.pop(2);
-console.log(DS.stack.top());
+
+
+console.log("--------");
+console.log(DS.findSpansWithStack([10, 4, 5, 90, 120, 80]));
+console.log(DS.findSpansWithStart([10, 4, 5, 90, 120, 80]));

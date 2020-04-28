@@ -113,7 +113,7 @@ function printKNodesOfLinkedList(head, K){
 }
 
 
-function stack(){
+function stackFunction(){
   var stack = [];
   
   function pop(){
@@ -134,13 +134,46 @@ function stack(){
   }
 }
 
-var stack = stack();
+var stack = stackFunction();
 
+
+function findSpansWithStart(arg){
+	var A= [];
+	for(var i=0;i<arg.length;i++){
+		var j = 1;
+		while(j<=i && arg[i] >= arg[i-j]){
+			j++;
+		}
+		A[i] = j;
+	}
+	return A;
+}
+
+function findSpansWithStack(arg){
+	var stack = stackFunction();
+	var A = [];
+	stack.push(0);
+	A[0] = 1;
+	for(var i=1;i<arg.length;i++){
+		while(!stack.isEmpty() && arg[stack.top()] <= arg[i]){
+			stack.pop();
+		}
+		if(stack.isEmpty()){
+			A[i] = i + 1;
+		}else{
+			A[i] = i - stack.top();
+		}
+		stack.push(i);
+	}
+	
+	return A;
+}
 
 
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
-		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest
+		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
+		findSpansWithStack, findSpansWithStart
 		
 };
 
