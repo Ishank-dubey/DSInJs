@@ -27,5 +27,7 @@ DS.stack.pop(2);
 
 
 console.log("--------");
-console.log(DS.findSpansWithStack([10, 4, 5, 90, 120, 80]));
-console.log(DS.findSpansWithStart([10, 4, 5, 90, 120, 80]));
+//console.log(DS.findSpansWithStack([10, 4, 5, 90, 120, 80]));
+//console.log(DS.findSpansWithStart([10, 4, 5, 90, 120, 80]));
+
+console.log(DS.reverseStack([1,2,4, 56, 70]));

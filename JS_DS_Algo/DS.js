@@ -129,11 +129,14 @@ function stackFunction(){
 	  if(!isEmpty())
 	  return stack[stack.length-1];
   }
-  function createNewStack(){
-	  stack = [];
+  function createNewStack(arg){
+	  stack = arg || [];
+  }
+  function get(){
+	  return stack;
   }
   return {
-	  pop, push, isEmpty, top, createNewStack
+	  pop, push, isEmpty, top, createNewStack, get
   }
 }
 
@@ -172,11 +175,42 @@ function findSpansWithStack(arg){
 	return A;
 }
 
+function reverseStack(arg){
+	var stack = stackFunction();
+	stack.createNewStack(arg);
+	
+	reverseStack1();
+	
+	function reverseStack1(){
+		if(stack.isEmpty()){
+			return;
+		}
+		var data = stack.pop();
+		reverseStack1();
+		reverseAgain(data);
+	}
+	
+	function reverseAgain(data){
+		
+		if(stack.isEmpty()){
+			stack.push(data);
+			return;
+		}
+		
+		var old  = stack.pop();
+		reverseAgain(data);
+		stack.push(old);
+		
+	}
+	
+	return stack.get();
+}
+
 
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
-		findSpansWithStack, findSpansWithStart
+		findSpansWithStack, findSpansWithStart, reverseStack
 		
 };
 
