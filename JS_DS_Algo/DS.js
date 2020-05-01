@@ -126,8 +126,12 @@ function stackFunction(){
 	  return stack.length == 0;
   }
   function top(){
-	  if(!isEmpty())
-	  return stack[stack.length-1];
+	  if (!isEmpty()) {
+		  return stack[stack.length-1];
+	  }else{
+		  return -1;
+	  }
+	  
   }
   function createNewStack(arg){
 	  stack = arg || [];
@@ -206,6 +210,40 @@ function reverseStack(arg){
 	return stack.get();
 }
 
+function highestRectangularAreaInHistogram(arg){
+	var stack = stackFunction(), finalArea = -1;
+	let i=0;
+	while(i<arg.length){
+		if(stack.isEmpty() || arg[stack.top()] <= arg[i]){
+			stack.push(i++);
+		}else{
+			let topValue = arg[stack.top()];
+			stack.pop();
+			let newArea = topValue*(i-1-stack.top());
+			if(newArea > finalArea){
+				finalArea = newArea;
+			}
+		}
+	}
+	
+	while(!stack.isEmpty()){
+		let topValue = arg[stack.top()];
+		stack.pop();
+		if(stack.isEmpty()){
+			let newArea = topValue*i;
+			if(newArea > finalArea){
+				finalArea = newArea;
+			}
+		}else{
+			let newArea = topValue*(i-1-stack.top());
+			if(newArea > finalArea){
+				finalArea = newArea;
+			}
+		}
+	}
+	return finalArea;
+}
+
 // Arrange all 'a's before 'b's
 function arrangeTwoOfTwo(arg){
 	console.log(arg);
@@ -249,6 +287,7 @@ module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinked
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
+		,highestRectangularAreaInHistogram
 		
 };
 
