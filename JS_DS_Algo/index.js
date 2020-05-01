@@ -46,5 +46,18 @@ var QueueLL = require('./QueueADT').QueueLinkedListImplementation();
 Queue.enQueue(1);
 Queue.enQueue(2);
 Queue.enQueue(3);
-require('./QueueADT').reverseQueue(Queue);
-console.log(Queue.deQueue());
+Queue.enQueue(4);
+Queue.enQueue(7);
+Queue.enQueue(8);
+//require('./QueueADT').reverseQueue(Queue);
+var stack = require('./DS').stackFunction();
+stack.push(1);
+stack.push(2);
+stack.push(4);
+stack.push(6);
+console.log('Half Leaving');
+require('./QueueADT').reverseLeavingQueue(Queue);
+while(!Queue.isEmpty()){
+	console.log(Queue.deQueue());
+}
+//console.log(require('./QueueADT').findConsecutivePairsWise(stack));

@@ -65,5 +65,46 @@ function reverseQueue(queueLocal){
 }
 
 
+function findConsecutivePairsWise(localStack){
+	var isConsecutivePaired = true;
+	while(!localStack.isEmpty()){
+		let n = localStack.pop();
+		if(!localStack.isEmpty()){
+			let m = localStack.pop();
+			if(Math.abs(n-m) != 1){
+				isConsecutivePaired = false;
+			}
+		}
+	}
+	return isConsecutivePaired;
+}
 
-module.exports = {QueueADT, QueueLinkedListImplementation, reverseQueue};
+function reverseLeavingQueue(localQueue){
+  var length = localQueue.size();
+  if(length % 2 !=0)
+  {
+	  return;
+  }
+  var halfLength = localQueue.size()/2;
+  var stack = require('./DS').stackFunction();
+  for(let i=0; i<halfLength ;i++){
+   stack.push(localQueue.deQueue());
+  }
+  while(!stack.isEmpty()){
+	  localQueue.enQueue(stack.pop());
+  }
+  for(let i=0; i<halfLength ;i++){
+    localQueue.enQueue(localQueue.deQueue());
+  }
+  
+  for(let i=0; i<halfLength ;i++){
+	    stack.push(localQueue.deQueue());
+	  }
+  
+  while(!stack.isEmpty()){
+	  localQueue.enQueue(stack.pop());
+	  localQueue.enQueue(localQueue.deQueue());
+  }
+}
+
+module.exports = {QueueADT, QueueLinkedListImplementation, reverseQueue, findConsecutivePairsWise, reverseLeavingQueue};
