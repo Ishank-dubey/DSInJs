@@ -302,7 +302,6 @@ function removeRepeatingChars(str){
   var length = str.length;
   var i = 0;
   while(i < length){
-	  console.log(i, ptr, str.charAt(i), outputArray[ptr]);
 	  if(ptr==-1 || str.charAt(i) != outputArray[ptr]){
 		  ptr++;
 		  outputArray[ptr] = str.charAt(i);
@@ -312,13 +311,12 @@ function removeRepeatingChars(str){
 			  i++;
 		  }
 		  outputArray.pop();
-		  //console.log(ptr);
+		  
 		  ptr--;
-		  //console.log(ptr);
+		  
 	  }
   }
   ++ptr;
-  //console.log('last', );
   outputArray[ptr] = '';
   return outputArray;
 }
