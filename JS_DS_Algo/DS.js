@@ -206,11 +206,49 @@ function reverseStack(arg){
 	return stack.get();
 }
 
+// Arrange all 'a's before 'b's
+function arrangeTwoOfTwo(arg){
+	console.log(arg);
+	var a = 0, b = arg.length-1;
+	while( a<=b ){
+		if(arg[a]=='a'){
+			a++;
+		}else if(arg[a]=='b'){
+			var temp = arg[b];
+			arg[b] = arg[a];
+			arg[a] = temp;
+			b--;
+		}
+	}
+	console.log(arg);
+}
+
+//arrange all 'a's before 'b's and 'b's before 'c's
+function arrangeThreeOfThree(arg){
+	console.log(arg);
+	var a = 0, b = 0, c= arg.length-1;
+	while( b<=c ){
+		if(arg[b]=='b'){
+			b++;
+		}else if(arg[b]=='a'){
+			var temp = arg[b];
+			arg[b] = arg[a];
+			arg[a] = temp;
+			a++;b++;
+		}else if(arg[b]=='c'){
+			var temp = arg[b];
+			arg[b] = arg[c];
+			arg[c] = temp;
+			c--;
+		}
+	}
+	console.log(arg);
+}
 
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
-		findSpansWithStack, findSpansWithStart, reverseStack
+		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		
 };
 
