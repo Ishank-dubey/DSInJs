@@ -39,3 +39,12 @@ console.log("--------");
 //DS.nextGreatestNumberWithForLoop([1,2,3]);
 //DS.nextGreatestNumberWithForLoop([1,2,4,4,4, 0,1]);
 DS.nextGreatestWithStack([1,20,3]);
+
+
+var Queue = require('./QueueADT').QueueADT();
+var QueueLL = require('./QueueADT').QueueLinkedListImplementation();
+Queue.enQueue(1);
+Queue.enQueue(2);
+Queue.enQueue(3);
+require('./QueueADT').reverseQueue(Queue);
+console.log(Queue.deQueue());

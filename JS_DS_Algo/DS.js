@@ -371,7 +371,7 @@ module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinked
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,
-		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction
 		
 };
 
