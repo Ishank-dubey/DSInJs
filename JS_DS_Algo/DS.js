@@ -283,11 +283,52 @@ function arrangeThreeOfThree(arg){
 	console.log(arg);
 }
 
+function removeDuplicacyCharacters(str){
+	let currentChar = str.charAt(0);
+	let outPutStr = "";
+	outPutStr = outPutStr.concat(currentChar);
+	for(let i=1;i<str.length;i++){
+		if(str.charAt(i)!=currentChar){
+			currentChar = str.charAt(i);
+			outPutStr = outPutStr.concat(currentChar);
+		}
+	}
+	return outPutStr;
+}
+
+function removeRepeatingChars(str){
+  var outputArray = [];
+  var ptr = -1;
+  var length = str.length;
+  var i = 0;
+  while(i < length){
+	  console.log(i, ptr, str.charAt(i), outputArray[ptr]);
+	  if(ptr==-1 || str.charAt(i) != outputArray[ptr]){
+		  ptr++;
+		  outputArray[ptr] = str.charAt(i);
+		  i++;
+	  }else{
+		  while(str.charAt(i) == outputArray[ptr]){
+			  i++;
+		  }
+		  outputArray.pop();
+		  //console.log(ptr);
+		  ptr--;
+		  //console.log(ptr);
+	  }
+  }
+  ++ptr;
+  //console.log('last', );
+  outputArray[ptr] = '';
+  return outputArray;
+}
+
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
-		,highestRectangularAreaInHistogram
+		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,
+		removeRepeatingChars
 		
 };
 

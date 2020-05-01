@@ -33,4 +33,6 @@ console.log("--------");
 ///console.log(DS.reverseStack([1,2,4, 56, 70]));
 //DS.arrangeTwoOfTwo(['b','b','b','b', 'a', 'a']);
 //DS.arrangeThreeOfThree(['b','b','b','b', 'a', 'a', 'b', 'a', 'a']);
-console.log(DS.highestRectangularAreaInHistogram([2, 5,6, 7, 2, 1, 10, 10]));
+//console.log(DS.highestRectangularAreaInHistogram([2, 5,6, 7, 2, 1, 10, 10]));
+//console.log(DS.removeDuplicacyCharacters('aaabbbbaaaaddddde'));
+console.log(DS.removeRepeatingChars("missiidi"));
