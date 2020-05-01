@@ -1,6 +1,6 @@
 # Data Structures Via Javascript/NodeJs
 
-Data Structure topics via Nodejs- 
+##### Data Structure topics via Nodejs- #####
 
 Stack, 
 
@@ -11,7 +11,7 @@ Recursion,
 LinkedList, 
 
 
-Problems -
+##### Problems - ######
 Josephus, 
 
 Fibonacci, 
