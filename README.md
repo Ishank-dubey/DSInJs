@@ -1,4 +1,4 @@
-# DSInJs
+# Data Structures Via Javascript/NodeJs
 
 Data Structure topics via Nodejs- 
 
