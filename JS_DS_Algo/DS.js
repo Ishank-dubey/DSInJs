@@ -321,12 +321,57 @@ function removeRepeatingChars(str){
   return outputArray;
 }
 
+function nextGreatestNumberWithForLoop(arg){
+	for(let i=0;i<arg.length;i++){
+		let j=i+1;
+		while(j<arg.length){
+			if(arg[i]<arg[j]){
+				console.log('Next Greater Number for '+arg[i]+' is '+arg[j]);
+				break;
+			}
+			j++;
+		}
+		if(j==arg.length){
+			console.log("No greatest Next to "+arg[i]);
+		}
+	}
+}
+
+function nextGreatestWithStack(arg){
+	var stack = stackFunction();
+	stack.push(arg[0]);
+	let index = 0;
+	while(index < arg.length){
+		let nextGreatest = arg[index];
+		if(!stack.isEmpty()){
+			let element = stack.pop();
+			while(element < nextGreatest){
+			  console.log("Next greatest for "+element+" is "+ nextGreatest);
+			  if(!stack.isEmpty()){
+				  element = stack.pop();
+			  }else{
+				  break;
+			  }
+			}
+			if(element > nextGreatest){
+				stack.push(element);
+			}
+		}
+		stack.push(nextGreatest);
+		index++;
+	}
+	
+	while(!stack.isEmpty()){
+		console.log("There is no next greater for "+stack.pop());
+	}
+}
+
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,
-		removeRepeatingChars
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack
 		
 };
 

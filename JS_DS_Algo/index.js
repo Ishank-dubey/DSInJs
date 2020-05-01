@@ -35,4 +35,7 @@ console.log("--------");
 //DS.arrangeThreeOfThree(['b','b','b','b', 'a', 'a', 'b', 'a', 'a']);
 //console.log(DS.highestRectangularAreaInHistogram([2, 5,6, 7, 2, 1, 10, 10]));
 //console.log(DS.removeDuplicacyCharacters('aaabbbbaaaaddddde'));
-console.log(DS.removeRepeatingChars("missiidi"));
+//console.log(DS.removeRepeatingChars("missiidi"));
+//DS.nextGreatestNumberWithForLoop([1,2,3]);
+//DS.nextGreatestNumberWithForLoop([1,2,4,4,4, 0,1]);
+DS.nextGreatestWithStack([1,20,3]);

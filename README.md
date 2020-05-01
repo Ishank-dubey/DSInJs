@@ -27,4 +27,8 @@ Remove consecutive chars
 
 Remove consecitiveness
 
+Get the Next greater number of elements of an Array
+
+Get the Next greater number of elements of an Array via Stack.
+
 Adding more with time..
