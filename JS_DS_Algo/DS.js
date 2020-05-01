@@ -231,12 +231,12 @@ function arrangeThreeOfThree(arg){
 		if(arg[b]=='b'){
 			b++;
 		}else if(arg[b]=='a'){
-			var temp = arg[b];
+			let temp = arg[b];
 			arg[b] = arg[a];
 			arg[a] = temp;
 			a++;b++;
 		}else if(arg[b]=='c'){
-			var temp = arg[b];
+			let temp = arg[b];
 			arg[b] = arg[c];
 			arg[c] = temp;
 			c--;
