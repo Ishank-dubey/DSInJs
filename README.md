@@ -21,7 +21,7 @@ Reverse a stack with push pop and single stack
 
 Arrange a,b,c in an array in O(n) time and O(1) extra space
 
-Largest Rectabgular Area in a Histogram using stack in O(n) time
+Largest Rectangular Area in a Histogram using stack in O(n) time
 
 Remove consecutive chars
 
