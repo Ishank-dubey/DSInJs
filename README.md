@@ -37,7 +37,7 @@ Reverse a Queue via Stack
 
 Find consecutive pairwise
 
-Interleaving Queue - Interleaving the firsr half with the Second half
+Interleaving Queue - Interleaving the firt half with the Second half
 
 Reverese K elements in a Queue
 
