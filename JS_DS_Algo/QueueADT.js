@@ -107,4 +107,23 @@ function reverseLeavingQueue(localQueue){
   }
 }
 
-module.exports = {QueueADT, QueueLinkedListImplementation, reverseQueue, findConsecutivePairsWise, reverseLeavingQueue};
+function reverseKElementsInaQueue(inputQueue, K){
+  if(K > inputQueue.size()){
+	  K = inputQueue.size();
+  }
+  var stack = require('./DS').stackFunction(); 
+  for(let i=0; i < K;i++){
+	  stack.push(inputQueue.deQueue());
+  }
+  
+  while(!stack.isEmpty()){
+	  inputQueue.enQueue(stack.pop());
+  }
+  
+  for(let j=0;j<inputQueue.size()-K;j++){
+	  inputQueue.enQueue(inputQueue.deQueue());
+  }
+}
+
+module.exports = {QueueADT, QueueLinkedListImplementation, reverseQueue, findConsecutivePairsWise, 
+		reverseLeavingQueue, reverseKElementsInaQueue};

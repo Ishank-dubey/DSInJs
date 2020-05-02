@@ -39,4 +39,6 @@ Find consecutive pairwise
 
 Interleaving Queue - Interleaving the firsr half with the Second half
 
+Reverese K elements in a Queue
+
 Adding more with time..

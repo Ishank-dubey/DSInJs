@@ -56,8 +56,11 @@ stack.push(2);
 stack.push(4);
 stack.push(6);
 console.log('Half Leaving');
-require('./QueueADT').reverseLeavingQueue(Queue);
-while(!Queue.isEmpty()){
-	console.log(Queue.deQueue());
-}
+//require('./QueueADT').reverseLeavingQueue(Queue);
+//while(!Queue.isEmpty()){
+	//console.log(Queue.deQueue());
+//}
+require('./QueueADT').reverseKElementsInaQueue(Queue, 4);
+console.log(Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue());
+
 //console.log(require('./QueueADT').findConsecutivePairsWise(stack));
