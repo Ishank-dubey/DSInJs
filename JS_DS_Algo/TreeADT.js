@@ -21,11 +21,10 @@ function TreeADT(){
 				}
 				break;
 			}else{
+				parent = node;
 				if(node.data <= data){
-					parent = node;
 					node = node.right;
 				}else if(node.data > data){
-					parent = node;
 					node = node.left;
 				}
 			}
