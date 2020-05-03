@@ -105,8 +105,9 @@ function TreeADT(){
 	function postOrderWithStack(){
 		var node = root;
 		var stack = require('./DS').stackFunction();
-		
+		var i = 0;
 		while(1){
+			
 			if(node){
 				stack.push(node);
 				node = node.left;
@@ -121,19 +122,25 @@ function TreeADT(){
 					console.log(node.data);
 					
 					if(node == stack.top().right){
-						console.log(stack.pop().data);
-						stack.top().right = null;
+						node = stack.pop();
+						console.log(node.data);
+						
 					}
 				}
-			if(!stack.isEmpty()){
-				node = stack.top().right;
+			if(!stack.isEmpty() ){
+			  if(stack.top().right == node){// This step is missing in Narasimha K Book and leads to infinite recurssion
+				  stack.top().right = null;
+				  node = null;  
+			  }
+			  else {
+				  node = stack.top().right;
+			  }
 			}
 			else{
 				node = null;
 			}
-			  
 			}
-		
+		i++;
 		}
 	}
 	function size(){}

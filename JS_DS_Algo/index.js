@@ -70,10 +70,13 @@ console.log('TREE 1');
 var Tree = require('./TreeADT').TreeADT();
 Tree.insert(1);
 Tree.insert(2);
-Tree.insert(0);
+Tree.insert(1.2);
+Tree.insert(0.5);
 Tree.insert(3);
+Tree.insert(2.5);
+Tree.insert(4);
 Tree.insert(-1);
-Tree.insert(1);
+Tree.insert(0.6);
 //Tree.traverseRecursivePreOrder();
 //Tree.traverseNoRecurssionPreOrder();
 
