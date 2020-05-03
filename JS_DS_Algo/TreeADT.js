@@ -105,7 +105,7 @@ function TreeADT(){
 	function postOrderWithStack(){
 		var node = root;
 		var stack = require('./DS').stackFunction();
-		var i = 0;
+		
 		while(1){
 			
 			if(node){
@@ -140,7 +140,42 @@ function TreeADT(){
 				node = null;
 			}
 			}
-		i++;
+		
+		}
+	}
+	function printNodesAtLevel(desiredLevel){
+		
+		var node = root;
+		innerPrintNodesAtLevel(desiredLevel, 1, node);
+		function innerPrintNodesAtLevel(desiredLevel, currentLevel, node){
+			if(!node || desiredLevel < 1){
+				return;
+			}
+			if(currentLevel == desiredLevel){
+				console.log(node.data);return;
+			}else{
+				currentLevel = currentLevel+1;
+				innerPrintNodesAtLevel(desiredLevel, currentLevel, node.left);
+				innerPrintNodesAtLevel(desiredLevel, currentLevel, node.right);
+			}
+		}
+	}
+	function printNodesLevelWise(){
+		if(!root){
+			console.log('nothing to print');
+			return;
+		}
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			let currentNode = queue.deQueue();
+			console.log(currentNode.data);
+			if(currentNode.left){
+				queue.enQueue(currentNode.left);
+			}
+			if(currentNode.right){
+				queue.enQueue(currentNode.right);
+			}
 		}
 	}
 	function size(){}
@@ -160,7 +195,9 @@ function TreeADT(){
 		    size,
 		    height,
 		    levelWhichHasMax,
-		    leastCommonAncestor
+		    leastCommonAncestor,
+		    printNodesAtLevel,
+		    printNodesLevelWise
 		   };
 	
 }
