@@ -10,6 +10,8 @@ Recursion,
 
 LinkedList, 
 
+Binary Tree
+
 
 ##### Problems - ######
 Josephus, 
@@ -40,5 +42,13 @@ Find consecutive pairwise
 Interleaving Queue - Interleaving the firt half with the Second half
 
 Reverese K elements in a Queue
+
+Trees Traversals - LDR(In Order), DLR(Pre Prder), LRD(Post Order)
+
+Print a given level in a Binary Tree
+
+Print the nodes of a Tree as per the levels
+
+
 
 Adding more with time..
