@@ -40,7 +40,6 @@ function TreeADT(){
 	}
 	/*DLR*/
 	function traverseRecursivePreOrder(){
-		
 		node = root;
 		innerFunction(node);
 		function innerFunction(node){
@@ -51,21 +50,91 @@ function TreeADT(){
 		}
 		
 	}
+	/*DLR*/
 	function traverseNoRecurssionPreOrder(){
 	  var stack = require('./DS').stackFunction();
+	  var node = root;
 	  while(1){
-		  while(root){
-			  console.log(root.data);
-			  stack.push(root);
-			  root = root.left;
+		  while(node){
+			  console.log(node.data);
+			  stack.push(node);
+			  node = node.left;
 		  }
 		  
 		  if(stack.isEmpty()){
 			  break;
 		  }
-		  root = stack.pop();
-		  root = root.right;
-	  }	
+		  node = stack.pop();
+		  node = node.right;
+	  }
+	}
+	function inOrderTraverseWithRecursion(){
+		node = root;
+		innerFunction(node);
+		function innerFunction(node){
+			if(!node)return;
+			innerFunction(node.left);
+			console.log(node.data);
+			innerFunction(node.right);
+		}
+	}
+	function inOrderTraverseWithStack(){
+		var node = root;
+		var stack = require('./DS').stackFunction();
+		while(1){
+		  while(node){
+			stack.push(node);
+			node = node.left;
+		  }
+		  if(stack.isEmpty())break;
+		  node = stack.pop();
+		  console.log(node.data);
+		  node = node.right;
+		}
+	}
+	function postOrderWithRecursion(){
+		var node = root;
+		innerFunction(node);
+		function innerFunction(node){
+			if(!node)return;
+			innerFunction(node.left);
+			innerFunction(node.right);
+			console.log(node.data);
+		}
+	}
+	function postOrderWithStack(){
+		var node = root;
+		var stack = require('./DS').stackFunction();
+		
+		while(1){
+			if(node){
+				stack.push(node);
+				node = node.left;
+			}else{
+				if(stack.isEmpty()){
+					console.log('Traversal Over');
+					return;
+				}
+				
+				if(!stack.top().right){
+					node = stack.pop();
+					console.log(node.data);
+					
+					if(node == stack.top().right){
+						console.log(stack.pop().data);
+						stack.top().right = null;
+					}
+				}
+			if(!stack.isEmpty()){
+				node = stack.top().right;
+			}
+			else{
+				node = null;
+			}
+			  
+			}
+		
+		}
 	}
 	function size(){}
 	function height(){}
@@ -77,6 +146,10 @@ function TreeADT(){
 		    search,
 		    traverseRecursivePreOrder,
 		    traverseNoRecurssionPreOrder,
+		    inOrderTraverseWithRecursion,
+		    inOrderTraverseWithStack,
+		    postOrderWithRecursion,
+		    postOrderWithStack,
 		    size,
 		    height,
 		    levelWhichHasMax,

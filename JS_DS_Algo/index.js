@@ -74,4 +74,10 @@ Tree.insert(0);
 Tree.insert(3);
 Tree.insert(-1);
 Tree.insert(1);
-Tree.traverseRecursivePreOrder();
+//Tree.traverseRecursivePreOrder();
+//Tree.traverseNoRecurssionPreOrder();
+
+//Tree.inOrderTraverseWithRecursion();
+//Tree.inOrderTraverseWithStack();
+//Tree.postOrderWithRecursion();
+Tree.postOrderWithStack();
