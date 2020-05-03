@@ -60,7 +60,18 @@ console.log('Half Leaving');
 //while(!Queue.isEmpty()){
 	//console.log(Queue.deQueue());
 //}
-require('./QueueADT').reverseKElementsInaQueue(Queue, 4);
-console.log(Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue());
+//require('./QueueADT').reverseKElementsInaQueue(Queue, 4);
+//console.log(Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue(), Queue.deQueue());
 
 //console.log(require('./QueueADT').findConsecutivePairsWise(stack));
+
+
+console.log('TREE 1');
+var Tree = require('./TreeADT').TreeADT();
+Tree.insert(1);
+Tree.insert(2);
+Tree.insert(0);
+Tree.insert(3);
+Tree.insert(-1);
+Tree.insert(1);
+Tree.traverseRecursivePreOrder();
