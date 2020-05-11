@@ -49,6 +49,10 @@ Print a given level in a Binary Tree
 
 Print the nodes of a Tree as per the levels
 
+Print Tree elements in left to right direction from the bottom
+
+Find the Number of Levels in a Tree
+
 
 
 Adding more with time..
