@@ -178,10 +178,91 @@ function TreeADT(){
 			}
 		}
 	}
-	function size(){}
+	function size(){
+
+		if(!root){
+			return console.log('0');
+		}
+		var queue = require('./QueueADT').QueueADT();
+	    queue.enQueue(root);
+	    var count = 0;
+	    while(!queue.isEmpty()){
+	    	count++;
+	    	var node = queue.deQueue();
+	    	if(node.left)
+	    		queue.enQueue(node.left);
+	    	if(node.right)
+	    		queue.enQueue(node.right);
+	    }
+	    console.log(count);
+	    return count;
+	
+	}
 	function height(){}
-	function levelWhichHasMax(){}
+	function findMaxInTree(){
+		if(!root){
+			return;
+		}
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		var max = -99999;
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			if(max < node.data){
+				max = node.data;
+			}
+			if(node.left)
+			  queue.enQueue(node.left);
+			if(node.right)
+		      queue.enQueue(node.right);
+		}
+		console.log(max);
+	}
+	function levelWhichHasMax(){
+		
+	}
 	function leastCommonAncestor(){}
+	
+
+	function searchElement(data){
+      var queue = require('./QueueADT').QueueADT();
+      queue.enQueue(root);
+      while(!queue.isEmpty()){
+    	  var node = queue.deQueue();
+    	  if(node.data == data){
+    		  
+    		  return console.log(data+ " Was Found");;
+    	  }
+    	  if(node.left)
+    		  queue.enQueue(node.left);
+    	  if(node.right)
+    		  queue.enQueue(node.right);
+    }
+     return console.log('not found'); 
+	}
+	
+	function printTreeElementsInReverseOrderAtEachLevel(){
+		var queue = require('./QueueADT').QueueADT();
+		var stack = require('./DS').stackFunction();
+		
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			//Right child is to be enqueued first
+			if(node.right){
+				queue.enQueue(node.right);
+			}
+			if(node.left){
+				queue.enQueue(node.left);
+			}
+			stack.push(node);
+		}
+		
+		while(!stack.isEmpty()){
+			var node = stack.pop();
+			console.log(node.data);
+		}
+	}
 	
 	return {insert,
 		    deleteNode,
@@ -197,7 +278,10 @@ function TreeADT(){
 		    levelWhichHasMax,
 		    leastCommonAncestor,
 		    printNodesAtLevel,
-		    printNodesLevelWise
+		    printNodesLevelWise,
+		    findMaxInTree,
+		    searchElement,
+		    printTreeElementsInReverseOrderAtEachLevel
 		   };
 	
 }
