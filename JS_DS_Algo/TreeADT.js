@@ -264,6 +264,31 @@ function TreeADT(){
 		}
 	}
 	
+	function findNumberofLevels(){
+		var queue = require('./QueueADT').QueueADT();
+		var level = 1;
+		queue.enQueue(root);
+		queue.enQueue(null);
+		
+		while(!queue.isEmpty()){
+			var node  = queue.deQueue();
+			
+			if(!node && !queue.isEmpty()){
+				level++;
+				queue.enQueue(null);
+			}
+			
+			if(node && node.left){
+				queue.enQueue(node.left);
+			}
+			if(node && node.right){
+				queue.enQueue(node.right);
+			}
+		}
+		console.log(level, " <<-- Levels in the Tree");
+	}
+	
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -281,7 +306,8 @@ function TreeADT(){
 		    printNodesLevelWise,
 		    findMaxInTree,
 		    searchElement,
-		    printTreeElementsInReverseOrderAtEachLevel
+		    printTreeElementsInReverseOrderAtEachLevel,
+		    findNumberofLevels
 		   };
 	
 }
