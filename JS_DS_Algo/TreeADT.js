@@ -354,6 +354,43 @@ function TreeADT(){
            * */
     	}
     }
+    
+    function findLevelWithMaxSum(){
+    	if(!root){
+    		console.log(0, 0);
+    		return 0;
+    	}
+    	var maxSum = 0;
+    	var queue = require('./QueueADT').QueueADT();
+		var level = 1;
+		var maxLevel = level;
+		queue.enQueue(root);
+		queue.enQueue(null);
+		var currentLevelSum = 0;
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			
+			if(!node){
+				if(maxSum < currentLevelSum){
+					maxSum = currentLevelSum;
+					maxLevel = level;
+				}
+				if(!queue.isEmpty())
+				  queue.enQueue(null);
+				level++;
+				currentLevelSum = 0;
+			}else{
+				currentLevelSum = currentLevelSum + node.data;
+				if(node.left){
+					queue.enQueue(node.left);
+				}
+				if(node.right){
+					queue.enQueue(node.right);
+				}
+			}
+		}
+		console.log(maxLevel, maxSum);
+    }
 	
 	
 	return {insert,
@@ -377,7 +414,8 @@ function TreeADT(){
 		    findNumberofLevels,
 		    findDiameter1,
 		    diameterUsingHeight,
-		    heightFromGivenNode
+		    heightFromGivenNode,
+		    findLevelWithMaxSum
 		   };
 	
 }
