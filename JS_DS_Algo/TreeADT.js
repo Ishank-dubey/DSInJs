@@ -288,6 +288,26 @@ function TreeADT(){
 		console.log(level, " <<-- Levels in the Tree");
 	}
 	
+    function findDiameter1(){
+    	return findDiameter1Inner(root, {height:0});
+    	function findDiameter1Inner(node, heightObj){
+    		
+    		
+    		if(!node){
+    			heightObj.height = 0;
+            	return 0;
+            }
+    		
+    		var nodeLeftHeight = {height:0}, nodeRightHeight = {height:0};
+            var leftDiameter = findDiameter1Inner(node.left, nodeLeftHeight);
+            var rightDiameter = findDiameter1Inner(node.right, nodeRightHeight);
+            
+            heightObj.height = Math.max(nodeLeftHeight.height, nodeRightHeight.height) +  1;
+            
+            return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
+    	}
+    }
+	
 	
 	return {insert,
 		    deleteNode,
@@ -307,7 +327,8 @@ function TreeADT(){
 		    findMaxInTree,
 		    searchElement,
 		    printTreeElementsInReverseOrderAtEachLevel,
-		    findNumberofLevels
+		    findNumberofLevels,
+		    findDiameter1
 		   };
 	
 }
