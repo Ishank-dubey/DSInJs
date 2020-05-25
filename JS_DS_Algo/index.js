@@ -97,4 +97,5 @@ Tree.insert(4);
 //Tree.size();
 //Tree.printTreeElementsInReverseOrderAtEachLevel();
 //Tree.findNumberofLevels();
+console.log(Tree.diameterUsingHeight());
 console.log(Tree.findDiameter1());

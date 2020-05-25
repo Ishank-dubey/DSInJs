@@ -286,6 +286,33 @@ function TreeADT(){
 			}
 		}
 		console.log(level, " <<-- Levels in the Tree");
+		return level;
+	}
+	function heightFromGivenNode(node){
+		if(!node){
+			return 0;
+		}
+		var queue = require('./QueueADT').QueueADT();
+		var level = 1;
+		queue.enQueue(node);
+		queue.enQueue(null);
+		
+		while(!queue.isEmpty()){
+			var node  = queue.deQueue();
+			
+			if(!node && !queue.isEmpty()){
+				level++;
+				queue.enQueue(null);
+			}
+			
+			if(node && node.left){
+				queue.enQueue(node.left);
+			}
+			if(node && node.right){
+				queue.enQueue(node.right);
+			}
+		}
+		return level;
 	}
 	
     function findDiameter1(){
@@ -298,13 +325,33 @@ function TreeADT(){
             	return 0;
             }
     		
-    		var nodeLeftHeight = {height:0}, nodeRightHeight = {height:0};
+    		var nodeLeftHeight = {height:0}, 
+    		  nodeRightHeight = {height:0};
             var leftDiameter = findDiameter1Inner(node.left, nodeLeftHeight);
             var rightDiameter = findDiameter1Inner(node.right, nodeRightHeight);
             
             heightObj.height = Math.max(nodeLeftHeight.height, nodeRightHeight.height) +  1;
             
             return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
+    	}
+    }
+    
+    function diameterUsingHeight(){
+    	return diameterUsingHeightInner(root);
+    	function diameterUsingHeightInner(node){
+    		if(!node){
+    			return 0;
+    		}
+          var leftheight = height(node.left);
+          var rightheight = height(node.right);
+          console.log(leftheight, rightheight);
+          var leftDiameter = diameterUsingHeightInner(node.left);
+          var rightDiameter = diameterUsingHeightInner(node.right);
+
+          return Math.max(leftheight + rightheight +1, Math.max(leftDiameter, rightDiameter));
+          /*
+           * Left Tree height + Right Tree height +1 or Diameter of the Left or the Diameter of the Right Tree O(n^2)
+           * */
     	}
     }
 	
@@ -328,7 +375,9 @@ function TreeADT(){
 		    searchElement,
 		    printTreeElementsInReverseOrderAtEachLevel,
 		    findNumberofLevels,
-		    findDiameter1
+		    findDiameter1,
+		    diameterUsingHeight,
+		    heightFromGivenNode
 		   };
 	
 }
