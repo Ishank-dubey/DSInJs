@@ -99,4 +99,5 @@ Tree.insert(3);
 //Tree.findNumberofLevels();
 //console.log(Tree.diameterUsingHeight());
 //console.log(Tree.findDiameter1());
-Tree.allRoutesFromRootToLeaf();
+//Tree.allRoutesFromRootToLeaf();
+console.log(Tree.findIfPathHasExactSumAndPrintPathWhichHasTheSum(8));

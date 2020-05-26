@@ -409,7 +409,10 @@ function TreeADT(){
 				allRoutesFromRootToLeafInner(node.right, array, index);
 			}
 		}
+		
+		
 	}
+	
 	
 	function printpath(array, index){
 		for(let i=0; i < index ;i++){
@@ -417,6 +420,33 @@ function TreeADT(){
 		}
 		console.log('-----');
 	}
+	
+	function findIfPathHasExactSum(sum){
+		return findIfPathHasExactSumInner(root, sum, [], 0);
+		function findIfPathHasExactSumInner(node, sumRemaining, array, index){
+			if(!node){
+				if(sumRemaining == 0){printpath(array, index)}
+				return sumRemaining == 0;
+			}
+			sumRemaining = sumRemaining - node.data;
+			array[index] = node;
+			index++;
+			if((!node.left && !node.right) || (node.left && node.right)){
+				return(findIfPathHasExactSumInner(node.left, sumRemaining, array, index) || findIfPathHasExactSumInner(node.right, sumRemaining, array, index));
+			}else if(node.left){
+				return(findIfPathHasExactSumInner(node.left, sumRemaining, array, index));
+			}else{
+				return (findIfPathHasExactSumInner(node.right, sumRemaining, array, index));
+			}
+		}
+	}
+	
+	function sumOfAllNodesInTree(){
+		
+	}
+	
+	
+	function findIfTreesAreStructurallySimilar(){}
 	
 	return {insert,
 		    deleteNode,
@@ -441,7 +471,10 @@ function TreeADT(){
 		    diameterUsingHeight,
 		    heightFromGivenNode,
 		    findLevelWithMaxSum,
-		    allRoutesFromRootToLeaf
+		    allRoutesFromRootToLeaf,
+		    findIfPathHasExactSum,
+		    findIfTreesAreStructurallySimilar,
+		    sumOfAllNodesInTree
 		   };
 	
 }
