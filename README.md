@@ -53,6 +53,14 @@ Print Tree elements in left to right direction from the bottom
 
 Find the Number of Levels in a Tree
 
+Diameter of a Tree
+
+Paths from Root to Leaf in a Tree
+
+Find level with Maximum Sum in a Tree
+
+
+
 
 
 Adding more with time..
