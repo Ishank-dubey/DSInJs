@@ -391,7 +391,32 @@ function TreeADT(){
 		}
 		console.log(maxLevel, maxSum);
     }
+	function allRoutesFromRootToLeaf(){
+		allRoutesFromRootToLeafInner(root, [], 0);
+		function allRoutesFromRootToLeafInner(node, array, index){
+			if(!node){
+				return 0;
+			}else{
+				array[index] = node;
+				//console.log(node, array, index);
+				index++;
+				
+				if(!node.left && !node.right){
+					printpath(array, index);
+					return;
+				}
+				allRoutesFromRootToLeafInner(node.left, array, index);
+				allRoutesFromRootToLeafInner(node.right, array, index);
+			}
+		}
+	}
 	
+	function printpath(array, index){
+		for(let i=0; i < index ;i++){
+			console.log(array[i].data);
+		}
+		console.log('-----');
+	}
 	
 	return {insert,
 		    deleteNode,
@@ -415,7 +440,8 @@ function TreeADT(){
 		    findDiameter1,
 		    diameterUsingHeight,
 		    heightFromGivenNode,
-		    findLevelWithMaxSum
+		    findLevelWithMaxSum,
+		    allRoutesFromRootToLeaf
 		   };
 	
 }

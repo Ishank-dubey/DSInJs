@@ -99,4 +99,4 @@ Tree.insert(3);
 //Tree.findNumberofLevels();
 //console.log(Tree.diameterUsingHeight());
 //console.log(Tree.findDiameter1());
-Tree.findLevelWithMaxSum();
+Tree.allRoutesFromRootToLeaf();
