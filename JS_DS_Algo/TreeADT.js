@@ -442,11 +442,42 @@ function TreeADT(){
 	}
 	
 	function sumOfAllNodesInTree(){
-		
+		return sumOfAllNodesInTreeInner(root);
+		function sumOfAllNodesInTreeInner(root){
+			if(!root)
+				return 0;
+			
+			var queue = require('./QueueADT').QueueADT();
+			queue.enQueue(root);
+			var sum = 0;
+			while(!queue.isEmpty()){
+				var node = queue.deQueue();
+				sum = sum + node.data;
+				if(node.left){
+					queue.enQueue(node.left);
+				}
+				if(node.right){
+					queue.enQueue(node.right);
+				}
+			}
+			return sum;
+		}
 	}
 	
 	
-	function findIfTreesAreStructurallySimilar(){}
+	function findIfTreesAreStructurallySimilar(root1, root2){
+		if(!root2 && !root1){
+			return true;
+		}
+		if(!root1 || !root2){
+			return 0;
+		}
+		return (root1.data == root2.data && findIfTreesAreStructurallySimilar(root2.left, root1.left) && findIfTreesAreStructurallySimilar(root2.right, root1.right))
+	}
+	
+	function getRootNode(){
+		return root;
+	}
 	
 	return {insert,
 		    deleteNode,
@@ -474,7 +505,8 @@ function TreeADT(){
 		    allRoutesFromRootToLeaf,
 		    findIfPathHasExactSum,
 		    findIfTreesAreStructurallySimilar,
-		    sumOfAllNodesInTree
+		    sumOfAllNodesInTree,
+		    getRootNode
 		   };
 	
 }

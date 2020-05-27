@@ -68,6 +68,7 @@ console.log('Half Leaving');
 
 console.log('TREE 1');
 var Tree = require('./TreeADT').TreeADT();
+var Tree1 = require('./TreeADT').TreeADT();
 Tree.insert(2);
 Tree.insert(1);
 Tree.insert(3);
@@ -75,6 +76,18 @@ Tree.insert(2.5);
 Tree.insert(1.5);
 Tree.insert(.5);
 Tree.insert(3);
+Tree.insert(13);
+
+Tree1.insert(2);
+Tree1.insert(1);
+Tree1.insert(3);
+Tree1.insert(2.5);
+Tree1.insert(1.5);
+Tree1.insert(.5);
+Tree1.insert(3);
+Tree1.insert(130);
+//console.log(Tree.findIfTreesAreStructurallySimilar(Tree.getRootNode(), Tree1.getRootNode()));
+
 //Tree.insert(30);
 //Tree.insert(40);
 //Tree.insert(50);
@@ -100,4 +113,6 @@ Tree.insert(3);
 //console.log(Tree.diameterUsingHeight());
 //console.log(Tree.findDiameter1());
 //Tree.allRoutesFromRootToLeaf();
-console.log(Tree.findIfPathHasExactSumAndPrintPathWhichHasTheSum(8));
+//console.log(Tree.findIfPathHasExactSumAndPrintPathWhichHasTheSum(8));
+
+console.log(Tree1.sumOfAllNodesInTree());
