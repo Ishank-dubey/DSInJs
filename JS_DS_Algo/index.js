@@ -85,7 +85,10 @@ Tree1.insert(2.5);
 Tree1.insert(1.5);
 Tree1.insert(.5);
 Tree1.insert(3);
-Tree1.insert(130);
+Tree1.insert(13);
+
+Tree.findMirrorOfTree();
+//console.log(Tree.findIfTreesAreMirrors(Tree.getRootNode(), Tree1.getRootNode()));
 //console.log(Tree.findIfTreesAreStructurallySimilar(Tree.getRootNode(), Tree1.getRootNode()));
 
 //Tree.insert(30);

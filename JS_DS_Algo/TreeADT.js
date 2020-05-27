@@ -479,6 +479,35 @@ function TreeADT(){
 		return root;
 	}
 	
+	function findMirrorOfTree(){
+		findMirrorOfTreeInner(root);
+		function findMirrorOfTreeInner(root){
+			if(root){
+				findMirrorOfTreeInner(root.left);
+				findMirrorOfTreeInner(root.right);
+				var temp = root.left;
+				root.left = root.right;
+				root.right = temp;
+			}
+			return root;
+		}
+	}
+	
+	function findIfTreesAreMirrors(root1, root2){
+		if(!root1 && !root2){
+			return true;
+		}
+		if(!root1 || !root2){
+			return false;
+		}
+		
+		if(root1.data != root2.data){
+			return false;
+		}
+		return (findIfTreesAreMirrors(root2.left, root1.right) && findIfTreesAreMirrors(root2.right, root1.left));
+		
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -506,7 +535,9 @@ function TreeADT(){
 		    findIfPathHasExactSum,
 		    findIfTreesAreStructurallySimilar,
 		    sumOfAllNodesInTree,
-		    getRootNode
+		    getRootNode,
+		    findMirrorOfTree,
+		    findIfTreesAreMirrors
 		   };
 	
 }
