@@ -508,6 +508,43 @@ function TreeADT(){
 		
 	}
 	
+	
+	/*
+	 * Find the path from root to node1, find the path from root to node2 and store the paths in two arrays
+	 * Compare the arrays for a mismatch
+	 * 
+	 * */
+	function lowsetCommonAnsestorOfTwoNodesMethod1(targetNode1Data, targetNode2Data){
+	   var array1 = [];
+	   lowestCommonAnsestorOfTwoNodesMethod1Inner(root, [], 0, targetNode1Data, array1);
+	   
+	   console.log(array1);
+	   var array2 = [];
+	   lowestCommonAnsestorOfTwoNodesMethod1Inner(root, [], 0, targetNode2Data, array2);
+	   console.log(array2);
+	   
+       function lowestCommonAnsestorOfTwoNodesMethod1Inner(node, array, index, targetNodeData, arrayOp){
+    	   if(!node){
+    		   return false;
+    	   }
+    	   array[index] = node;
+		   index++;
+    	   if(node.data == targetNodeData){
+    		   saveInArray(array, index, arrayOp);
+    		   return true;
+    	   }
+    	   return (lowestCommonAnsestorOfTwoNodesMethod1Inner(node.left, array, index, targetNodeData, arrayOp) || 
+    			   lowestCommonAnsestorOfTwoNodesMethod1Inner(node.right, array, index, targetNodeData, arrayOp));
+       }
+       
+       function saveInArray(array, index, arrayOp){
+    	   console.log('saving');
+    	   for(let i=0 ; i < index ; i++){
+    		   arrayOp[i] = array[i];
+    	   }
+       }
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -537,7 +574,8 @@ function TreeADT(){
 		    sumOfAllNodesInTree,
 		    getRootNode,
 		    findMirrorOfTree,
-		    findIfTreesAreMirrors
+		    findIfTreesAreMirrors,
+		    lowsetCommonAnsestorOfTwoNodesMethod1
 		   };
 	
 }

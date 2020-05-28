@@ -78,6 +78,9 @@ Tree.insert(.5);
 Tree.insert(3);
 Tree.insert(13);
 
+
+Tree.lowsetCommonAnsestorOfTwoNodesMethod1(13, 3);
+
 Tree1.insert(2);
 Tree1.insert(1);
 Tree1.insert(3);
@@ -87,7 +90,7 @@ Tree1.insert(.5);
 Tree1.insert(3);
 Tree1.insert(13);
 
-Tree.findMirrorOfTree();
+//Tree.findMirrorOfTree();
 //console.log(Tree.findIfTreesAreMirrors(Tree.getRootNode(), Tree1.getRootNode()));
 //console.log(Tree.findIfTreesAreStructurallySimilar(Tree.getRootNode(), Tree1.getRootNode()));
 
