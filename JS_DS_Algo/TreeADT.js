@@ -511,17 +511,18 @@ function TreeADT(){
 	
 	/*
 	 * Find the path from root to node1, find the path from root to node2 and store the paths in two arrays
-	 * Compare the arrays for a mismatch
+	 * Compare the arrays for a mismatch- this approach takes 2 traversals of the tree
 	 * 
 	 * */
 	function lowsetCommonAnsestorOfTwoNodesMethod1(targetNode1Data, targetNode2Data){
 	   var array1 = [];
 	   lowestCommonAnsestorOfTwoNodesMethod1Inner(root, [], 0, targetNode1Data, array1);
 	   
-	   console.log(array1);
+	   
 	   var array2 = [];
 	   lowestCommonAnsestorOfTwoNodesMethod1Inner(root, [], 0, targetNode2Data, array2);
-	   console.log(array2);
+	   
+	   return compareAndFindTheLowestCommonNode(array1, array2);
 	   
        function lowestCommonAnsestorOfTwoNodesMethod1Inner(node, array, index, targetNodeData, arrayOp){
     	   if(!node){
@@ -538,11 +539,72 @@ function TreeADT(){
        }
        
        function saveInArray(array, index, arrayOp){
-    	   console.log('saving');
     	   for(let i=0 ; i < index ; i++){
     		   arrayOp[i] = array[i];
     	   }
        }
+       
+       function compareAndFindTheLowestCommonNode(a1, a2){
+		   var previousValue = null;
+    	   for(let i=0;i< a2.length;i++){
+    		   
+    		   if((a1[i] && a2[i]) && (a1[i].data === a2[i].data)){
+    			   previousValue = a1[i].data;
+    		   }else{
+    			   break;
+    		   }
+    	   }
+    	   return previousValue;
+	   }
+	}
+	
+	/*
+	 * Find the lowest common ancestor of two nodes in a binary tree in one traversal
+	 * */
+	
+	function lowestCommonAncestorInOneTraversal(node1, node2){
+		var flag1 = false; var flag2 = false;
+		
+		var result = lowestCommonAncestorInOneTraversalInner(root, node1, node2);
+		
+		if(result && flag1 && flag2){
+			return result;
+		}else {
+			return null;
+	    }
+		
+		function lowestCommonAncestorInOneTraversalInner(node, node1, node2){
+			if(!node){
+				return null;
+			}
+			var temp = null;
+			
+			if(node1 == node.data){
+				flag1 = true;
+				temp = node;
+			}
+			
+			if(node2 == node.data){
+				flag2 = true;
+				temp = node;
+			}
+			
+			var leftNode = lowestCommonAncestorInOneTraversalInner(node.left, node1, node2);
+			var rightNode = lowestCommonAncestorInOneTraversalInner(node.right, node1, node2);
+			
+			if(temp){
+				return temp;
+			}
+			
+			if( leftNode && rightNode ){
+				return node;
+			}
+			
+			if(leftNode || rightNode){
+				return leftNode ? leftNode : rightNode;
+			}
+			
+		}
 	}
 	
 	return {insert,
@@ -575,7 +637,8 @@ function TreeADT(){
 		    getRootNode,
 		    findMirrorOfTree,
 		    findIfTreesAreMirrors,
-		    lowsetCommonAnsestorOfTwoNodesMethod1
+		    lowsetCommonAnsestorOfTwoNodesMethod1,
+		    lowestCommonAncestorInOneTraversal
 		   };
 	
 }

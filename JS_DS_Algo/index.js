@@ -75,11 +75,11 @@ Tree.insert(3);
 Tree.insert(2.5);
 Tree.insert(1.5);
 Tree.insert(.5);
-Tree.insert(3);
+Tree.insert(4);
 Tree.insert(13);
 
 
-Tree.lowsetCommonAnsestorOfTwoNodesMethod1(13, 3);
+console.log(Tree.lowestCommonAncestorInOneTraversal(4, 2.5));
 
 Tree1.insert(2);
 Tree1.insert(1);
