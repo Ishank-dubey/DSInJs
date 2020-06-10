@@ -122,3 +122,5 @@ Tree1.insert(13);
 //console.log(Tree.findIfPathHasExactSumAndPrintPathWhichHasTheSum(8));
 
 console.log(Tree1.sumOfAllNodesInTree());
+
+console.log(DS.sequentialRemoval(['a','b','c','d'],['z']));

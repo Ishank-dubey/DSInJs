@@ -366,12 +366,26 @@ function nextGreatestWithStack(arg){
 	}
 }
 
+function sequentialRemoval(parent, child){
+	if(child.length > parent.length){
+		return false;
+	}
+	var parentIndex = 0;
+	var childIndex = 0;
+	for(;parentIndex < parent.length && childIndex < child.length;parentIndex++){
+		if(parent[parentIndex] == child[childIndex]){
+			childIndex++;
+		}
+	}
+	return childIndex == child.length ? true : false;
+}
+
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,
-		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, sequentialRemoval
 		
 };
 
