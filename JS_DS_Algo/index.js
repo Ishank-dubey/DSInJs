@@ -77,8 +77,13 @@ Tree.insert(1.5);
 Tree.insert(.5);
 Tree.insert(4);
 Tree.insert(13);
-
-
+//console.log('--');
+//Tree.inOrderTraverseWithStack();
+//console.log('--');
+//Tree.traverseNoRecurssionPreOrder();
+console.log('--');
+console.log(Tree.constructTreeFromInorderAndPreorderTraversal(0, 8, [0.5,1,1.5,2,2.5,3,4,13], [2,1,0.5,1.5,3,2.5,4,13]));
+console.log('--');
 console.log(Tree.lowestCommonAncestorInOneTraversal(4, 2.5));
 
 Tree1.insert(2);

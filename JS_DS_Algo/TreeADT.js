@@ -606,6 +606,31 @@ function TreeADT(){
 			
 		}
 	}
+	function constructTreeFromInorderAndPreorderTraversal(startIndex, endIndex, inOrderArray, preOrderArray){
+		var preIndex = 0;
+		var root = constructTreeFromInorderAndPreorderTraversalInner(startIndex, endIndex, inOrderArray, preOrderArray);
+		
+		return root;
+		function constructTreeFromInorderAndPreorderTraversalInner(startIndex, endIndex, inOrderArray, preOrderArray){
+			if(startIndex > endIndex){
+				return null;
+			}
+			var data = preOrderArray[preIndex];
+			preIndex++;
+			var node = {data:data};
+			
+			if(startIndex == endIndex){
+				node.left = null; node.right = null;
+				return node;
+			}
+
+			var indexOfDatainInOrderArray = inOrderArray.indexOf(data);
+
+			node.left = constructTreeFromInorderAndPreorderTraversalInner(startIndex, indexOfDatainInOrderArray-1, inOrderArray, preOrderArray);
+			node.right = constructTreeFromInorderAndPreorderTraversalInner(indexOfDatainInOrderArray+1, endIndex, inOrderArray, preOrderArray);
+			return node;
+		}
+	}
 	
 	return {insert,
 		    deleteNode,
@@ -638,7 +663,8 @@ function TreeADT(){
 		    findMirrorOfTree,
 		    findIfTreesAreMirrors,
 		    lowsetCommonAnsestorOfTwoNodesMethod1,
-		    lowestCommonAncestorInOneTraversal
+		    lowestCommonAncestorInOneTraversal,
+		    constructTreeFromInorderAndPreorderTraversal
 		   };
 	
 }
