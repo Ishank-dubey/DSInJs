@@ -22,6 +22,7 @@ Stock Span,
 
 Reverse a stack with push pop and single stack
 
+Sequential Removal of chareaters form an Array
 
 Arrange a,b,c in an array in O(n) time and O(1) extra space
 
@@ -61,6 +62,6 @@ Find level with Maximum Sum in a Tree
 
 Lowset common ancestor of two nodes 
 
-
+Find the Tree from Inorder and Preorder travesals
 
 Adding more with time..
