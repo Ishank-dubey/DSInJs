@@ -64,4 +64,6 @@ Lowset common ancestor of two nodes
 
 Find the Tree from Inorder and Preorder travesals
 
+Zig Zag traversal of a Tree
+
 Adding more with time..
