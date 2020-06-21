@@ -648,7 +648,6 @@ function TreeADT(){
 				console.log(node.data);
 				return true;
 			}
-			//console.log('No Ancestors');
 			return false;
 		}
 		
