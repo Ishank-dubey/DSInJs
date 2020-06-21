@@ -632,6 +632,37 @@ function TreeADT(){
 		}
 	}
 	
+	function findAncestorsOfGivenNode(node){
+		
+	}
+	
+	function zigZagTreeTraversal(){
+		var leftToRight = true;
+		var currentStack = require('./DS').stackFunction();
+		var nextStack = require('./DS').stackFunction();
+		currentStack.push(root);
+		while(!currentStack.isEmpty()){
+			//console.log('While');
+			var node = currentStack.pop();
+			console.log(node.data);
+			if(leftToRight){
+				if(node.left)nextStack.push(node.left);
+				if(node.right)nextStack.push(node.right);
+			}else{
+				if(node.right)nextStack.push(node.right);
+				if(node.left)nextStack.push(node.left);
+			}
+			
+			if(currentStack.isEmpty()){
+				leftToRight = !leftToRight;
+				var temp = currentStack;
+				currentStack = nextStack;
+				nextStack = temp;
+			}
+		}
+		
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -664,7 +695,8 @@ function TreeADT(){
 		    findIfTreesAreMirrors,
 		    lowsetCommonAnsestorOfTwoNodesMethod1,
 		    lowestCommonAncestorInOneTraversal,
-		    constructTreeFromInorderAndPreorderTraversal
+		    constructTreeFromInorderAndPreorderTraversal,
+		    zigZagTreeTraversal
 		   };
 	
 }

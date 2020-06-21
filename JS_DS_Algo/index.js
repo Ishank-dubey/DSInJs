@@ -82,10 +82,11 @@ Tree.insert(13);
 //console.log('--');
 //Tree.traverseNoRecurssionPreOrder();
 console.log('--');
-console.log(Tree.constructTreeFromInorderAndPreorderTraversal(0, 8, [0.5,1,1.5,2,2.5,3,4,13], [2,1,0.5,1.5,3,2.5,4,13]));
-console.log('--');
-console.log(Tree.lowestCommonAncestorInOneTraversal(4, 2.5));
-
+//console.log(Tree.constructTreeFromInorderAndPreorderTraversal(0, 8, [0.5,1,1.5,2,2.5,3,4,13], [2,1,0.5,1.5,3,2.5,4,13]));
+console.log('--Zig Zag');
+//console.log(Tree.lowestCommonAncestorInOneTraversal(4, 2.5));
+Tree.zigZagTreeTraversal();
+console.log('--Zig Zag--End');
 Tree1.insert(2);
 Tree1.insert(1);
 Tree1.insert(3);
