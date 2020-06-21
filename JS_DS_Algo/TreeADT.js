@@ -632,7 +632,25 @@ function TreeADT(){
 		}
 	}
 	
-	function findAncestorsOfGivenNode(node){
+	function findAncestorsOfGivenNode(data){
+		var status = findAncestorsRecurssion(root);
+		if(!status){
+			console.log('no ansestors');
+		}
+		 function findAncestorsRecurssion(node){
+			if(!node){
+				return 0;
+			}
+			if((node.left && node.left.data == data) || 
+					(node.right && node.right.data == data) || 
+			   findAncestorsRecurssion(node.left) || 
+			   findAncestorsRecurssion(node.right)){
+				console.log(node.data);
+				return true;
+			}
+			//console.log('No Ancestors');
+			return false;
+		}
 		
 	}
 	
@@ -642,7 +660,6 @@ function TreeADT(){
 		var nextStack = require('./DS').stackFunction();
 		currentStack.push(root);
 		while(!currentStack.isEmpty()){
-			//console.log('While');
 			var node = currentStack.pop();
 			console.log(node.data);
 			if(leftToRight){
@@ -696,7 +713,8 @@ function TreeADT(){
 		    lowsetCommonAnsestorOfTwoNodesMethod1,
 		    lowestCommonAncestorInOneTraversal,
 		    constructTreeFromInorderAndPreorderTraversal,
-		    zigZagTreeTraversal
+		    zigZagTreeTraversal,
+		    findAncestorsOfGivenNode
 		   };
 	
 }
