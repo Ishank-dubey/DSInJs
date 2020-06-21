@@ -66,4 +66,6 @@ Find the Tree from Inorder and Preorder travesals
 
 Zig Zag traversal of a Tree
 
+Finding Ancestors of a given data
+
 Adding more with time..
