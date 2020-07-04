@@ -679,6 +679,21 @@ function TreeADT(){
 		
 	}
 	
+	function checkIfBinaryTree(root){
+		checkIfBinaryTreeInner(root, -Infinity, Infinity);
+		
+		function checkIfBinaryTreeInner(root, min, max){
+			if(!root)
+				return true;
+			
+			if(root.data > max || root.data < min)
+				return false;
+			
+			return checkIfBinaryTreeInner(root.left, min, root.data) && 
+			checkIfBinaryTreeInner(root.right, root.data, max);
+		}
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -713,7 +728,8 @@ function TreeADT(){
 		    lowestCommonAncestorInOneTraversal,
 		    constructTreeFromInorderAndPreorderTraversal,
 		    zigZagTreeTraversal,
-		    findAncestorsOfGivenNode
+		    findAncestorsOfGivenNode,
+		    checkIfBinaryTree
 		   };
 	
 }
