@@ -68,4 +68,6 @@ Zig Zag traversal of a Tree
 
 Finding Ancestors of a given data
 
+Method to find if ai given tree is a BST in O(n)
+
 Adding more with time..
