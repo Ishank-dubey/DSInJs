@@ -60,7 +60,7 @@ Paths from Root to Leaf in a Tree
 
 Find level with Maximum Sum in a Tree
 
-Lowset common ancestor of two nodes 
+Lowest common ancestor of two nodes 
 
 Find the Tree from Inorder and Preorder travesals
 
@@ -68,6 +68,6 @@ Zig Zag traversal of a Tree
 
 Finding Ancestors of a given data
 
-Method to find if ai given tree is a BST in O(n)
+Method to find if a given tree is a BST in O(n)
 
 Adding more with time..
