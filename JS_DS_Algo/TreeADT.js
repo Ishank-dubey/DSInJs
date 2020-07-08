@@ -694,6 +694,19 @@ function TreeADT(){
 		}
 	}
 	
+	function findVerticalSum(root){
+		var map = {};
+		innerFindVerticalSum(root, 0);
+		return map;
+		function innerFindVerticalSum(node, column){
+			if(!node)
+				return 0;
+			innerFindVerticalSum(node.left, column-1);
+			map[column] = map[column] ? (map[column] + node.data) : node.data;
+			innerFindVerticalSum(node.right, column+1);
+		}
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -729,7 +742,8 @@ function TreeADT(){
 		    constructTreeFromInorderAndPreorderTraversal,
 		    zigZagTreeTraversal,
 		    findAncestorsOfGivenNode,
-		    checkIfBinaryTree
+		    checkIfBinaryTree,
+		    findVerticalSum
 		   };
 	
 }
