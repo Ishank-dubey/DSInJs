@@ -70,4 +70,6 @@ Finding Ancestors of a given data
 
 Method to find if a given tree is a BST in O(n)
 
+Vertical Sums in a Tree.
+
 Adding more with time..
