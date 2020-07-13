@@ -732,6 +732,52 @@ function TreeADT(){
 			innerFindVerticalSum(node.right, column+1);
 		}
 	}
+	
+	
+	/*
+	 * O(n) time complexity and O(n) space complexity
+	 * */
+	function addingNextSiblingsUsingQueue(root){
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		queue.enQueue(null);
+		
+		while( !queue.isEmpty() ){
+			var temp = queue.deQueue();
+			if(!temp){
+				if(!queue.isEmpty()){
+					queue.enQueue(null);
+				}
+			} else {
+				temp.nextSibling = queue.front();
+				if(temp.left){
+					queue.enQueue(temp.left);
+				}
+				if(temp.right){
+					queue.enQueue(temp.right);
+				}
+			}
+		}
+	}
+	
+	
+	/*
+	 * O(n) time complexity complexity and O(1) space complexity
+	 * */
+	function addingNextSiblingViaRecursion(root){
+		if(!root){
+			return null;
+		}
+		if(root.left)
+		  root.left.nextSibling = root.right;
+		
+		if(root.right)
+		  root.right.nextSibling = root.nextSibling ? root.nextSibling.left : null;
+		
+		addingNextSiblingViaRecursion(root.left);
+		addingNextSiblingViaRecursion(root.right);
+	}
+	
 	return {insert,
 	    deleteNode,
 	    search,
@@ -769,7 +815,9 @@ function TreeADT(){
 	    findAncestorsOfGivenNode,
 	    checkIfBinaryTree,
 	    formTreeFromPreOrderTraversal,
-	    findVerticalSum
+	    findVerticalSum,
+	    addingNextSiblingsUsingQueue,
+	    addingNextSiblingViaRecursion
 	   };
 }
 module.exports = {TreeADT}
