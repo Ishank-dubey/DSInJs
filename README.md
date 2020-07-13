@@ -72,4 +72,8 @@ Method to find if a given tree is a BST in O(n)
 
 Vertical Sums in a Tree.
 
+Add Next sibling in Tree nodes
+
+Create a tree from preorder traversal of 'L' and 'I' nodes where 'L' is leaf and 'I' is intermediate with Exactly two children.
+
 Adding more with time..
