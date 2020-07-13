@@ -95,8 +95,10 @@ Tree1.insert(1.5);
 Tree1.insert(.5);
 Tree1.insert(3);
 Tree1.insert(13);
+
 console.log(Tree1.formTreeFromPreOrderTraversal(['I','L','I','L','L']));
 
+console.log(Tree.findVerticalSum(Tree.getRootNode()));
 //Tree.findMirrorOfTree();
 //console.log(Tree.findIfTreesAreMirrors(Tree.getRootNode(), Tree1.getRootNode()));
 //console.log(Tree.findIfTreesAreStructurallySimilar(Tree.getRootNode(), Tree1.getRootNode()));

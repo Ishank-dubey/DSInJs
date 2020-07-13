@@ -694,6 +694,7 @@ function TreeADT(){
 		}
 	}
 	
+
 	/*
 	 * Input is array of L and I valued nodes, L is a Leaf and I is an intermadiate with exactly 2 children and 
 	 * obtained after pre-order traversal
@@ -716,47 +717,59 @@ function TreeADT(){
 				node.right = formTreeFromPreOrderTraversalInner(preorderArrayInner, index+2);
 			}
 			return node;
+			}
+		}
+
+	function findVerticalSum(root){
+		var map = {};
+		innerFindVerticalSum(root, 0);
+		return map;
+		function innerFindVerticalSum(node, column){
+			if(!node)
+				return 0;
+			innerFindVerticalSum(node.left, column-1);
+			map[column] = map[column] ? (map[column] + node.data) : node.data;
+			innerFindVerticalSum(node.right, column+1);
 		}
 	}
-	
 	return {insert,
-		    deleteNode,
-		    search,
-		    traverseRecursivePreOrder,
-		    traverseNoRecurssionPreOrder,
-		    inOrderTraverseWithRecursion,
-		    inOrderTraverseWithStack,
-		    postOrderWithRecursion,
-		    postOrderWithStack,
-		    size,
-		    height,
-		    levelWhichHasMax,
-		    leastCommonAncestor,
-		    printNodesAtLevel,
-		    printNodesLevelWise,
-		    findMaxInTree,
-		    searchElement,
-		    printTreeElementsInReverseOrderAtEachLevel,
-		    findNumberofLevels,
-		    findDiameter1,
-		    diameterUsingHeight,
-		    heightFromGivenNode,
-		    findLevelWithMaxSum,
-		    allRoutesFromRootToLeaf,
-		    findIfPathHasExactSum,
-		    findIfTreesAreStructurallySimilar,
-		    sumOfAllNodesInTree,
-		    getRootNode,
-		    findMirrorOfTree,
-		    findIfTreesAreMirrors,
-		    lowsetCommonAnsestorOfTwoNodesMethod1,
-		    lowestCommonAncestorInOneTraversal,
-		    constructTreeFromInorderAndPreorderTraversal,
-		    zigZagTreeTraversal,
-		    findAncestorsOfGivenNode,
-		    checkIfBinaryTree,
-		    formTreeFromPreOrderTraversal
-		   };
-	
+	    deleteNode,
+	    search,
+	    traverseRecursivePreOrder,
+	    traverseNoRecurssionPreOrder,
+	    inOrderTraverseWithRecursion,
+	    inOrderTraverseWithStack,
+	    postOrderWithRecursion,
+	    postOrderWithStack,
+	    size,
+	    height,
+	    levelWhichHasMax,
+	    leastCommonAncestor,
+	    printNodesAtLevel,
+	    printNodesLevelWise,
+	    findMaxInTree,
+	    searchElement,
+	    printTreeElementsInReverseOrderAtEachLevel,
+	    findNumberofLevels,
+	    findDiameter1,
+	    diameterUsingHeight,
+	    heightFromGivenNode,
+	    findLevelWithMaxSum,
+	    allRoutesFromRootToLeaf,
+	    findIfPathHasExactSum,
+	    findIfTreesAreStructurallySimilar,
+	    sumOfAllNodesInTree,
+	    getRootNode,
+	    findMirrorOfTree,
+	    findIfTreesAreMirrors,
+	    lowsetCommonAnsestorOfTwoNodesMethod1,
+	    lowestCommonAncestorInOneTraversal,
+	    constructTreeFromInorderAndPreorderTraversal,
+	    zigZagTreeTraversal,
+	    findAncestorsOfGivenNode,
+	    checkIfBinaryTree,
+	    formTreeFromPreOrderTraversal,
+	    findVerticalSum
+	   };
 }
 module.exports = {TreeADT}
