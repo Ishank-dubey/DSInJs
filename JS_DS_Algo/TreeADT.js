@@ -694,6 +694,31 @@ function TreeADT(){
 		}
 	}
 	
+	/*
+	 * Input is array of L and I valued nodes, L is a Leaf and I is an intermadiate with exactly 2 children and 
+	 * obtained after pre-order traversal
+	 * O(n)
+	 * */
+	function formTreeFromPreOrderTraversal(preorderArray){
+		return formTreeFromPreOrderTraversalInner(preorderArray, 0);
+		function formTreeFromPreOrderTraversalInner(preorderArrayInner, index) {
+			if(!preorderArrayInner[index]){
+				return null;
+			}
+			
+			var node = {};
+			node.data = preorderArrayInner[index];
+			if(node.data === 'L'){
+				node.left = null;
+				node.right = null;
+			}else{
+				node.left = formTreeFromPreOrderTraversalInner(preorderArrayInner, index+1);
+				node.right = formTreeFromPreOrderTraversalInner(preorderArrayInner, index+2);
+			}
+			return node;
+		}
+	}
+	
 	return {insert,
 		    deleteNode,
 		    search,
@@ -729,7 +754,8 @@ function TreeADT(){
 		    constructTreeFromInorderAndPreorderTraversal,
 		    zigZagTreeTraversal,
 		    findAncestorsOfGivenNode,
-		    checkIfBinaryTree
+		    checkIfBinaryTree,
+		    formTreeFromPreOrderTraversal
 		   };
 	
 }
