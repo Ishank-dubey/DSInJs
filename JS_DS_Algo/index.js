@@ -102,6 +102,27 @@ Tree1.addingNextSiblingViaRecursion(Tree1.getRootNode());
 console.log(Tree1.getRootNode().left.right.nextSibling.nextSibling.right.data, ' checking');
 //console.log(Tree.findVerticalSum(Tree.getRootNode()));
 //Tree.findMirrorOfTree();
+
+var genericTree = require('./GenericTreesADT').GenericTreeADT();
+//console.log(genericTree.findDepthFromParentParray([-1, 0 , 1, 6, 6, 0, 0, 2, 7, 8]), 'DEPTH') ;
+
+/**/
+//Form generic tree
+/**/
+var obj = {data: 1, firstChild: {data: 11, firstChild: null, nextSibling:{
+	data: 12, firstChild: null, nextSibling: null
+}}, nextSibling:{
+data: 2, firstChild: null, nextSibling:{
+	data: 3, firstChild: null, nextSibling: {
+		data: 40, firstChild: null, nextSinling: null
+	}
+}
+}
+};
+var genericTreeRoot = {};
+genericTreeRoot.nextSibling = obj;
+//genericTree.findSiblingsOfTheGenericTree(genericTreeRoot);
+genericTree.findChildNodesGivenANode(obj);
 //console.log(Tree.findIfTreesAreMirrors(Tree.getRootNode(), Tree1.getRootNode()));
 //console.log(Tree.findIfTreesAreStructurallySimilar(Tree.getRootNode(), Tree1.getRootNode()));
 
