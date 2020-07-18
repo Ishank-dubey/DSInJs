@@ -57,11 +57,53 @@ function GenericTreeADT(){
 		console.log("Total: ", count);
 	}
 	
+	/*
+	 * Given a preorder traversaled array, K- size of the children, any node will have 0 or K children 
+	 * For any node i the children will be from K*i+1 to K*(i+ 1)
+	 * */
+	function formAKArrayTreeFromPreOrderTraversal(traversedArray, index, K){
+		var newNode = {};
+		newNode.data = traversedArray[index];
+		for(var i=0; i<K; i++){
+			if( K*(index+1) <  traversedArray.length){//Because there will be K or 0 children so compare with the max index of the child 
+			  newNode[i] = formAKArrayTreeFromPreOrderTraversal(traversedArray, K*index+1+i, K);
+			}else{
+			  newNode[i] = null;
+			}
+		}
+		return newNode;
+	}
+	//O(n) time, n is the size of the array
+	
+	/*
+	 * To find the levels in the K-Ary tree
+	 *     (K^LEVEL-1)/(K-1)+K <= n <= (K^(LEVEL+1)-1)/(K-1)
+	 * */
+	function findTheLevelsInKArrayTree(traversedArray, K){
+		var level = 0;
+		if(traversedArray.length == 0 || traversedArray.length == 1){
+			return level;
+		}
+	    if(traversedArray.length == K+1){
+	    	level ++;
+	    	return level;
+	    }
+	    var found = false;
+	    level = 2;
+	    while(!found){
+	      if((Math.pow(K, level)-1)/(K-1)+K <= traversedArray.length && traversedArray.length <= (Math.pow(K, level+1)-1)/(K-1)){
+	    	  return level;
+	      }
+	      level = level+1;
+	    }
+	}
 	
 	return {
 		    findDepthFromParentParray,
 		    findSiblingsOfTheGenericTree,
-		    findChildNodesGivenANode
+		    findChildNodesGivenANode,
+		    formAKArrayTreeFromPreOrderTraversal,
+		    findTheLevelsInKArrayTree
 		};
 }
 module.exports = {GenericTreeADT};
