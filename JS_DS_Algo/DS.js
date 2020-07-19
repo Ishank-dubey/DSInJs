@@ -28,7 +28,7 @@ function fibo(N){
 		var result = fibo(N-1) + fibo(N-2);
 		return result;
 	}
-}
+}//time complexity goes exponential- O(n^2), lower numbers are called again and again
 
 function fiboWithoutRecurssion(N){
 	var last = 1, lastToLast = 01, summation = 01;
@@ -47,11 +47,7 @@ function fiboWithoutRecurssion(N){
 		last = summation;
 	}
 	return summation;
-}
-
-
-
-
+}/*O(n) time complexity*/
 
 
 function insertToLinkedList(arg){
