@@ -1,8 +1,8 @@
 /**
  * When LTag  == 0 -  left points to the predecessor
  * When LTag  == 1 -  left points to the left child
- * When RTag == 0 -  right points to the descendent
- * When RTag == 1 -  right points to the child
+ * When RTag  == 0 -  right points to the descendent
+ * When RTag  == 1 -  right points to the child
  * */
 
 

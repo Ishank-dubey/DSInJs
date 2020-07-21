@@ -1,6 +1,11 @@
 function TreeADT(){
 	var root = null;
 	
+	
+	
+	/*
+	 * Inorder insertion in  a BST with a while loop
+	 * */
 	function insert(data){
 		if(!root){
 			root = {data:data, left:null, right:null};
@@ -778,6 +783,104 @@ function TreeADT(){
 		addingNextSiblingViaRecursion(root.right);
 	}
 	
+	function insertBSTWithParentWithRecurssion(data){
+		root = insertBSTWithParentWithRecurssionInner(root);
+		return root;
+		function insertBSTWithParentWithRecurssionInner(node){
+		if(!node){
+			return {data: data, left: null, right: null, parent: null};
+		}
+		var temp;
+		if(data < node.data){
+			temp = insertBSTWithParentWithRecurssionInner(node.left);
+			node.left = temp;
+			temp.parent = node;
+		}else if(data > node.data){
+			temp = insertBSTWithParentWithRecurssionInner(node.right);
+			node.right = temp;
+			temp.parent = node;
+		}
+		return node;
+		}
+	}
+	
+	function insertInBSTWithParentInorder(data){
+		if(!root){
+			root = {parent: null, data:data, left:null, right: null};
+		}else{
+		var node = root;
+		var parent = node;
+		while(node){
+			parent = node;
+			if(data < node.data){
+				node = node.left;
+			}else if(data > node.data){
+				node = node.right;
+			}
+		}
+		if(data < parent.data){
+			parent.left = {data: data, left: null, right:null, parent: parent};
+		}else{
+			parent.right = {data: data, left: null, right:null, parent: parent};
+		}
+		}
+		return root;
+	}
+	
+	
+	function rightSubTreeInorder(node){
+		while(node.left){
+			node = node.left;
+		}
+		return node;
+	}
+	
+	
+	/*
+	 * If the right subtree is present than find the leftest of the right tree
+	 * If right is not present then start from the root and maintain the successor
+	 * This method finds successor w/o parent pointer
+	 * */
+	function inOrderSuccessor(node){
+		if(node.right){
+			return rightSubTreeInorder(node.right);
+		}
+		var nodeR = root;
+		var successor = null;
+		while(nodeR){
+			if(node.data > nodeR.data){
+				nodeR = nodeR.right;
+			}else if(node.data < nodeR.data){
+				successor = nodeR;
+				nodeR = nodeR.left;
+			}else if(node.data == nodeR.data){
+				break;
+			}
+		}
+		return successor; 
+	}
+	// Time complexity is O(h), h being the height of the tree
+	
+	
+	/*
+	 * InOrder successor using the parent pointer, if the right sub tree exists then go for the right sub tree else
+	 * when the node is the left child of its parent that parent is the successor of the node or keep on looking 
+	 * in the parent hierarchy
+	 * */
+	function InorderSuccessorUsingParent(node){
+		if(node.right){
+			return rightSubTreeInorder(node.right);
+		}
+		var parent = node.parent;
+		while(parent && parent.right==node){
+			node = parent;
+			parent = parent.parent;
+		}
+		return parent;
+	}
+	
+	
+	
 	return {insert,
 	    deleteNode,
 	    search,
@@ -817,7 +920,12 @@ function TreeADT(){
 	    formTreeFromPreOrderTraversal,
 	    findVerticalSum,
 	    addingNextSiblingsUsingQueue,
-	    addingNextSiblingViaRecursion
+	    addingNextSiblingViaRecursion,
+	    rightSubTreeInorder,
+	    inOrderSuccessor,
+	    insertBSTWithParentWithRecurssion,
+	    insertInBSTWithParentInorder,
+	    InorderSuccessorUsingParent
 	   };
 }
 module.exports = {TreeADT}
