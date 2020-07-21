@@ -827,7 +827,9 @@ function TreeADT(){
 		return root;
 	}
 	
-	
+	/*
+	 * Find the min in a given tree
+	 * */
 	function rightSubTreeInorder(node){
 		while(node.left){
 			node = node.left;
@@ -878,7 +880,7 @@ function TreeADT(){
 		}
 		return parent;
 	}
-	
+	// Time complexity is O(h), h being the height of the tree but the parent is needed
 	
 	
 	return {insert,
