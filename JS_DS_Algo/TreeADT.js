@@ -883,6 +883,58 @@ function TreeADT(){
 	// Time complexity is O(h), h being the height of the tree but the parent is needed
 	
 	
+	
+	/*
+	 * 1. Brute force method is to traverse in the pre-order way and then do a search of the given node, the following node is successor
+	 * this has O(n) time and space complexity
+	 * 2. Optimized method has these points and it will need parent
+	 *   a. If left child exits then thats the successor
+	 *   b. If there is no left child then look if the given node is the left child of its parent- the sibling of that parent will be the successor 
+	 *   if there is no sibling traverse the parents checking for their left parents and right child
+	 *   c. If a and b aren't true  start traversing the parent unless a parent is the left child of its parent and the parent has 
+	 *   some right child.
+	 * */
+	function preOrderSuccessor(node){
+      //When the left child exists thats it!
+		if(node.left){
+			return node.left;
+		}
+		if(node == node.parent.left){
+			if(node.parent.right){
+				return node.parent.right; 
+			}
+			parent = node.parent.parent;
+			node = node.parent;
+			while(1){
+				if((parent && parent.right == node) || (parent && !parent.right)){
+					node = parent;
+					parent = parent.parent;
+				}else if(parent.right){
+					return parent.right;
+				}
+				if(!parent){
+					return null;
+				}
+			}
+		}else if(node == node.parent.right){
+			var parent = node.parent.parent;
+			node = node.parent;
+			while(1){
+				if((parent && parent.right == node) || (parent && !parent.right)){
+					node = parent;
+					parent = parent.parent;
+				}else if(parent.right){
+					return parent.right;
+				}
+				if(!parent){
+					return null;
+				}
+			}
+		}
+	}
+	//O(h) time complexity as we traverse the height only
+	
+	
 	return {insert,
 	    deleteNode,
 	    search,
@@ -927,7 +979,8 @@ function TreeADT(){
 	    inOrderSuccessor,
 	    insertBSTWithParentWithRecurssion,
 	    insertInBSTWithParentInorder,
-	    InorderSuccessorUsingParent
+	    InorderSuccessorUsingParent,
+	    preOrderSuccessor
 	   };
 }
 module.exports = {TreeADT}
