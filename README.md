@@ -84,4 +84,6 @@ Insert nodes with parent pointer with recursion and without recurssion
 
 Method to find the pre-order successor
 
+Method to find the post-order successor
+
 Adding more with time..
