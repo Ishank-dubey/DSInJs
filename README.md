@@ -82,4 +82,6 @@ Inorder successor of a node via parent and without it
 
 Insert nodes with parent pointer with recursion and without recurssion
 
+Method to find the pre-order successor
+
 Adding more with time..
