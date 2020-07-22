@@ -78,4 +78,8 @@ Create a tree from preorder traversal of 'L' and 'I' nodes where 'L' is leaf and
 
 K-Ary tree and finding its height
 
+Inorder successor of a node via parent and without it
+
+Insert nodes with parent pointer with recursion and without recurssion
+
 Adding more with time..
