@@ -934,6 +934,27 @@ function TreeADT(){
 	}
 	//O(h) time complexity as we traverse the height only
 	
+	/* 1. do post-order travarsal and get in array and then search - O(n)
+	 * 2. Optimized consider three points
+	 *   a. Of the node is root return null
+	 *   b. If the node is the parent's right child or its the left child but parent's right child is null then parent 
+	 *   is the successor
+	 *   c. If the node is the left child of its parent then traverse to the left most of the parent's right
+	 * */
+	function postOrderSuccessor(node){
+      if(node == root){
+    	  return null;
+      }
+      if(node.parent.right == node || !parent.right){
+    	  return node.parent;
+      }
+      
+      var currentNode = node.parent.right;
+      while(currentNode.left){
+    	  currentNode = currentNode.left;
+      }
+      return currentNode;
+	}
 	
 	return {insert,
 	    deleteNode,
@@ -980,7 +1001,8 @@ function TreeADT(){
 	    insertBSTWithParentWithRecurssion,
 	    insertInBSTWithParentInorder,
 	    InorderSuccessorUsingParent,
-	    preOrderSuccessor
+	    preOrderSuccessor,
+	    postOrderSuccessor
 	   };
 }
 module.exports = {TreeADT}
