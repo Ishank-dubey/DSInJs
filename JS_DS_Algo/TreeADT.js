@@ -893,12 +893,18 @@ function TreeADT(){
 	 *   if there is no sibling traverse the parents checking for their left parents and right child
 	 *   c. If a and b aren't true  start traversing the parent unless a parent is the left child of its parent and the parent has 
 	 *   some right child.
+	 *   d. If the left child dosent exist but the right child exists then the right child is the successor of the node
 	 * */
 	function preOrderSuccessor(node){
       //When the left child exists thats it!
 		if(node.left){
 			return node.left;
 		}
+		
+		if(node.right){
+			return node.right;
+		}
+		
 		if(node == node.parent.left){
 			if(node.parent.right){
 				return node.parent.right; 
@@ -909,7 +915,7 @@ function TreeADT(){
 				if((parent && parent.right == node) || (parent && !parent.right)){
 					node = parent;
 					parent = parent.parent;
-				}else if(parent.right){
+				}else if(parent && parent.right){
 					return parent.right;
 				}
 				if(!parent){
@@ -923,7 +929,7 @@ function TreeADT(){
 				if((parent && parent.right == node) || (parent && !parent.right)){
 					node = parent;
 					parent = parent.parent;
-				}else if(parent.right){
+				}else if(parent && parent.right){
 					return parent.right;
 				}
 				if(!parent){
@@ -940,21 +946,70 @@ function TreeADT(){
 	 *   b. If the node is the parent's right child or its the left child but parent's right child is null then parent 
 	 *   is the successor
 	 *   c. If the node is the left child of its parent then traverse to the left most of the parent's right
+	 *   d. ALso make sire when going for the right child of the parent we do the post-order traversal of the 
+	 *   right child
 	 * */
 	function postOrderSuccessor(node){
       if(node == root){
     	  return null;
       }
-      if(node.parent.right == node || !parent.right){
+      if(node.parent.right == node || !node.parent.right){
     	  return node.parent;
       }
       
       var currentNode = node.parent.right;
-      while(currentNode.left){
-    	  currentNode = currentNode.left;
+      
+      //Go for post order traversal
+      var postArray = [];
+      postOrderInner(currentNode);
+      function postOrderInner(node){
+    	  if(!node){
+    		  return null;
+    	  }
+    	  if(node.left)
+    	  postOrderInner(node.left);
+    	  if(node.right)
+    	  postOrderInner(node.right);
+    	  
+    	  postArray.push(node);
       }
+      currentNode = postArray[0];
       return currentNode;
 	}
+	//O(h) time complexity as we traverse the height only
+	
+	
+	
+	/* Expression Tree
+	 * The intermediate node is an operand, the leaf node are the operators
+	 * The post order traversal of the expression tree gives the post order expression
+	 * */
+	function expressionTree(array){
+		var stack = require('./DS').stackFunction();
+		for(let i=0; i< array.length;i++){
+			let character = array[i];
+			if(character == "+" || 
+			   character == "-" ||
+			   character == "*" ||
+			   character == "/"){
+				
+				var newNode = {data: character};
+				newNode.right = stack.pop();
+				newNode.left = stack.pop();
+				stack.push(newNode);
+			}else {
+				stack.push({data: character, left: null, right: null});
+			}
+		}
+		return stack.pop();
+	}
+	
+	/*
+	 * The number of nodes in a given level k is 2^(k-1) => n = total nodes = 2^0 + 2^1 + 2^2 +....2^(k-1) = 2^k-1
+	 * => k height = log(n+1) => time is O(log(n))
+	 * */
+	
+	
 	
 	return {insert,
 	    deleteNode,
@@ -1002,7 +1057,8 @@ function TreeADT(){
 	    insertInBSTWithParentInorder,
 	    InorderSuccessorUsingParent,
 	    preOrderSuccessor,
-	    postOrderSuccessor
+	    postOrderSuccessor,
+	    expressionTree
 	   };
 }
 module.exports = {TreeADT}

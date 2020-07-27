@@ -87,9 +87,32 @@ Tree2.insertBSTWithParentWithRecurssion(5);
 Tree2.insertBSTWithParentWithRecurssion(4);
 Tree2.insertBSTWithParentWithRecurssion(3);
 Tree2.insertBSTWithParentWithRecurssion(13);
-Tree2.traverseRecursivePreOrder();
-console.log(Tree2.preOrderSuccessor(ROOT1.left.left.right.left.left), "<---SUCCESSOR");
-console.log('---PRE---');
+Tree2.insertBSTWithParentWithRecurssion(15);
+Tree2.insertBSTWithParentWithRecurssion(14);
+Tree2.insertBSTWithParentWithRecurssion(14.5);
+
+console.log('EXPRESSON-->');
+var theroot = Tree2.expressionTree(['A','B','C','*','+', 'D', '/']);
+
+postOrder(theroot);
+console.log('expression start');
+function postOrder(node){
+	if(!node){
+		return  null;
+	}
+	if(node.left){
+		postOrder(node.left);
+	}
+	if(node.right){
+		postOrder(node.right);
+	}
+	
+	console.log(node.data);
+}
+console.log('expression end');
+//Tree2.traverseRecursivePreOrder();
+console.log(Tree2.postOrderSuccessor(ROOT1.left), "<---SUCCESSOR POST");
+
 //Tree2.insertBSTWithParentWithRecurssion(.5);
 //Tree2.insertBSTWithParentWithRecurssion(4);
 var ROOT = Tree2.insertBSTWithParentWithRecurssion(13);
