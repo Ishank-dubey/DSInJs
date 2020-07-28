@@ -1005,10 +1005,121 @@ function TreeADT(){
 	}
 	
 	/*
-	 * The number of nodes in a given level k is 2^(k-1) => n = total nodes = 2^0 + 2^1 + 2^2 +....2^(k-1) = 2^k-1
+	 * 1. The number of nodes in a given level k is 2^(k-1) => n = total nodes = 2^0 + 2^1 + 2^2 +....2^(k-1) = 2^k-1
 	 * => k height = log(n+1) => time is O(log(n))
+	 * 
+	 * 2. In a BST => the in-order traversal produces a sorted list
+	 * 3. BST considers either left or the right not both
+	 * 4. Happiness is the key to Success not vice versa
+	 * 5. Aim is not success, aim is trying
 	 * */
 	
+	
+	/*
+	 * Find the given element in a BST using recurssion
+	 * */
+	function findElementInBSTRecurssion(data){
+		return findElementInBSTRecurssionInner(root);
+		function findElementInBSTRecurssionInner(node){
+			if(!node){
+				return null;
+			}
+			if(data > node.data){
+				return findElementInBSTRecurssionInner(node.right);
+			}else if(data < node.data){
+				return  findElementInBSTRecurssionInner(node.left);
+			}else {
+				return node;
+			}
+		}
+	}
+	//O(n) in time and space
+	
+	
+	/*
+	 * Find the given element in a BST using loop
+	 * */
+	function findElementInBSTIterative(data){
+		var node = root;
+		while(node){
+			if(node.data < data){
+				node = node.right;
+			}else if(data < node.data){
+				node = node.left;
+			}else{
+				break;
+			}
+		}
+		return node;
+	}//O(n) in time, O(1) is space
+	
+	
+	/*
+	 * To find the minimum element in a BST via recurssion
+	 * */
+	function findMinInBSTRecurssion(){
+		return findMinInBSTRecurssionInner(root);
+		function findMinInBSTRecurssionInner(node){
+			if(!node){
+				return node;
+			}
+			if(!node.left){
+				return node;
+			}
+			return findMinInBSTRecurssionInner(node.left);
+		}
+	}
+	//O(n) in Time and Space
+	
+	
+	
+	/*
+	 * To find the minimum element in a BST via loop
+	 * */
+	function findMinInBSTIteration(){
+        if(!root){
+        	return null;
+        }
+        var node = root;
+        while(node.left){
+        	node = node.left;
+        }
+        return node;
+	}
+	//O(n) in Time and O(1) in Space
+	
+	/*
+	 * Find the max of the BST recursively
+	 * */
+	function maxRecursivelyInBST(){
+		return maxRecursivelyInBSTInner(root);
+		function maxRecursivelyInBSTInner(node){ 
+		if(!node){
+			return null;
+		}
+		if(!node.right){
+			return node;
+		}
+		return maxRecursivelyInBSTInner(node.right);
+		}
+	}//O(n) in time and space
+	
+	
+	
+	
+	/*
+	 * Find the max value in tree using loop
+	 * */
+	function maxValueInBSTIteration(){
+		var node = root;
+		if(!node){
+			return null;
+		}
+		while(node.right){
+			node = node.right;
+		}
+		return node;
+	}//O(n) on time and O(1) in space
 	
 	
 	return {insert,
@@ -1058,7 +1169,13 @@ function TreeADT(){
 	    InorderSuccessorUsingParent,
 	    preOrderSuccessor,
 	    postOrderSuccessor,
-	    expressionTree
+	    expressionTree,
+	    findElementInBSTRecurssion,
+	    findElementInBSTIterative,
+	    findMinInBSTRecurssion,
+	    findMinInBSTIteration,
+	    maxRecursivelyInBST,
+	    maxValueInBSTIteration
 	   };
 }
 module.exports = {TreeADT}

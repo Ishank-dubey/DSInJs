@@ -94,6 +94,13 @@ Tree2.insertBSTWithParentWithRecurssion(14.5);
 console.log('EXPRESSON-->');
 var theroot = Tree2.expressionTree(['A','B','C','*','+', 'D', '/']);
 
+console.log(Tree2.findElementInBSTRecurssion(14), "-----\\\\-----");
+console.log(Tree2.findElementInBSTIterative(140), "==========");
+
+console.log(Tree2.findMinInBSTRecurssion(140), "====MIN======");
+console.log(Tree2.maxRecursivelyInBST(140), "====MAX======");
+console.log(Tree2.maxValueInBSTIteration(140), "====MAX======");
+
 postOrder(theroot);
 console.log('expression start');
 function postOrder(node){
