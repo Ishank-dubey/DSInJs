@@ -80,28 +80,37 @@ Tree.insert(4);
 Tree.insert(13);
 
  //Tree2.insertBSTWithParentWithRecurssion(7);
- var ROOT1 = Tree2.insertBSTWithParentWithRecurssion(12);
+ //var ROOT1 = Tree2.insertBSTWithParentWithRecurssion(12);
 Tree2.insertBSTWithParentWithRecurssion(10);
 Tree2.insertBSTWithParentWithRecurssion(1);
 Tree2.insertBSTWithParentWithRecurssion(5);
 Tree2.insertBSTWithParentWithRecurssion(4);
 Tree2.insertBSTWithParentWithRecurssion(3);
 Tree2.insertBSTWithParentWithRecurssion(13);
+Tree2.insertBSTWithParentWithRecurssion(11);
 Tree2.insertBSTWithParentWithRecurssion(15);
 Tree2.insertBSTWithParentWithRecurssion(14);
 Tree2.insertBSTWithParentWithRecurssion(14.5);
 
-console.log('EXPRESSON-->');
+console.log('RAnGE');
+Tree2.findNodesInRange(1, 15);
+console.log('RAnGE');
+//console.log(Tree2.findLCAInBST(11, 15), "LCA");
+console.log(Tree2.isBST(), "iSBST");
+console.log(Tree2.BSTFromSortedArray([1,2,3]),"New");
+console.log('DELETE-->');
 var theroot = Tree2.expressionTree(['A','B','C','*','+', 'D', '/']);
 
-console.log(Tree2.findElementInBSTRecurssion(14), "-----\\\\-----");
-console.log(Tree2.findElementInBSTIterative(140), "==========");
+//console.log(Tree2.findElementInBSTRecurssion(14), "-----\\\\-----");
+//console.log(Tree2.findElementInBSTIterative(140), "==========");
 
-console.log(Tree2.findMinInBSTRecurssion(140), "====MIN======");
-console.log(Tree2.maxRecursivelyInBST(140), "====MAX======");
-console.log(Tree2.maxValueInBSTIteration(140), "====MAX======");
-
-postOrder(theroot);
+//console.log(Tree2.findMinInBSTRecurssion(140), "====MIN======");
+//console.log(Tree2.maxRecursivelyInBST(140), "====MAX======");
+//console.log(Tree2.maxValueInBSTIteration(140), "====MAX======");
+Tree2.inOrderTraverseWithRecursion();
+Tree2.deleteNodeFromSubTree(1);
+Tree2.inOrderTraverseWithRecursion();
+//postOrder(theroot);
 console.log('expression start');
 function postOrder(node){
 	if(!node){
@@ -118,7 +127,7 @@ function postOrder(node){
 }
 console.log('expression end');
 //Tree2.traverseRecursivePreOrder();
-console.log(Tree2.postOrderSuccessor(ROOT1.left), "<---SUCCESSOR POST");
+///console.log(Tree2.postOrderSuccessor(ROOT1.left), "<---SUCCESSOR POST");
 
 //Tree2.insertBSTWithParentWithRecurssion(.5);
 //Tree2.insertBSTWithParentWithRecurssion(4);

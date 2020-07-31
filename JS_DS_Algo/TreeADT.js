@@ -1121,6 +1121,159 @@ function TreeADT(){
 		return node;
 	}//O(n) on time and O(1) in space
 	
+    
+	/*
+	 * Delete a node in a BST
+	 * a. When there in no child i.e. the node is a leaf return null to the parent
+	 * b. When there is a single child make the node as that child and return it
+	 * c. When the node has two children then we need to traverse the left child for the max value
+	 * in the left sub tree and have the max value as the value of the node and then delete the max value from the left sub tree
+	 * */
+	
+	function deleteNodeFromSubTree(value){
+		deleteInner(root, value);
+		function deleteInner(node, val){
+			
+			if(!node)return null;
+			
+			if(node.data > val){
+				node.left = deleteInner(node.left, val);
+			}else if(node.data < val){
+				node.right = deleteInner(node.right, val);
+			}else{
+				if(node.left && node.right){
+					var localData = maxValueInBSTIteration(node);
+					node.data = localData;
+					node.left = deleteInner(node.left, localData);
+				}else{
+					if(node.left){
+						node = node.left;
+					}
+					if(node.right){
+						node = node.right;
+					}
+					if(!node.right && !node.left)
+						node = null;
+				}
+			}
+			return node;
+		}
+	}
+	
+	
+	/*
+	 * Finding the LCA of a and b in a BST
+	 * Given that a < b, a node thats a< node.data<b or node.data equals a or b then that node is the ancestor assuming 
+	 * that the both of them are present in the tree
+	 * */
+	
+	/* assuming a < b */
+	function findLCAInBST(a, b){
+		var node = root;
+		while(node){
+			if((a < node.data && node.data < b) || node.data == b || node.data ==a){
+				return node;
+			}else if(node.data < a){
+				node = node.right;
+			}else{
+				node = node.left;
+			}
+		}
+		return null;
+	}//O(n)
+	
+	
+	/*
+	 * To check if a given tree is a BST
+	 * */
+	
+	function isBST(){
+		return isBSTInner(root, -Infinity, Infinity);
+		function isBSTInner(node, min, max){
+			if(!node){
+				return true;
+			}
+			return (node.data > min && node.data < max)
+			       && isBSTInner(node.left, min, node.data)
+			       && isBSTInner(node.right, node.data, max);
+		}
+	}//O(n)
+	
+	
+	/*
+	 * Given the sorted array, find the BST
+	 * the root is given by Math.floor((left+right)/2)
+	 * go with divide and conquer methodology
+	 * */
+	function BSTFromSortedArray(array){
+		return BSTFromSortedArrayInner(0, array.length-1);
+		function BSTFromSortedArrayInner(left, right){
+			if(left > right){
+				return null;
+			}
+			var node = {left: null, right: null};
+			if(left == right){
+				node.data = array[left];
+			}else{
+				var mid = Math.floor((left+right)/2);
+				node.data = array[mid];
+				node.left = BSTFromSortedArrayInner(left, mid-1);
+				node.right = BSTFromSortedArrayInner(mid+1, right);
+			}
+			return node;
+		}
+	}
+	
+	
+	/*
+	 * Find all the nodes in a given range [K1, K2] where K1 < K2
+	 * a. via recurssion
+	 * b. via queue 
+	 * */
+	
+	//Using recurssion - go for in order traversal
+	function findNodesInRange(k1, k2){
+		findNodesInRangeInner(root);
+		function findNodesInRangeInner(node){
+			if(!node){
+				return null;
+			}
+			if(node.data >= k1){
+				findNodesInRangeInner(node.left);
+			}
+			if(node.data >= k1 && node.data <= k2){
+				console.log(node.data);
+			}
+			if(node.data <= k2){
+				findNodesInRangeInner(node.right);
+			}
+		}
+	}//O(n)
+	
+	//Using a queue - find all in range
+	function findInRangeIterative(k1, k2){
+		if(!root){
+			return null;
+		}
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			if(node.left && node.data >= k1){
+				queue.enQueue(node.left);
+			}
+			if(node.data >= k1 && node.data <= k2){
+				console.log(node.data);
+			}
+			if(node.right && node.data <= k2){
+				queue.enQueue(node.right);
+			}
+			
+		}
+		
+	}//O(n)
+	
+	
 	
 	return {insert,
 	    deleteNode,
@@ -1175,7 +1328,13 @@ function TreeADT(){
 	    findMinInBSTRecurssion,
 	    findMinInBSTIteration,
 	    maxRecursivelyInBST,
-	    maxValueInBSTIteration
+	    maxValueInBSTIteration,
+	    deleteNodeFromSubTree,
+	    findLCAInBST,
+	    isBST,
+	    BSTFromSortedArray,
+	    findNodesInRange,
+	    findInRangeIterative
 	   };
 }
 module.exports = {TreeADT}
