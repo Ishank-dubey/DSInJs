@@ -96,4 +96,6 @@ Print all nodes in a given Range
 
 Check if it's a BST
 
+Insertion in AVL tree
+
 Adding more with time..
