@@ -1273,6 +1273,133 @@ function TreeADT(){
 		
 	}//O(n)
 	
+	/*
+	 * AVL - nodes in a balanced tree where difference in Height is max 2
+	 * */
+	
+	/*
+	 * Case 1. insertion in left subtree of the left child of X
+	 *            6
+	 *           /  \ 
+	 *          5    9
+	 *         /     /
+	 *        3      8
+	 *              /
+	 *             7 
+	 * Consider when 7 is inserted => node 9 has 0 right children and 2 left children making it unbalanced
+	 * */
+	function leftRotation(X){
+		var W = X.left;
+		X.left = W.right;
+		W.right = X;
+		X.height = Math.max(X.left.height, X.right.height) + 1;
+		W.height = Math.max(W.left.height, W.right.height) + 1;
+		return W;
+	}
+	
+	/*
+	 * Case 2 insertion in the right child's right subtree
+	 *              8
+	 *             /  \
+	 *            6    15
+	 *           /       \
+	 *          3         19
+	 *                     \
+	 *                      29
+	 *  X = 15 after 29 is inserted
+	 * */ 
+	function rightRotation(X){
+		var W = X.right;
+		X.right = W.left;
+		W.left = X;
+		W.height = Math.max(W.right.height, W.left.height);
+		X.height = Math.max(X.right.height, X.left.height);
+		return W;
+	}
+	
+	/*
+	 * Case 3, insertion happens in the right subtree of the left child
+	 *                    8                              8                               6
+	 *                   / \                            / \                             / \
+	 *                  5   9  => right rotate   	   6   9	=> rotate left         5   8          
+	 *                 / \                            / \							  /	  / \
+	 *                3   6                          5   7						     3   7   9
+	 *                     \                        /
+	 *                      7                      3
+     *  X=8 becomes un-balanced after insertion of 7
+	 * */
+	
+	function doubleRotateRightFirst(Z){
+      Z.left = rightRotation(Z.left);
+      return leftRotation(Z);
+	}
+	
+	/*
+	 * Case 4, insertion happens in the left sub tree of the right child
+	 *        4                           4                               6
+	 *       / \                         / \                             / \
+	 *      2   7                       2   6                           4   7
+	 *         / \     =>left rotate       / \       =>right rotate    / \   \
+	 *        6   8                       5   7                       2   5   8
+	 *       /                                 \
+	 *      5                                   8
+	 *      
+	 *  X = 4 becomes un-balanced after the insertion of 5    
+	 * */
+	function doubleRotationLeftFirst(Z){
+		Z.right = leftRotation(Z.right);
+		return rightRotation(Z);
+	}
+	
+	/*
+	 * Height of a node in AVL
+	 * */
+	function nodeHeightAVL(node){
+		if(!node){
+			return 0;
+		}
+		return node.height;
+	}
+	
+	/*
+	 * Insert in AVL Tree 
+	 * */
+	
+	function insertInAVL(data){
+		root =  insertInner(root);
+		function insertInner(node){
+			if(!node){
+				return {
+					left: null,
+					right: null,
+					data: data,
+					height: 0
+				}
+			}
+			if(data < node.data){
+				node.left = insertInner(node.left);
+				if(Math.abs(nodeHeightAVL(node.left)-nodeHeightAVL(node.right))== 2){
+					if(data < node.left.data){ // Left left condition Case 1
+						leftRotation(node);
+					}else{
+						doubleRotateRightFirst(node); //Case 4
+					}
+				}
+			}else{
+				node.right = insertInner(node.right);
+				if(Math.abs(nodeHeightAVL(node.left)-nodeHeightAVL(node.right))== 2){
+					if(data > node.right.data){ // right right condition Case 2
+						rightRotation(node);
+					}else{
+						doubleRotationLeftFirst(node); //Case 3
+					}
+				}
+			}
+			node.height = Math.max(nodeHeightAVL(node.left), nodeHeightAVL(node.right)) + 1;
+			console.log(node.height, 'HEIGHT', node.data);
+			return node;
+		}
+	}
 	
 	
 	return {insert,
@@ -1334,7 +1461,8 @@ function TreeADT(){
 	    isBST,
 	    BSTFromSortedArray,
 	    findNodesInRange,
-	    findInRangeIterative
+	    findInRangeIterative,
+	    insertInAVL
 	   };
 }
 module.exports = {TreeADT}
