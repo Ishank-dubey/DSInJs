@@ -88,4 +88,12 @@ Method to find the post-order successor
 
 Find max and min values in a BST via Recurssion and Iteration
 
+Delete a node
+
+LCA in BST
+
+Print all nodes in a given Range
+
+Check if it's a BST
+
 Adding more with time..
