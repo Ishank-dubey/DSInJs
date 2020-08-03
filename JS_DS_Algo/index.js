@@ -101,13 +101,15 @@ console.log(Tree2.BSTFromSortedArray([1,2,3]),"New");
 var Tree3 = require('./TreeADT').TreeADT();
 
 console.log('--INserting--in AVL');
-Tree3.insertInAVL(6);
+
 Tree3.insertInAVL(4);
 Tree3.insertInAVL(7);
-Tree3.insertInAVL(8);
 Tree3.insertInAVL(2);
+Tree3.insertInAVL(6);
+Tree3.insertInAVL(8);
 Tree3.insertInAVL(5);
 Tree3.traverseRecursivePreOrder();
+console.log(Tree3.getRootNode(), 'the height');
 console.log('--INserting--');
 console.log('DELETE-->');
 var theroot = Tree2.expressionTree(['A','B','C','*','+', 'D', '/']);

@@ -1142,7 +1142,7 @@ function TreeADT(){
 				node.right = deleteInner(node.right, val);
 			}else{
 				if(node.left && node.right){
-					var localData = maxValueInBSTIteration(node);
+					var localData = maxValueInBSTIteration(node.left);
 					node.data = localData;
 					node.left = deleteInner(node.left, localData);
 				}else{
@@ -1292,8 +1292,8 @@ function TreeADT(){
 		var W = X.left;
 		X.left = W.right;
 		W.right = X;
-		X.height = Math.max(X.left.height, X.right.height) + 1;
-		W.height = Math.max(W.left.height, W.right.height) + 1;
+		X.height = Math.max(nodeHeightAVL(X.left), nodeHeightAVL(X.right)) + 1;
+		W.height = Math.max(nodeHeightAVL(W.left), nodeHeightAVL(W.right)) + 1;
 		return W;
 	}
 	
@@ -1312,8 +1312,8 @@ function TreeADT(){
 		var W = X.right;
 		X.right = W.left;
 		W.left = X;
-		W.height = Math.max(W.right.height, W.left.height);
-		X.height = Math.max(X.right.height, X.left.height);
+		W.height = Math.max(nodeHeightAVL(W.right), nodeHeightAVL(W.left)) + 1;
+		X.height = Math.max(nodeHeightAVL(X.right), nodeHeightAVL(X.left)) + 1;
 		return W;
 	}
 	
@@ -1373,33 +1373,32 @@ function TreeADT(){
 					left: null,
 					right: null,
 					data: data,
-					height: 0
+					height: 1
 				}
 			}
 			if(data < node.data){
 				node.left = insertInner(node.left);
 				if(Math.abs(nodeHeightAVL(node.left)-nodeHeightAVL(node.right))== 2){
 					if(data < node.left.data){ // Left left condition Case 1
-						leftRotation(node);
+						node =  leftRotation(node);
 					}else{
-						doubleRotateRightFirst(node); //Case 4
+						node =  doubleRotateRightFirst(node); //Case 3
 					}
 				}
 			}else{
 				node.right = insertInner(node.right);
 				if(Math.abs(nodeHeightAVL(node.left)-nodeHeightAVL(node.right))== 2){
 					if(data > node.right.data){ // right right condition Case 2
-						rightRotation(node);
+						node =  rightRotation(node);
 					}else{
-						doubleRotationLeftFirst(node); //Case 3
+						node =  doubleRotationLeftFirst(node); //Case 4
 					}
 				}
 			}
 			node.height = Math.max(nodeHeightAVL(node.left), nodeHeightAVL(node.right)) + 1;
-			console.log(node.height, 'HEIGHT', node.data);
 			return node;
 		}
-	}
+	}//O(log(n)) = O(h) time complexity
 	
 	
 	return {insert,
