@@ -98,4 +98,10 @@ Check if it's a BST
 
 Insertion in AVL tree
 
+Delete the leaves
+
+Delete the half leaves
+
+Find the node with the least difference from the given key
+
 Adding more with time..
