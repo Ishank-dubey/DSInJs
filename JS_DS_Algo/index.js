@@ -121,6 +121,9 @@ Tree5.insertInAVL(5);
 
 console.log("TREE5");
 Tree5.traverseRecursivePreOrder();
+Tree5.linkNodesAtaLevelUsingRecurssion();
+console.log("0000000");
+console.log(Tree5.getRootNode().left, 'Tree5.getRoot().left');
 console.log("TREE5 DELETE EAF");
 console.log(Tree5.findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion(10), "difference KEY");
 //Tree5.deleteLeaves();

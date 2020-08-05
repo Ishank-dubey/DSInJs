@@ -34,7 +34,7 @@ function TreeADT(){
 				}
 			}
 		}
-	}
+	}//O(log n) average case and O(n) worst case i.e. elements are only inserted in left or right i.e. skew
 	
 	function deleteNode(){
 		return root.length;
@@ -1572,10 +1572,104 @@ function TreeADT(){
 			if(!node.right){
 				return node.left;
 			}
+			return node;
 		}
 	}//O(n)
 	
+	/*
+	 * Prune the ones not in Range, recurssion
+	 * */
+	function pruneTheOnesNotInRange(a, b){
+		root = pruneTheOnesNotInRangeInner(root);
+		function pruneTheOnesNotInRangeInner(node){
+			if(!node){
+				return null;
+			}
+			node.left = pruneTheOnesNotInRangeInner(node.left);
+			node.right = pruneTheOnesNotInRangeInner(node.right);
+			if(node.data >= a && node.data <= b){
+				return node;
+			}
+			if(node.data < a){
+				return node.right;
+			}
+			if(node.data > b){
+				return node.left;
+			}
+		}
+	}//O(n) worst case, O(log n) average case
 	
+	/*
+	 * Adding reference to the right sibling in a given BST
+	 * Using Queue
+	 * Linking the nodes of the same level
+	 * */
+	function linkingNodesAtALevelUsingQueue(){
+		var queue = require('./QueueADT').QueueADT();
+		var currentLevel = 1;
+		var nextLevelCount = 0;
+		var previous = null;
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			if(node.left){
+				queue.enQueue(node.left);
+				nextLevelCount++;
+			}
+			if(node.right){
+				queue.enQueue(node.right);
+				nextLevelCount++;
+			}
+			if(previous){
+				previous.next = node;
+			}
+			previous = node;
+			currentLevel--;
+			if(!currentLevel){
+				currentLevel = nextLevelCount;
+				nextLevelCount++;
+				previous = null;
+			}
+		}
+	}//O(n) in space and time
+	
+	/*
+	 * linking nodes of same level using recurssion
+	 * */
+	
+	function linkNodesAtaLevelUsingRecurssion(){
+		linkNodesAtaLevelUsingRecurssionInner(root);
+		
+		function linkNodesAtaLevelUsingRecurssionInner(node){
+			if(!node){
+				return null;
+			}
+			var previousNode = null;
+			var nextHead = null;
+			while(node){
+				if(node.left){
+					if(!previousNode){
+						previousNode = node.left;
+						nextHead = previousNode;
+					}else{
+						previousNode.next = node.left;
+						previousNode = node.left;
+					}
+				}
+				if(node.right){
+					if(!previousNode){
+						previousNode = node.right;
+						nextHead = previousNode;
+					}else{
+						previousNode.next = node.right;
+						previousNode = node.right;
+					}
+				}
+				node = node.next;
+			}
+			linkNodesAtaLevelUsingRecurssionInner(nextHead);
+		}
+	}//Space complexity is O(log n) and time is O(n)
 	
 	return {insert,
 	    deleteNode,
@@ -1643,7 +1737,11 @@ function TreeADT(){
 	    isAVL,
 	    deleteLeaves,
 	    findTheNodeWithMinDiffFromAGivenKey,
-	    findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion
+	    findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion,
+	    deleteTheHalfNodes,
+	    pruneTheOnesNotInRange,
+	    linkNodesAtaLevelUsingRecurssion,
+	    linkingNodesAtALevelUsingQueue
 	   };
 }
 module.exports = {TreeADT}
