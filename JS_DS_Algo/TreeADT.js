@@ -1250,6 +1250,56 @@ function TreeADT(){
 		}
 	}//O(n)
 	
+	/*
+	 * To find the node with minimum difference using a Queue
+	 * */
+	function findTheNodeWithMinDiffFromAGivenKey(key){
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		var difference = Infinity, element;
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			if(node.left){
+				queue.enQueue(node.left);
+			}
+			if(node.right){
+				queue.enQueue(node.right);
+			}
+			if(difference > Math.abs(key - node.data)){
+				difference = Math.abs(key - node.data);
+				element = node;
+			}
+		}
+		return {difference, element}
+	};// O(n) - fixed complexity
+	
+	
+	/*
+	 * Find the min difference node from a given key
+	 * Use recurssion so that we have a better avarage complexity
+	 * */
+	function findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion(key){
+		return findTheNodeWithMinDiffFromAGivenKeyUsingRecurssionInner(root);
+		function findTheNodeWithMinDiffFromAGivenKeyUsingRecurssionInner(node){
+		  if(!node)
+			  return null;
+		  
+		  if(node.data == key)
+			  return node;
+		  
+		  if(node.data >  key){
+			  if(!node.left) return node;
+		  var temp = findTheNodeWithMinDiffFromAGivenKeyUsingRecurssionInner(node.left);
+		  return Math.abs(temp.data - key) < Math.abs(node.data - key) ? temp: node;
+		  }else {
+			  if(!node.right) return node;
+			  var temp = findTheNodeWithMinDiffFromAGivenKeyUsingRecurssionInner(node.right);
+			  return Math.abs(temp.data - key) < Math.abs(node.data - key) ? temp: node;
+		  }
+			  
+		}
+	}//O(n) in worst case and O(log n) in a average case
+	
 	//Using a queue - find all in range
 	function findInRangeIterative(k1, k2){
 		if(!root){
@@ -1400,6 +1450,132 @@ function TreeADT(){
 		}
 	}//O(log(n)) = O(h) time complexity
 	
+	/*
+	 * Create a AVL with a given height = Fill Binary Tree
+	 * Number of nodes in a full binary tree with height h = N(h) = 2^(h+1)-1
+	 * We can start forming a BST for the given nodes in a binary Merge short way
+	 * */
+	
+	function formFullAVL(h){
+		root = formFullAVLInner(1, Math.pow(2, h+1)-1);
+		function formFullAVLInner(left, right){
+			if(left > right){
+				return null;
+			}
+			if(left == right){
+				return {left: null, right: null, height: 0, data: left}
+			}
+			var node = {};
+			var mid = Math.floor((left+right)/2);
+			node.left = formFullAVLInner(left, mid-1);
+			node.right = formFullAVLInner(mid+1, right);
+			node.data = mid;
+			node.height = Math.max(nodeHeightAVL(node.left), nodeHeightAVL(node.right))+1;
+			return node;
+		}
+	}// Time complexity = O(n), Space = O(log(n))
+	
+	/*
+	 * Forming a Minimal AVL for given height
+	 * N(0) = 1, min(N(1)) = 2 now N(2) = 1+ min(N(1)) + min(N(0)) = 4      X
+	 *                                                                    / \
+	 *                                                                   Y   A
+	 *                                                                  /
+	 *                                                                 Z
+	 *  N(h) = 1+ min(N(h-1)) + min(N(h-2));
+	 *  after we have the number of the nodes we can use formFullAVL(1, N(h)) to create the AVL
+	 *  Below is a method to find the N(h)                                                            
+	 * */
+	function findNumberOfNodesForMinAVL(h){
+		if(h ==0 ){
+			return 1;
+		}
+		if(h ==1 ){
+			return 2;
+		}
+		
+		var secondLast = 1;
+		var last = 2;
+		var current = 0;
+		for(var i=2; i<=h; i++){
+			current = 1 + last + secondLast;
+			secondLast = last;
+			last = current;
+		}
+		return current;
+	}
+    
+	/*
+	 * Determine if the tree is a AVL
+	 * */
+	function isAVL(node){
+		return isAVLInner(root);
+		function isAVLInner(node){
+			if(!node){
+				return 0;
+			}
+			var leftHeight, rightHeight;
+			leftHeight = isAVLInner(node.left);
+			if(!leftHeight){
+				return -1;
+			}
+			rightHeight = isAVLInner(node.right);
+			if(!rightHeight){
+				return -1;
+			}
+			if(Math.abs(leftHeight - rightHeight) > 1){
+				return -1;
+			}
+			return Math.max(leftHeight + rightHeight) + 1;
+			
+		}
+	}
+	
+	
+	/*
+	 * Delete the leaves in a BST, its a bottom-up approach
+	 * */
+	
+	function deleteLeaves(){
+		root = deleteLeavesInner(root);
+		function deleteLeavesInner(node){
+			if(!node){
+				return null;
+			}
+			if(!node.left && !node.right){
+				return null;
+			}
+			node.left = deleteLeavesInner(node.left);
+			node.right = deleteLeavesInner(node.right);
+			return node;
+		}
+	}//O(n)
+	
+	/*
+	 * Delete the half nodes only i.e. not their child if present
+	 * 
+	 * */
+	function deleteTheHalfNodes(){
+		root = deleteTheHalfNodesInner(root);
+		function deleteTheHalfNodesInner(node){
+			if(!node){
+				return null;
+			}
+			node.left = deleteTheHalfNodesInner(node.left);
+			node.right = deleteTheHalfNodesInner(node.right);
+			if(!node.left && !node.right){
+				return node;
+			}
+			if(!node.left){
+				return node.right;
+			}
+			if(!node.right){
+				return node.left;
+			}
+		}
+	}//O(n)
+	
+	
 	
 	return {insert,
 	    deleteNode,
@@ -1461,7 +1637,13 @@ function TreeADT(){
 	    BSTFromSortedArray,
 	    findNodesInRange,
 	    findInRangeIterative,
-	    insertInAVL
+	    insertInAVL,
+	    formFullAVL,
+	    findNumberOfNodesForMinAVL,
+	    isAVL,
+	    deleteLeaves,
+	    findTheNodeWithMinDiffFromAGivenKey,
+	    findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion
 	   };
 }
 module.exports = {TreeADT}

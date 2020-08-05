@@ -109,9 +109,32 @@ Tree3.insertInAVL(6);
 Tree3.insertInAVL(8);
 Tree3.insertInAVL(5);
 Tree3.traverseRecursivePreOrder();
+var Tree4 = require('./TreeADT').TreeADT();
+
+var Tree5 = require('./TreeADT').TreeADT();
+Tree5.insertInAVL(4);
+Tree5.insertInAVL(7);
+Tree5.insertInAVL(2);
+Tree5.insertInAVL(6);
+Tree5.insertInAVL(8);
+Tree5.insertInAVL(5);
+
+console.log("TREE5");
+Tree5.traverseRecursivePreOrder();
+console.log("TREE5 DELETE EAF");
+console.log(Tree5.findTheNodeWithMinDiffFromAGivenKeyUsingRecurssion(10), "difference KEY");
+//Tree5.deleteLeaves();
+Tree5.traverseRecursivePreOrder();
+console.log("TREE5 END");
+console.log('form avl');
+Tree4.formFullAVL(2);
+console.log(Tree4.getRootNode());
+console.log('form avl EBD');
 console.log(Tree3.getRootNode(), 'the height');
 console.log('--INserting--');
 console.log('DELETE-->');
+var Tree5 = require('./TreeADT').TreeADT();
+console.log(Tree5.findNumberOfNodesForMinAVL(5),"min nodes");
 var theroot = Tree2.expressionTree(['A','B','C','*','+', 'D', '/']);
 
 //console.log(Tree2.findElementInBSTRecurssion(14), "-----\\\\-----");
