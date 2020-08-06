@@ -12,6 +12,10 @@ LinkedList,
 
 Binary Tree
 
+AVL 
+
+Heaps
+
 
 ##### Problems - ######
 Josephus, 
@@ -105,5 +109,11 @@ Delete the half leaves
 Find the node with the least difference from the given key
 
 Linking the siblings via Queue and Recurssion in a BST
+
+Heapify the node
+
+Heap sort
+
+Insert in a Heap
 
 Adding more with time..
