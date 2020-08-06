@@ -329,7 +329,15 @@ console.log(genericTree.findTheLevelsInKArrayTree([0, 1, 2, 3, 4, 5,
 //console.log(Tree.findDiameter1());
 //Tree.allRoutesFromRootToLeaf();
 //console.log(Tree.findIfPathHasExactSumAndPrintPathWhichHasTheSum(8));
-
+var heap = require('./HeapADT').HeapADT();
+console.log('HEAP---');
+//heap.insert(31);
+//heap.insert(10);
+//heap.insert(16);
+//heap.heapifyArray([20, 40, 10]);
+heap.heapSort([20, 40, 10, 100, 0]);
+console.log(heap.getMax());
+console.log('---HEAP');
 console.log(Tree1.sumOfAllNodesInTree());
 
 console.log(DS.sequentialRemoval(['a','b','c','d'],['z']));
