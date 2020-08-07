@@ -336,8 +336,22 @@ console.log('HEAP---');
 //heap.insert(16);
 //heap.heapifyArray([20, 40, 10]);
 heap.heapSort([20, 40, 10, 100, 0]);
-console.log(heap.getMax());
+var _heap = require('./HeapADT').HeapADT();
+//console.log(heap.getMax());
+//console.log(_heap.slidingWindowMaximum([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] , 3));
+
+_heap.insertAsMInHeap(3);
+_heap.insertAsMInHeap(20);
+_heap.insertAsMInHeap(1);
+_heap.deleteMin();
+console.log(_heap.deleteMin(), 'MIN');
+_heap.deleteMin();
+console.log(_heap.getMax(), 'give them a coat');
 console.log('---HEAP');
 console.log(Tree1.sumOfAllNodesInTree());
-
+var runningMedian = require('./HeapADT').runningMedian();
+console.log(runningMedian(1), 'running median');
+console.log(runningMedian(9), 'running median');
+console.log(runningMedian(2), 'running median');
+console.log(runningMedian(0), 'running median');
 console.log(DS.sequentialRemoval(['a','b','c','d'],['z']));
