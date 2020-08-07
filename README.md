@@ -116,4 +116,8 @@ Heap sort
 
 Insert in a Heap
 
+Running median or infinite median using Heaps
+
+Sliding window maximum value using heaps in n * log (w) time
+
 Adding more with time..
