@@ -16,6 +16,8 @@ AVL
 
 Heaps
 
+Disjoint sets
+
 
 ##### Problems - ######
 Josephus, 
@@ -119,5 +121,9 @@ Insert in a Heap
 Running median or infinite median using Heaps
 
 Sliding window maximum value using heaps in n * log (w) time
+
+Find with path compression in a Disjoint set
+
+Union in a Disjoint set with and w/o path compression
 
 Adding more with time..
