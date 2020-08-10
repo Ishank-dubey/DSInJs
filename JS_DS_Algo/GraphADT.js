@@ -38,8 +38,10 @@ function GraphADTUsingAdjacencyList(){
 	var V;
 	var array = []; //Array of head node e.g. [{vertix:0, next:array[0]}], the length of this array 
 	                //is the number of Vertices
+	var indegree = [];
 	function setVertices(arg){
 		V = arg;
+		initialize();
 	}
 	function initialize(initWithVertix){
 		for(let i=0;i<V;i++){
@@ -52,33 +54,167 @@ function GraphADTUsingAdjacencyList(){
 	
 	
 	
-	function addEdge(src, dest, isUnidirectional){
+	function addEdge(src, dest, isUndirectional){
 		if(src <0 || src >=V || dest < 0 || dest >= V)return null;
 		
 		/*
 		 * Adding the new node as the first next
 		 * */
-		var node = {vertix: dest, next:null};
+		var node = {vertix: dest, next:null, weight: 1};
 		node.next = array[src].next;
 		array[src].next = node;
 		
-		if(isUnidirectional){
-			var node2 = {vertix:src, next:null};
+		if(isUndirectional){
+			var node2 = {vertix:src, next:null, weight:1};
 			node2.next = array[dest].next;
 			array[dest].next = node2;
 		}
 	}
+	
+	function findEdgeBetween(src, dest){
+		var head = array[src];
+		while(head){
+		  if(head.vertix == dest){
+			  return true;
+		  }
+		  head = head.next;
+		}
+		return false;
+	}//O(E)
+	
+	
+	/*
+	 * Depth first traversal
+	 * The nodes are traversed as and when they have further adjacent nodes
+	 * We could have used stack but its earier to use recurssion as the adjacent can be any number
+	 * */
+	function dfs(){
+		var visited = [];
+		var connected = [];
+		for(let i=0 ; i< array.length ; i++){
+			if(!visited[i])
+			  dfsInner(i);
+		}
+		function dfsInner(index){
+			visited[index] = 1;
+			console.log("DFS:: ", index);
+			for(let j=0;j< array.length;j++){
+				if(findEdgeBetween(index, j))
+				  connected.push({src: index, dest: j});
+				
+				if(findEdgeBetween(index, j) && !visited[j]){
+					dfsInner(j);
+				}
+			}
+		}
+		return {connected, visited};
+	}//O(V+E) in this adjacency list implimentaion
+	
+	
+	
+	/*
+	 * In this we want to traverse the vertixes that are adjecent to a given node and then go to the adjacent 
+	 * node's adjacent nodes
+	 * */
+	function bfs(){
+		var visited = [];
+		var connected = [];
+		
+		for(let a=0; a< V ;a++){
+			indegree[a] = 0;
+		}
+		for(let i=0;i< V;i++){
+			if(!visited[i]){
+				bfsInner(i);
+			}
+		}
+		console.log(indegree, 'IND');
+		return {visited, connected};
+		
+		function bfsInner(index){
+			//note that this queue will have one connected component
+			var queue = require('./QueueADT').QueueADT();
+			queue.enQueue(index);
+			
+			while(!queue.isEmpty()){
+				var newIndex = queue.deQueue();
+				if(!visited[newIndex]){
+					visited[newIndex] = 1;
+					console.log(newIndex, "NODE BFS");	
+				}
+				
+				for(let j=0;j< V;j++){
+					if(findEdgeBetween(newIndex, j)){
+						connected.push({src: newIndex, dest: j});
+						if(newIndex != j){
+							indegree[j] = indegree[j] + 1;
+						}
+						
+					}
+						if(findEdgeBetween(newIndex, j) && !visited[j]){
+							queue.enQueue(j);
+						}
+				}
+			}
+			
+		}
+		
+	}//O(V+E)
+	
+	
+	/*
+	 * Topological sort - each node comes before all the nodes to whom it has put going nodes
+	 * In a directed graph the indegree is the compound of all the paths that send on it i.e.
+	 * Its is the destination not Hamiltonian may have more than one correct sequences
+	 * Topological sort of not 
+	 * In topological sort we first go to the nodes whose indegree is 0
+	 * The topological sort shall fail in case of a cyclic dependency graph
+	 * To do a topological sort - 
+	 *   1. Enqueue all the nodes w/ 0 indegree
+	 *   2. While loop - then enqueue the adjecent nodes only when their indegree is 0
+	 *   3. A counter also needs to keep the track for cyclic paths(see code)
+	 * */
+	function topolgicalSort(){
+		var queue = require('./QueueADT').QueueADT();
+		var count = 0;
+		for(let a=0; a< V ;a++){
+			if(indegree[a] == 0){
+				queue.enQueue(a);
+			}
+		}
+		while(!queue.isEmpty()){
+			var node = queue.deQueue();
+			console.log(node, "<<--TOPOLOGICAL SORT");
+			count = count+1;
+			for(let j=0;j<V;j++){
+				if(findEdgeBetween(node, j)){
+					//console.log(indegree[j], 'indgree', j);
+					indegree[j] = indegree[j]-1;
+					if(indegree[j] == 0 ){
+						queue.enQueue(j);
+					}
+				}
+			}
+		}
+		if(count != V){
+			console.log(`This Graph is cyclic so no Topological sort is valid`);
+		}
+	}//O(V + E)
+	
+	
 	return {
 		setVertices,
 		initialize,
-		addEdge
+		addEdge,
+		findEdgeBetween,
+		dfs,
+		bfs,
+		topolgicalSort
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
 
 
-/*
- * Depth first search (DFS) traversal
- * */
+
 
    function piTill50Decimal(n){
 	   var initialVal = 10;
