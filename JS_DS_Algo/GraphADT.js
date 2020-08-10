@@ -128,7 +128,7 @@ function GraphADTUsingAdjacencyList(){
 				bfsInner(i);
 			}
 		}
-		console.log(indegree, 'IND');
+		//console.log(indegree, 'IND');
 		return {visited, connected};
 		
 		function bfsInner(index){
@@ -142,7 +142,7 @@ function GraphADTUsingAdjacencyList(){
 					visited[newIndex] = 1;
 					console.log(newIndex, "NODE BFS");	
 				}
-				
+				// For O(V+E) efficiency use the while loop as in the next function -topolgicalSort 
 				for(let j=0;j< V;j++){
 					if(findEdgeBetween(newIndex, j)){
 						connected.push({src: newIndex, dest: j});
@@ -186,6 +186,7 @@ function GraphADTUsingAdjacencyList(){
 			var node = queue.deQueue();
 			console.log(node, "<<--TOPOLOGICAL SORT");
 			count = count+1;
+			// For O(V+E) efficiency use the while loop as in the next function -unWeightedShortestPath
 			for(let j=0;j<V;j++){
 				if(findEdgeBetween(node, j)){
 					//console.log(indegree[j], 'indgree', j);
@@ -201,6 +202,46 @@ function GraphADTUsingAdjacencyList(){
 		}
 	}//O(V + E)
 	
+	/*
+	    * 1. Have a distance array, all elements are initalized to -1
+	    * 2. distance of src itself is 0
+	    * 3. Enque the adjacent elements and move farther away
+	    * */
+	   function unWeightedShortestPath(src){
+		   var distance = [];
+		   for(let j=0 ; j< V ; j++){
+			   distance[j] = -1;
+		   }
+		   distance[src] = 0;
+		   var queue = require('./QueueADT').QueueADT();
+		   queue.enQueue(src);
+		   while(!queue.isEmpty()){
+			   var currentNode = queue.deQueue();
+			   var node = array[currentNode];
+			   
+			   //Finding the adjacent nodes is cheaper this way
+			   while(node){
+				   var adjacentKey = node.next ? node.next.vertix : null;
+				   //console.log(nextNode, 'VERTIX', currentNode, array[currentNode]);
+				   if(adjacentKey != null && distance[adjacentKey] == -1){
+					   distance[adjacentKey] = distance[currentNode] + 1;
+					   queue.enQueue(adjacentKey); 
+				   }
+				   node = node.next;
+			   }
+			   //This for loop is costlier to find the adjacent nodes as this needs to chack all the nodes
+			   /*for(let k=0 ; k < V ; k++){
+				   if(findEdgeBetween(currentNode, k)){
+					   if(distance[k] == -1){
+						   distance[k] = distance[currentNode] + 1;
+						   queue.enQueue(k);
+					   }
+				   }
+			   }*/
+		   }
+		   return distance;
+	   }//O(E+V)
+
 	
 	return {
 		setVertices,
@@ -209,12 +250,13 @@ function GraphADTUsingAdjacencyList(){
 		findEdgeBetween,
 		dfs,
 		bfs,
-		topolgicalSort
+		topolgicalSort,
+		unWeightedShortestPath
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
+   
 
-
-
+   
 
    function piTill50Decimal(n){
 	   var initialVal = 10;

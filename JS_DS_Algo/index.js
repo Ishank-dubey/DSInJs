@@ -383,3 +383,4 @@ console.log(_graph2.findEdgeBetween(6, 7), "find edge", 6, 7);
 //console.log(_graph2.dfs(), 'DFS');
 _graph2.bfs();
 _graph2.topolgicalSort();
+console.log(_graph2.unWeightedShortestPath(0));
