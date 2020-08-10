@@ -981,7 +981,7 @@ function TreeADT(){
 	
 	
 	/* Expression Tree
-	 * The intermediate node is an operand, the leaf node are the operators
+	 * The intermediate node is an operators, the leaf node are the operands
 	 * The post order traversal of the expression tree gives the post order expression
 	 * */
 	function expressionTree(array){

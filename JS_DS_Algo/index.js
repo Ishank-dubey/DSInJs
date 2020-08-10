@@ -355,3 +355,7 @@ console.log(runningMedian(9), 'running median');
 console.log(runningMedian(2), 'running median');
 console.log(runningMedian(0), 'running median');
 console.log(DS.sequentialRemoval(['a','b','c','d'],['z']));
+var _graph = require('./GraphADT').GraphADTAdjacencyMatrix();
+_graph.setVertixes(3);
+_graph.initializeAdjecencyMatrix(3);
+var test = require('./GraphADT').piTill50Decimal(50);
