@@ -257,6 +257,36 @@ function HeapADT(){
 	}
 	
 	/*
+	 * Top bottom - heapify for object Min heap
+	 * Object is {vertix, distance}, the priority is on the min distance 
+	 * */
+	function topBottomMinHeapWithObjects(index){
+		if(index >= count || index <0 ) return -1;
+		
+		var leftChildIndex = leftChild(index);
+	    var rightChildIndex = rightChild(index);
+	    var minIndex = index;
+	    if(leftChildIndex < count && leftChildIndex!=-1 && array[index].distance > array[leftChildIndex].distance){
+	    	minIndex = leftChildIndex;
+	    }
+	    if(rightChildIndex < count && rightChildIndex!=-1 && array[minIndex].distance > array[rightChildIndex].distance){
+	    	minIndex = rightChildIndex;
+	    }
+	    if(minIndex != index){
+	    	var temp = array[index];
+	    	array[index] = array[minIndex];
+	    	array[minIndex] = temp;
+	    	topBottomMinHeapWithObjects(minIndex);
+	    }
+	    
+	}
+	
+	/*
+	 * 
+	 * 
+	 * */
+	
+	/*
 	 * Top bottom for min heap
 	 * */
 	function topBottomMinHeap(index){
