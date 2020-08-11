@@ -117,7 +117,7 @@ function HeapADT(){
 		console.log(array);
 		//note that leaves are compared with the parent 
 		//as left and right children in the topBottom method
-	}//O(n)
+	}//O(n) as sum of all the heights of the nodes in a tree is almost n
 	
 	/*
 	 * 1. Create the heap with the above heapifyArray method to create a max heap
@@ -259,6 +259,7 @@ function HeapADT(){
 	/*
 	 * Top bottom - heapify for object Min heap
 	 * Object is {vertix, distance}, the priority is on the min distance 
+	 * Mainly to be used in Dijkstra’s algo
 	 * */
 	function topBottomMinHeapWithObjects(index){
 		if(index >= count || index <0 ) return -1;
@@ -279,13 +280,73 @@ function HeapADT(){
 	    	topBottomMinHeapWithObjects(minIndex);
 	    }
 	    
+	}//O(log n)
+	
+	/*
+	 * Heapify the array of objects as a Min Heap
+	 * This is to be used in Dijkstra’s shortest path algo
+	 * */
+	function heapifyTheArrayOfObjectToMinHeap(inputArray){
+		count = inputArray.length;
+		array = inputArray;
+		let i = Math.floor((count - 1 - 1)/2);// = n/2 -1
+		for( ;i>=0; i--){
+			topBottomMinHeapWithObjects(i);
+		}
+		console.log(array);
+	}//O(n)
+	
+	
+	
+	/* to be used in sDijkstra’s algo
+	 * get the minimum val from the object min heap
+	 * */
+	function deleteMinFromObjectMinHeap(){
+		if(!count){return -1;}
+		var dataNode = array[0];
+		array[0] = array[count-1];
+		count = count - 1;
+		topBottomMinHeapWithObjects(0);
+		return dataNode.vertix;
 	}
 	
 	/*
-	 * 
-	 * 
+	 * Function to reduce an existing node's distance value
+	 * Since we are going to decrease the distance from an existing value - 
+	 * We only need to traverse above till the root so O(log n) 
 	 * */
+	function reduceTheDistanceValInObjectHeap(V, dist){
+		
+		
+		var index;
+		for(let j=0;j< count;j++){
+			if(array[j].vertix == V){
+				index =  j;
+				break;
+			}
+		}
+		
+		while(index>=1 && dist < array[Math.floor((index-1)/2)].distance){
+			array[index] = array[Math.floor((index-1)/2)];
+			index = Math.floor((index-1)/2);
+		}
+		
+		array[index] = {vertix: V, distance: dist};
+	}
 	
+	/*
+	 * Check of a vertix is present in the heap or not
+	 * */
+	function isPresentInObjectMinHeap(V){
+		var isVPresent = false;
+		//console.log(array, '---', count);
+		for(let j=0;j< count;j++){
+			if(array[j].vertix == V){
+				isVPresent = true;
+			}
+		}
+		return isVPresent;
+	}
 	/*
 	 * Top bottom for min heap
 	 * */
@@ -352,7 +413,11 @@ function HeapADT(){
 		     slidingWindowMaximum,
 		     insertAsMInHeap,
 		     deleteMin,
-		     getCount
+		     getCount,
+		     heapifyTheArrayOfObjectToMinHeap,
+		     reduceTheDistanceValInObjectHeap,
+		     deleteMinFromObjectMinHeap,
+		     isPresentInObjectMinHeap
 		    };
 }
 

@@ -54,18 +54,18 @@ function GraphADTUsingAdjacencyList(){
 	
 	
 	
-	function addEdge(src, dest, isUndirectional){
+	function addEdge(src, dest, isUndirectional, weight){
 		if(src <0 || src >=V || dest < 0 || dest >= V)return null;
 		
 		/*
 		 * Adding the new node as the first next
 		 * */
-		var node = {vertix: dest, next:null, weight: 1};
+		var node = {vertix: dest, next:null, weight: weight || 1};
 		node.next = array[src].next;
 		array[src].next = node;
 		
 		if(isUndirectional){
-			var node2 = {vertix:src, next:null, weight:1};
+			var node2 = {vertix:src, next:null, weight:weight || 1};
 			node2.next = array[dest].next;
 			array[dest].next = node2;
 		}
@@ -75,7 +75,7 @@ function GraphADTUsingAdjacencyList(){
 		var head = array[src];
 		while(head){
 		  if(head.vertix == dest){
-			  return true;
+			  return head;
 		  }
 		  head = head.next;
 		}
@@ -241,8 +241,61 @@ function GraphADTUsingAdjacencyList(){
 		   }
 		   return distance;
 	   }//O(E+V)
-
-	
+      
+	   /*
+	    * Djkstra method to find the shortest distance in a weighted non negative edges
+	    * 1. all the nodes to be initialized with Infinity distance
+	    * 2. Source is given 0 distance and also upadted to the Min Heap
+	    * 
+	    * */
+	   function dij(src){
+		   src = src || 0;
+		   var parentArray = [];
+		   
+		   var heap = require('./HeapADT').HeapADT();
+		   var distance = [];
+		   var heapArray = [];
+		   
+		   //O(n) operation
+		   for(let j=0;j<V;j++){
+			   distance[j] = Infinity;
+			   parentArray[j] = 0;
+			   heapArray[j] = {vertix:j, distance:Infinity}
+		   }
+		   
+		   
+		   heap.heapifyTheArrayOfObjectToMinHeap(heapArray);// This is O(n) operation
+		   heap.reduceTheDistanceValInObjectHeap(src, 0);//O(log n)
+		   distance[src] = 0;
+		   parentArray[0] = -1;	
+		   while(heap.getCount()){//O(V + E)
+			   var minVal = heap.deleteMinFromObjectMinHeap();
+			   console.log(minVal, 'mv');
+			   var currentVertix = minVal;
+			   
+			   var adjacentNode = array[currentVertix].next;
+			   while(adjacentNode){
+				   var adjacentVertix = adjacentNode.vertix;
+				   if(isFinite(distance[currentVertix]) && heap.isPresentInObjectMinHeap(adjacentVertix)
+					 && ((distance[currentVertix]+findEdgeBetween(currentVertix, adjacentVertix).weight) < distance[adjacentVertix])){
+					   distance[adjacentVertix] = (distance[currentVertix]+findEdgeBetween(currentVertix, adjacentVertix).weight);
+					   heap.reduceTheDistanceValInObjectHeap(adjacentVertix, distance[adjacentVertix]);//O(log V)
+					   parentArray[adjacentVertix] = currentVertix;
+				   }
+				   adjacentNode = adjacentNode.next;
+			   }
+		   }
+		   console.log("Shortest path values::", distance);
+		   console.log('Printing the path for src to vertex 4->');
+		   printPath(4, parentArray);//Example to print the shortest path for vertix 4
+	   }//O((V+E)log V) is almost E*log V, V+E is for the BFS traversal
+	function printPath(vertix, parent){
+		if(parent[vertix] == -1){
+			return;
+		}
+		printPath(parent[vertix], parent);
+		console.log(vertix);
+	}
 	return {
 		setVertices,
 		initialize,
@@ -251,7 +304,8 @@ function GraphADTUsingAdjacencyList(){
 		dfs,
 		bfs,
 		topolgicalSort,
-		unWeightedShortestPath
+		unWeightedShortestPath,
+		dij
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

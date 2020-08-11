@@ -68,14 +68,14 @@ function DisjointSetADT(){
 		var jRepRank = rank[jRepresentative];
 		if(jRepRank == iRepRank){
 			parent[iRepresentative] = jRepresentative;
-			//rank[jRepresentative] = rank[jRepresentative]+1;
+			rank[jRepresentative] = rank[jRepresentative]+1;
 		}else if(jRepRank < iRepRank){
 			parent[jRepresentative] = iRepresentative;
 			//rank[jRepresentative] = rank[jRepresentative]+1;
 		}
 		else if(iRepRank < jRepRank){
 			parent[iRepresentative] = jRepresentative;
-			rank[iRepresentative] = rank[iRepresentative]+1;
+			//rank[iRepresentative] = rank[iRepresentative]+1;
 		}
 	}
 	return{
