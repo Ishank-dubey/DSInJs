@@ -64,7 +64,6 @@ function GraphADTUsingAdjacencyList(){
 		 * Adding the new node as the first next
 		 * */
 		var node = {vertix: dest, next:null, weight: weight || 1};
-		console.log(src, 'src');
 		node.next = array[src].next;
 		array[src].next = node;
 		
@@ -274,7 +273,7 @@ function GraphADTUsingAdjacencyList(){
 		   heap.reduceTheDistanceValInObjectHeap(src, 0);//O(log n)
 		   distance[src] = 0;
 		   parentArray[0] = -1;	
-		   while(heap.getCount()){//O(V + E)
+		   while(heap.getCount()){//O(V + E) as this is similar to BFS
 			   var minVal = heap.deleteMinFromObjectMinHeap();
 			   console.log(minVal, 'mv');
 			   var currentVertix = minVal;
@@ -318,7 +317,7 @@ function GraphADTUsingAdjacencyList(){
 		distance[src] = 0;
 		
 		
-		//This loop is V-1 times adn gives a simple shortest path
+		//This loop is V-1 times and gives a simple shortest path
 		for(let v=1; v< V;v++){
 			for(let e=0; e < edgesArray.length;e++){
 				var srclocal = edgesArray[e].src;
@@ -347,7 +346,69 @@ function GraphADTUsingAdjacencyList(){
 			
 		}
 		console.log("Shortest using bellman ford::: ",distance);
-	}
+	}//O(E*V)
+	
+	/*
+	 * Minimum spanning tree- a tree formed that connects all the vertixes and the edges give the minimum
+	 * possible weight i.e. minimum total cost
+	 * 1. Prim's 
+	 * 2. Kruskal's algos are well known
+	 * this makes sense on a undirected graph
+	 * */
+	
+	
+	//In this method we are not using a minHeap and so O(V^2) 
+	function primsMSTWithArray(src){
+		src = src || 0;
+		var minSet = [];
+		var key = [];
+		var parent = [];
+		parent[0] = -1;
+		for(let j=0;j< V;j++){
+			minSet[j] = false;
+			key[j] = Infinity;
+		}
+		key[src] = 0;
+		
+		
+		
+		for(let c=0;c < V-1;c++){
+			var u = findMinKey();
+			minSet[u] = true;
+			console.log(u, "u");
+			var adjacentNode = array[u].next;
+			//console.log(array, 'array', adjacentNode);
+			while(adjacentNode){
+				if(!minSet[adjacentNode.vertix] && key[adjacentNode.vertix] > adjacentNode.weight){
+					console.log(u, adjacentNode.vertix, adjacentNode.weight, "ganganam style");
+					parent[adjacentNode.vertix] = {p:u, w: adjacentNode.weight};
+					key[adjacentNode.vertix] = adjacentNode.weight;
+				}
+				adjacentNode = adjacentNode.next;
+			}
+		}
+		printTheSpanningTree();
+		function findMinKey(){
+			var min_index = 0;
+			var min_val = Infinity;
+			for(let k=0;k< V;k++){
+				console.log(!minSet[k] , isFinite(key[k]) ,min_val > key[k], k, "k", key);
+				if(!minSet[k] && isFinite(key[k]) && min_val > key[k]){
+					min_val = key[k];
+					min_index = k;
+				}
+			}
+			return min_index;
+		}
+		function printTheSpanningTree(){
+			console.log("Printing the spanning Tree:: - ", parent);
+			for(let v=1;v < V;v++){
+				console.log(parent[v].p+" - "+v+" - "+parent[v].w);
+			}
+		};
+		
+		
+	}//O(V^2)
 	
 	return {
 		setVertices,
@@ -359,7 +420,8 @@ function GraphADTUsingAdjacencyList(){
 		topolgicalSort,
 		unWeightedShortestPath,
 		dij,
-		bellmanFord
+		bellmanFord,
+		primsMSTWithArray
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

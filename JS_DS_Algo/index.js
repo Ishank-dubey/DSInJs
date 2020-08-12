@@ -413,3 +413,22 @@ console.log("Bellman Ford---->");
 
 
 _graph3.bellmanFord(0);
+
+
+var _graph4 = require('./GraphADT').GraphADTUsingAdjacencyList();
+_graph4.setVertices(5);
+_graph4.addEdge(0, 1 , false, 2);
+_graph4.addEdge(0, 3 , false, 6);
+_graph4.addEdge(1, 0 , false, 2);
+_graph4.addEdge(1, 2 , false, 3);
+_graph4.addEdge(1, 3 , false, 8);
+_graph4.addEdge(1, 4 , false, 5);
+_graph4.addEdge(2, 1 , false, 3);
+_graph4.addEdge(2, 4 , false, 7);
+_graph4.addEdge(3, 0 , false, 6);
+_graph4.addEdge(3, 1 , false, 8);
+_graph4.addEdge(3, 4 , false, 9);
+_graph4.addEdge(4, 1 , false, 5);
+_graph4.addEdge(4, 2 , false, 7);
+_graph4.addEdge(4, 3 , false, 9);
+_graph4.primsMSTWithArray();
