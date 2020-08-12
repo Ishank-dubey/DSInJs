@@ -38,6 +38,9 @@ function GraphADTUsingAdjacencyList(){
 	var V;
 	var array = []; //Array of head node e.g. [{vertix:0, next:array[0]}], the length of this array 
 	                //is the number of Vertices
+	
+	var edgesArray = [];
+	
 	var indegree = [];
 	function setVertices(arg){
 		V = arg;
@@ -61,10 +64,13 @@ function GraphADTUsingAdjacencyList(){
 		 * Adding the new node as the first next
 		 * */
 		var node = {vertix: dest, next:null, weight: weight || 1};
+		console.log(src, 'src');
 		node.next = array[src].next;
 		array[src].next = node;
 		
+		edgesArray.push({src, dest, weight: weight || 1});
 		if(isUndirectional){
+			edgesArray.push({dest:src, src:dest, weight: weight || 1});
 			var node2 = {vertix:src, next:null, weight:weight || 1};
 			node2.next = array[dest].next;
 			array[dest].next = node2;
@@ -296,6 +302,53 @@ function GraphADTUsingAdjacencyList(){
 		printPath(parent[vertix], parent);
 		console.log(vertix);
 	}
+	
+	/*
+	 * The above Dijkistra algorithm is a greedy algo and takes the smallest first but
+	 * When a negative node is present then this is can fail so we use BellmanFord algo that states -
+	 * The simple path is obtained when we see through all the edges V-1 times then another iteration is need to finalize
+	 * the shortest paths
+	 * */
+	
+	function bellmanFord(src){
+		var distance = [];
+		for(let j=0;j<V;j++){
+			distance[j] = Infinity;
+		}
+		distance[src] = 0;
+		
+		
+		//This loop is V-1 times adn gives a simple shortest path
+		for(let v=1; v< V;v++){
+			for(let e=0; e < edgesArray.length;e++){
+				var srclocal = edgesArray[e].src;
+				var destlocal = edgesArray[e].dest;
+				var weightlocal = edgesArray[e].weight;
+				
+				if(isFinite(distance[srclocal]) &&
+				   distance[destlocal] > distance[srclocal]+ weightlocal){
+					distance[destlocal] = distance[srclocal]+ weightlocal;
+				}
+				
+			}
+		}
+		
+		//this loop finds if there is even more short distance then there is cycle
+		for(let e=0; e < edgesArray.length;e++){
+			var srclocal = edgesArray[e].src;
+			var destlocal = edgesArray[e].dest;
+			var weightlocal = edgesArray[e].weight;
+			
+			if(isFinite(distance[srclocal]) &&
+			   distance[destlocal] > distance[srclocal]+ weightlocal){
+				console.log("there is a cycle");
+				return;
+			}
+			
+		}
+		console.log("Shortest using bellman ford::: ",distance);
+	}
+	
 	return {
 		setVertices,
 		initialize,
@@ -305,7 +358,8 @@ function GraphADTUsingAdjacencyList(){
 		bfs,
 		topolgicalSort,
 		unWeightedShortestPath,
-		dij
+		dij,
+		bellmanFord
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

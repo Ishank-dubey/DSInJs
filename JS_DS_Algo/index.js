@@ -398,3 +398,18 @@ _graph2.topolgicalSort();
 console.log(_graph2.unWeightedShortestPath(0));
 console.log("DIJ--->");
 _graph2.dij();
+
+var _graph3 = require('./GraphADT').GraphADTUsingAdjacencyList();
+_graph3.setVertices(5);
+_graph3.addEdge(0, 1 , false, -1);
+_graph3.addEdge(0, 2 , false, 4);
+_graph3.addEdge(1, 2 , false, 3);
+_graph3.addEdge(1, 3 , false, 2);
+_graph3.addEdge(1, 4 , false, 2);
+_graph3.addEdge(3, 2 , false, 5);
+_graph3.addEdge(3, 1 , false, 1);
+_graph3.addEdge(4, 3 , false, -3);
+console.log("Bellman Ford---->");
+
+
+_graph3.bellmanFord(0);
