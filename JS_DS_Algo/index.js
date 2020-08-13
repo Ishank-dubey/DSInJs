@@ -443,10 +443,12 @@ console.log(_graph5.isCycle(), ' cycle');
 _graph5.sortEdgesByWeight();
 
 var _graph6 = require("./GraphADT").GraphADTUsingAdjacencyList();
-_graph6.setVertices(4);
-_graph6.addEdge(0, 1, true, 1);
-_graph6.addEdge(1, 2, true, 1);
-_graph6.addEdge(2, 3, true, 1);
+_graph6.setVertices(5);
+_graph6.addEdge(1, 0, true, 1);
+_graph6.addEdge(0, 2, true, 1);
+_graph6.addEdge(2, 1, true, 1);
+_graph6.addEdge(0, 3, true, 1);
+_graph6.addEdge(3, 4, true, 1);
 //_graph6.addEdge(0, 3, true, 1);
 //_graph6.addEdge(3, 4, true, 1);
-_graph6.articulationPoints();
+_graph6.articulateEdge();

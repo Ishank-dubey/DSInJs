@@ -569,7 +569,49 @@ function GraphADTUsingAdjacencyList(){
 				currentNode =  currentNode.next;
 			}
 		}
-	}
+	}//O(E + V)
+	
+	
+	/*
+	 * Articulate Edges
+	 * 1. Similar to the Cut vertices above
+	 * 2. Only condition is low[v] > discovery[u]
+	 * */
+	function articulateEdge(){
+		var parent = [];
+		var low = [];
+		var discovery = [];
+		var level = 0;
+		var visited= [];
+		for(let j=0;j< V;j++){
+			visited[j] = false;
+			parent[j] = null;
+		}
+		for(let k=0;k< V;k++){
+			if(!visited[k])
+			dfsArticulateEdge(k);
+		}
+		function dfsArticulateEdge(u){
+			low[u] = ++level;
+			discovery[u] = low[u];
+			visited[u] = true;
+			var currentNode = array[u].next;
+			while(currentNode){
+				var v = currentNode.vertix;
+				if(!visited[v]){
+					parent[v] = u;
+					dfsArticulateEdge(v);
+					low[u] = Math.min(low[v], low[v]);
+					if(low[v] > discovery[u]){
+						console.log(u+" - "+v);
+					}
+				}else if(v != parent[u]){
+					low[u] = Math.min(low[u], discovery[v]);
+				}
+				currentNode = currentNode.next;
+			}
+		}
+	}//O(V + E), the brute force approach its O(E(E+V))
 	
 	
 	return {
@@ -588,7 +630,8 @@ function GraphADTUsingAdjacencyList(){
 		isCycle,
 		sortEdgesByWeight,
 		kruskalViaDisjointSet,
-		articulationPoints
+		articulationPoints,
+		articulateEdge
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    
