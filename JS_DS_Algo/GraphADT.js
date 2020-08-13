@@ -444,6 +444,61 @@ function GraphADTUsingAdjacencyList(){
 		printTheSpanningTree(parent);
 	}//O((V+E) log V)
 	
+	/*
+	 * Kruskal's method
+	 * 1. Iterating over all the edges
+	 * 2. Use Disjoint Sets method isCycle to see if a cycle is introduced or not
+	 * */
+	function kruskalViaDisjointSet(){
+		var disjointSet = require('./DisjointSet').DisjointSetADT();
+		disjointSet.setSize(V);
+		disjointSet.makeSet();
+		
+		sortEdgesByWeight();
+		var parent = [];
+		var count = 0;
+		for(let e=0;e<edgesArray.length ;e++){
+			var src = edgesArray[e].src;
+			var dest = edgesArray[e].dest;
+			
+			var srcRep = disjointSet.findWithPathCompression(src);
+			var destRep = disjointSet.findWithPathCompression(dest);
+			if(srcRep != destRep){
+				disjointSet.unionWithPathCompression(srcRep, destRep);
+				parent.push({src, dest, w: edgesArray[e].weight});
+			}
+			
+		}
+		console.log("Kruskal:: ", parent);
+	}//E log E
+	
+	
+	function sortEdgesByWeight(){
+		edgesArray.sort((a, b) => a.weight-b.weight );
+		console.log(edgesArray, 'edgesArray');
+	}//O(n log n)
+	
+	/*
+	 * Detect Cycle in a Graph via disjoint sets data structure
+	 * */
+	function isCycle(){
+		var disjointSet = require('./DisjointSet').DisjointSetADT();
+		disjointSet.setSize(V);
+		disjointSet.makeSet();
+		for(let e=0;e < edgesArray.length ;e++){
+			var src = edgesArray[e].src;
+			var dest = edgesArray[e].dest;
+			
+			var srcRep = disjointSet.findWithPathCompression(src);
+			var destRep = disjointSet.findWithPathCompression(dest);
+			if(srcRep == destRep){
+				return true;
+			}
+			disjointSet.unionWithPathCompression(srcRep, destRep);
+		}
+		return false;
+	}//O(E log V)
+	
 	return {
 		setVertices,
 		initialize,
@@ -456,7 +511,10 @@ function GraphADTUsingAdjacencyList(){
 		dij,
 		bellmanFord,
 		primsMSTWithArray,
-		primsMethodUsingHeap
+		primsMethodUsingHeap,
+		isCycle,
+		sortEdgesByWeight,
+		kruskalViaDisjointSet
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    
