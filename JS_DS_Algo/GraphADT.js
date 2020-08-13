@@ -120,6 +120,7 @@ function GraphADTUsingAdjacencyList(){
 	/*
 	 * In this we want to traverse the vertixes that are adjecent to a given node and then go to the adjacent 
 	 * node's adjacent nodes
+	 * The indegree array also represents
 	 * */
 	function bfs(){
 		var visited = [];
@@ -499,6 +500,78 @@ function GraphADTUsingAdjacencyList(){
 		return false;
 	}//O(E log V)
 	
+	/*
+	 * Start - Now, below are the problems on Graphs given in the Book
+	 * */
+	/*
+	 * 1. Maxiumum number of edges in a graph = n(n-1) - no loops - Undirected graph
+	 * 2. How many adjancency matrix are possible for a Graph of n nodes - n! = nPn
+	 * 3. Number of Adjacency lists are possible for E edges = ePe = e!
+	 * 4. In a directed graph the maxium edges are n^2, when no loops are allowed then n(n-1)/2
+	 * 5. Simple directed graphs  - V(V-1) as any node
+	 * 6. In order to get the maximum spanning tree Use the minimum spanning algo after making the edges as negative
+	 * */
+	
+	// to find the Cut vertixes in a Guraph that make it disconnected
+	/*
+	 * We do a DFS with some additions - 
+	 * 1. When its a root node with more than one child then its a Cut vertex
+	 * 2. When its not a root and any of its child don't have connection to its ancestor then also its a cut edge
+	 * 3. We will find the 2nd condition via the comparison of the discovery time of the non parent elements even if they 
+	 *    are visited also the condition of whether its a root node or not needs be checked
+	 * */
+	function articulationPoints(){
+		var discovery = [];
+		var low = [];
+		var visited = [];
+		var parent = [];
+		var cutVertixesArray = [];
+		var level = 0;
+		for(let j=0;j< V;j++){
+			visited[j] = false;
+			parent[j] = null;
+			cutVertixesArray[j] = false;
+		}
+		for(let k=0;k< V;k++){
+			if(!visited[k]){
+				articulationDFS(k);
+			}
+		}
+		console.log("Cut vertixes:: ", cutVertixesArray);
+		
+		function articulationDFS(u){
+			visited[u] = true;
+			low[u] = ++level;
+			discovery[u] = low[u];
+			var children = 0;
+			
+			var currentNode = array[u].next;
+			console.log(u);
+			while(currentNode){
+				
+				var vertix = currentNode.vertix;
+				  
+				if(!visited[vertix]){
+					parent[vertix] = u;
+					children = children+1;
+					articulationDFS(vertix);
+					low[u] = Math.min(low[u], low[vertix]);
+					if(!parent[u] && children >1){
+						cutVertixesArray[u] = true;
+					}
+					
+					if(parent[u] !=null && low[vertix] >= discovery[u]){
+						cutVertixesArray[u] = true;
+					}
+				}else if(vertix != parent[u] ){
+					low[u] = Math.min(low[u], discovery[vertix]);
+				}
+				currentNode =  currentNode.next;
+			}
+		}
+	}
+	
+	
 	return {
 		setVertices,
 		initialize,
@@ -514,7 +587,8 @@ function GraphADTUsingAdjacencyList(){
 		primsMethodUsingHeap,
 		isCycle,
 		sortEdgesByWeight,
-		kruskalViaDisjointSet
+		kruskalViaDisjointSet,
+		articulationPoints
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    
