@@ -126,4 +126,10 @@ Find with path compression in a Disjoint set
 
 Union in a Disjoint set with and w/o path compression
 
+Dijikstra
+
+Bellman Ford
+
+Prim's with O(V^2) and O(E log V)
+
 Adding more with time..
