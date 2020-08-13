@@ -346,7 +346,8 @@ function GraphADTUsingAdjacencyList(){
 			
 		}
 		console.log("Shortest using bellman ford::: ",distance);
-	}//O(E*V)
+	}//O(E*V), In a negative edge graph there can be a cyclic shortest path
+	//Cyclic shortest path can't be cyclic whe all the edges are positive.
 	
 	/*
 	 * Minimum spanning tree- a tree formed that connects all the vertixes and the edges give the minimum
@@ -375,19 +376,19 @@ function GraphADTUsingAdjacencyList(){
 		for(let c=0;c < V-1;c++){
 			var u = findMinKey();
 			minSet[u] = true;
-			console.log(u, "u");
+			
 			var adjacentNode = array[u].next;
-			//console.log(array, 'array', adjacentNode);
+			
 			while(adjacentNode){
 				if(!minSet[adjacentNode.vertix] && key[adjacentNode.vertix] > adjacentNode.weight){
-					console.log(u, adjacentNode.vertix, adjacentNode.weight, "ganganam style");
+					
 					parent[adjacentNode.vertix] = {p:u, w: adjacentNode.weight};
 					key[adjacentNode.vertix] = adjacentNode.weight;
 				}
 				adjacentNode = adjacentNode.next;
 			}
 		}
-		printTheSpanningTree();
+		printTheSpanningTree(parent);
 		function findMinKey(){
 			var min_index = 0;
 			var min_val = Infinity;
@@ -400,15 +401,48 @@ function GraphADTUsingAdjacencyList(){
 			}
 			return min_index;
 		}
-		function printTheSpanningTree(){
-			console.log("Printing the spanning Tree:: - ", parent);
-			for(let v=1;v < V;v++){
-				console.log(parent[v].p+" - "+v+" - "+parent[v].w);
-			}
-		};
+		
 		
 		
 	}//O(V^2)
+	
+	function printTheSpanningTree(parent){
+		console.log("Printing the spanning Tree:: - ", parent);
+		for(let v=1;v < V;v++){
+			console.log(parent[v].p+" - "+v+" - "+parent[v].w);
+		}
+	};
+	
+	function primsMethodUsingHeap(){
+		var minHeap = require('./HeapADT').HeapADT();
+		var arrayToBeheapified = [];
+		var key = [];
+		for(let j=0;j<V;j++){
+			arrayToBeheapified[j] = {vertix:j, distance: Infinity};
+			key[j] = Infinity;
+		}
+		var parent = [];
+		
+		minHeap.heapifyTheArrayOfObjectToMinHeap(arrayToBeheapified);
+		minHeap.reduceTheDistanceValInObjectHeap(0, 0);
+		parent[0] = -1;
+		key[0] = 0;
+		
+		while(minHeap.getCount()){
+			var u = minHeap.deleteMinFromObjectMinHeap();
+			var adjacentNode = array[u].next;
+			while(adjacentNode){
+				var adjacentVertix = adjacentNode.vertix;
+				if(minHeap.isPresentInObjectMinHeap(adjacentVertix) && key[adjacentVertix] > adjacentNode.weight){
+					minHeap.reduceTheDistanceValInObjectHeap(adjacentVertix, adjacentNode.weight);
+					key[adjacentVertix] = adjacentNode.weight;
+					parent[adjacentVertix] = {p: u, w: adjacentNode.weight};
+				}
+				adjacentNode= adjacentNode.next;
+			}
+		}
+		printTheSpanningTree(parent);
+	}//O((V+E) log V)
 	
 	return {
 		setVertices,
@@ -421,7 +455,8 @@ function GraphADTUsingAdjacencyList(){
 		unWeightedShortestPath,
 		dij,
 		bellmanFord,
-		primsMSTWithArray
+		primsMSTWithArray,
+		primsMethodUsingHeap
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

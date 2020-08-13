@@ -432,3 +432,4 @@ _graph4.addEdge(4, 1 , false, 5);
 _graph4.addEdge(4, 2 , false, 7);
 _graph4.addEdge(4, 3 , false, 9);
 _graph4.primsMSTWithArray();
+_graph4.primsMethodUsingHeap();
