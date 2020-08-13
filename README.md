@@ -134,4 +134,8 @@ Prim's with O(V^2) and O(E log V)
 
 Kruskal using the Disjoint set union and find operations
 
+Articulate or Cut Vertixes
+
+Articulate Edges
+
 Adding more with time..
