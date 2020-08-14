@@ -138,4 +138,10 @@ Articulate or Cut Vertixes
 
 Articulate Edges
 
+Euler path for undirected graph
+
+
+isConnected graph
+
+
 Adding more with time..
