@@ -468,7 +468,6 @@ function GraphADTUsingAdjacencyList(){
 				disjointSet.unionWithPathCompression(srcRep, destRep);
 				parent.push({src, dest, w: edgesArray[e].weight});
 			}
-			
 		}
 		console.log("Kruskal:: ", parent);
 	}//E log E
@@ -613,6 +612,92 @@ function GraphADTUsingAdjacencyList(){
 		}
 	}//O(V + E), the brute force approach its O(E(E+V))
 	
+	/*
+	 * DFS applications
+	 * 1. Eulerian path - a path that contains all edges w/o repetations
+	 * 2. Eulerian Circuit - a path that contains all the edges w/o repetaions and strats and ends at the same vertex
+	 * 3. Eularian Graph - a graph that contains an eulerian circuit
+	 * 4. Even vertex - a vertex that has even number of incident edges
+	 * 5. Odd vertex - a vertex that has an odd number of incident edges
+	 * 6. In an undirected graph 0 or 2 can have odd degree and others will have odd degree as
+	 *    the sum of all the degree in a undirected path is even
+	 * */
+	
+	//this is utility to check that - if any node(s) having edges are connected to other nodes having edges i.e. its a
+	//fully connected graph = saying that all the non zero degree vertixes are connected 
+	//Connect graph or not
+	function isConnected(){
+		var visited = [];
+		var anIndex;
+		for(let i=0;i< V;i++){
+			visited[i] = false;
+		}
+		let j=0;
+		for(;j< V;j++){
+			if(array[j].next){
+				anIndex = j; //this is a non zero degree vertix
+				break;
+			}
+		}
+
+		if( j== V)return true;
+		
+		dfsInner(anIndex);
+		
+		function dfsInner(u){
+			visited[u] = true;
+			var currentNode = array[u].next;
+			while(currentNode){
+				var v = currentNode.vertix;
+				if(!visited[v]){
+					dfsInner(v);	
+				}
+				currentNode = currentNode.next;
+			}
+		}
+		
+		
+		//Check if any non degree edge was not visited
+		for(let k=0; k< V ;k++){
+			if(array[k].next && !visited[k]){
+				return false;
+			}
+		}
+
+		return true;
+	}
+	
+	function findDegreeFromArray(key){
+		
+			var size = 0;
+			var currentNode = array[key].next;
+		    while(currentNode){
+		    	size = size + 1;
+		    	currentNode = currentNode.next;
+		    }
+		    return size;
+	}
+	
+	//Euler circuit is when all nodes have even degree and connected
+	//Euler path when 2 are odd
+	//Euler circuit is a Euler path
+	function eulersPath(){
+		if(!isConnected())return false;
+		var oddCount = 0;
+		for(let k=0;k < V;k++){
+			if(findDegreeFromArray(k)%2 !=0 ){
+				oddCount++;
+			}
+		}
+		if(oddCount > 2 || oddCount==1 )return false;
+		
+		if(oddCount ==2 ){
+			return 'eular path';
+		}else{
+			return 'eular circuit';
+		}
+	}
+	
 	
 	return {
 		setVertices,
@@ -631,7 +716,9 @@ function GraphADTUsingAdjacencyList(){
 		sortEdgesByWeight,
 		kruskalViaDisjointSet,
 		articulationPoints,
-		articulateEdge
+		articulateEdge,
+		isConnected,
+		eulersPath
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    
