@@ -143,5 +143,8 @@ Euler path for undirected graph
 
 isConnected graph
 
+Find the transpose of a directed graph edges
+
+Adding the SCC(strongly connected components) - E + V
 
 Adding more with time..
