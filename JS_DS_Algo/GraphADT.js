@@ -799,6 +799,7 @@ function GraphADTUsingAdjacencyList(){
 	
 	/*
 	 * Hamiltonian path - all the vertix must be present, no repetition and the last must point to the first vertix
+	 * Note that When a Hamiltonian path exists - then unique Topological sort exists
 	 * The following is the backtracking solution - 
 	 * */
 	function hameltoninPathWithBackTracking(){
@@ -837,7 +838,7 @@ function GraphADTUsingAdjacencyList(){
 		    }
 			return false;
 		}
-	}
+	}//(V + E)
 	
 	return {
 		setVertices,
