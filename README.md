@@ -147,4 +147,7 @@ Find the transpose of a directed graph edges
 
 Adding the SCC(strongly connected components) - E + V
 
+
+Hamiltonian Path With Back-Tracking
+
 Adding more with time..
