@@ -792,6 +792,52 @@ function GraphADTUsingAdjacencyList(){
  		}	
 	}//O(E + V)
 	
+	/*
+	 * To find a spanning tree thats not necessarily a min spanning tree 
+	 * Iterate over the edges and add the edge when if its not forming a cycle
+	 * */
+	
+	/*
+	 * Hamiltonian path - all the vertix must be present, no repetition and the last must point to the first vertix
+	 * The following is the backtracking solution - 
+	 * */
+	function hameltoninPathWithBackTracking(){
+		var path = [];
+		for(let i=0;i< V;i++){
+			path[i] = -1;
+		}
+		path[0] = 0;
+		
+		return hameltonianPathInner(1);
+		
+		function canBeIncludedInPath(pos, v){
+			for(let j=0;j< pos;j++){
+				if(path[j] == v){
+					return false;
+				}
+			}
+			return findEdgeBetween(path[pos-1], v);
+		}
+		
+		function hameltonianPathInner(v){
+			if(v == V){
+				return findEdgeBetween(path[v-1], 0);
+			}
+			
+			for(let k=1;k< V;k++){
+			  if(canBeIncludedInPath(v, k)){
+			    path[v] = k;
+			    if( hameltonianPathInner(v+1)){
+			    	return true;
+			    }else{
+			    	path[v] = -1;
+			    	return false;
+			    }
+			  }
+		    }
+			return false;
+		}
+	}
 	
 	return {
 		setVertices,
@@ -814,7 +860,8 @@ function GraphADTUsingAdjacencyList(){
 		isConnected,
 		eulersPath,
 		transposeTheAdjecencyList,
-		SCC
+		SCC,
+		hameltoninPathWithBackTracking
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

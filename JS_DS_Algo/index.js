@@ -465,3 +465,14 @@ _graph7.addEdge(0, 3, false, 1);
 _graph7.addEdge(3, 4, false, 1);
 console.log('Start Transpose->');
 _graph7.SCC();
+
+var _graph8 = require("./GraphADT").GraphADTUsingAdjacencyList();
+_graph8.setVertices(5);
+_graph8.addEdge(0, 1, true, 1);
+_graph8.addEdge(0, 3, true, 1);
+_graph8.addEdge(1, 2, true, 1);
+_graph8.addEdge(1, 3, true, 1);
+_graph8.addEdge(1, 4, true, 1);
+_graph8.addEdge(2, 4, true, 1);
+//_graph8.addEdge(3, 4, true, 1);
+console.log(_graph8.hameltoninPathWithBackTracking(), 'hameltoninPathWithBackTracking');
