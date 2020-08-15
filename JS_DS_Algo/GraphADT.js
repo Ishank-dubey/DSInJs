@@ -696,7 +696,101 @@ function GraphADTUsingAdjacencyList(){
 		}else{
 			return 'eular circuit';
 		}
+	}//O(E + V)
+	
+	/*
+	 * Strongly connected components
+	 * When in a directed graph a path exists between all the pair of nodes
+	 * In a way when we do a DFS from a certain starting point there will nodes that are visited and nodes that aren't
+	 * The nodes that are visited will form the Strongly Connected Component(SCC) and the nodes that were not visited will
+	 * fall in other SCC
+	 * 1. We do a DFS and populate a stack that will give us the source as the first element when popped
+	 * 2. Now, reverse the edges and then do another DFS taking the vertixes popped from the stack as the source
+	 * 3. This will start visiting the SCCs 
+	 * */
+	
+	
+	//this is util method to find the transpose need in the SCC problem
+	function transposeTheAdjecencyList(){
+		var newArray = [];
+		for(let v=0;v < V;v++){
+			newArray[v] = {vertix:v, next:null};
+		}
+		for(let k=0;k< V;k++){
+			var currentNode = array[k].next;
+			while(currentNode){
+				var vertix = currentNode.vertix;
+				var newNode = {vertix: k, next: newArray[vertix].next};
+				newArray[vertix].next = newNode;
+				currentNode = currentNode.next;
+			}
+		}
+		array = newArray;
 	}
+	
+	
+	function SCC(){
+		var stack = require('./DS').stackFunction();
+		var visited = [];
+		
+		function markUnVisited(){
+			for(let j=0;j < V;j++){
+				visited[j] = false;
+			}
+		}
+		
+		markUnVisited();
+		
+		//Fill the stack
+		for(let i=0;i < V;i++){
+			if(!visited[i]){
+				fillTheStack(i);
+			}
+		}
+		
+		markUnVisited();
+		
+		//Do the transpose
+		transposeTheAdjecencyList();
+		
+		//Do the DFS using the stack formed above
+		
+		while(!stack.isEmpty()){
+			var aV = stack.pop();
+			if(!visited[aV]){
+				fdsUtil(aV);
+				console.log("-----------");
+			}
+			
+		}
+		
+		function fdsUtil(u){
+			visited[u] = true;
+			console.log(u);
+			var currentNode = array[u].next;
+			while(currentNode){
+				let v = currentNode.vertix;
+				if(!visited[v]){
+					fdsUtil(v);
+				}
+				currentNode = currentNode.next;
+			}
+		}
+		
+		function fillTheStack(u){
+			visited[u] = true;
+			
+			var currentNode = array[u].next;
+			while(currentNode){
+				let v = currentNode.vertix;
+				if(!visited[v]){
+					fillTheStack(v);
+				}
+				currentNode = currentNode.next;
+			}
+			stack.push(u);
+ 		}	
+	}//O(E + V)
 	
 	
 	return {
@@ -718,7 +812,9 @@ function GraphADTUsingAdjacencyList(){
 		articulationPoints,
 		articulateEdge,
 		isConnected,
-		eulersPath
+		eulersPath,
+		transposeTheAdjecencyList,
+		SCC
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    
