@@ -474,5 +474,5 @@ _graph8.addEdge(1, 2, true, 1);
 _graph8.addEdge(1, 3, true, 1);
 _graph8.addEdge(1, 4, true, 1);
 _graph8.addEdge(2, 4, true, 1);
-//_graph8.addEdge(3, 4, true, 1);
+_graph8.addEdge(3, 4, true, 1);
 console.log(_graph8.hameltoninPathWithBackTracking(), 'hameltoninPathWithBackTracking');

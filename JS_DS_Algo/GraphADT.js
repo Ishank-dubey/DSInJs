@@ -831,7 +831,7 @@ function GraphADTUsingAdjacencyList(){
 			    	return true;
 			    }else{
 			    	path[v] = -1;
-			    	return false;
+			    	//return false;
 			    }
 			  }
 		    }
