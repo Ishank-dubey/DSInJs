@@ -898,9 +898,6 @@ function GraphADTUsingAdjacencyList(){
 	//Coloring problem using some adjacent criteria 
 	function coloring(m){
 		
-		
-		
-		//Since, this is an undirected graph
 		function checkAdjacent(col, u){
 			var nextNode = array[u].next;
 			while(nextNode){
@@ -922,7 +919,7 @@ function GraphADTUsingAdjacencyList(){
 			if( u == V){
 				return true;
 			}
-			for(let c=1;c <= V;c++){
+			for(let c=1;c <= m ;c++){
 				if(checkAdjacent(c, u)){
 					color[u] = c;
 					if(coloringInner(u+1)){
@@ -936,6 +933,78 @@ function GraphADTUsingAdjacencyList(){
 		} 
 	}//O(m * V) in time, O(V) in space
 	
+	/*
+	 * Checking if the graph is Bipartite
+	 * 1. Check of its colorable with m=2
+	 * 2. When there is a simple cycle - Bipartite graph is possible only when there are even edges its not bipartite if odd edges
+	 * 3. Do a BFS like traversal and start marking the adjacent edges with one color and then the next vertixes with the other color 
+	 * */
+	/*
+	 * Checking if the graph is Bipartite
+	 * 1. Check of its colorable with m=2
+	 * 2. When there is a simple cycle - Bipartite graph is possible only when there are even edges its not bipartite if odd edges
+	 * 3. Do a BFS like traversal and start marking the adjacent edges with one color and then the next vertixes with the other color 
+	 * */
+     function isBipartite(){
+    	 var queue = require('./QueueADT').QueueADT();
+    	 var colorArray = [];
+    	 
+    	 //Our colors are 1 and 0 so intialize this array to -1
+    	 for(let j=0;j< V;j++){
+    		 colorArray[j] = -1;
+    	 }
+    	 queue.enQueue(0);
+    	 colorArray[0] = 1;
+    	 while(!queue.isEmpty()){
+    		 let u = queue.deQueue();
+    		 var currentNode = array[u].next;
+    		 while(currentNode){
+    			 let v = currentNode.vertix;
+    			 if(colorArray[v] == -1){
+    				 colorArray[v] = 1- colorArray[u];
+    				 queue.enQueue(v);
+    			 }else if(colorArray[v] == colorArray[u]){
+    				 return false;
+    			 }
+    			 currentNode = currentNode.next;
+    		 }
+    	 }
+    	 return true;
+     }//O( V + E )
+     
+     /*
+      * Bipartite in a DFS way
+      * */
+     function biparateInDFS(){
+    	var colorArray = []; 
+    	for(let j=0;j< V;j++){
+    		colorArray[j] = -1;
+    	}
+    	return biparateDFSInner(0, 1);
+    	//!color of the parent needs to passed in this
+    	function biparateDFSInner(u, c){
+    		if(colorArray[u] != -1 && colorArray[u] !=c ){
+    			//return false;
+    		}
+    		
+    		colorArray[u] = c;
+    		var currentNode = array[u].next;
+    		while(currentNode){
+    			var v = currentNode.vertix;
+    			if(colorArray[v] == -1){
+    				if(!biparateDFSInner(v, 1-c)){
+    					return false;
+    				}else{
+    					return true;
+    				}
+    			}else if(colorArray[v] != -1 && colorArray[v] == c){
+    				return false;
+    			}
+    			currentNode = currentNode.next;
+    		}
+    		return true;
+    	}
+     }//O(V + E)
 	
 	return {
 		setVertices,
@@ -961,7 +1030,9 @@ function GraphADTUsingAdjacencyList(){
 		SCC,
 		hameltoninPathWithBackTracking,
 		mColorNaive,
-		coloring
+		coloring,
+		isBipartite,
+		biparateInDFS
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

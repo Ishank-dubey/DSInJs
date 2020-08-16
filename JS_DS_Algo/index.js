@@ -35,7 +35,7 @@ console.log("--------");
 //DS.arrangeThreeOfThree(['b','b','b','b', 'a', 'a', 'b', 'a', 'a']);
 //console.log(DS.highestRectangularAreaInHistogram([2, 5,6, 7, 2, 1, 10, 10]));
 //console.log(DS.removeDuplicacyCharacters('aaabbbbaaaaddddde'));
-//console.log(DS.removeRepeatingChars("missiidi"));
+console.log(DS.removeRepeatingChars("missiidi"), 'removeRepeatingChars');
 //DS.nextGreatestNumberWithForLoop([1,2,3]);
 //DS.nextGreatestNumberWithForLoop([1,2,4,4,4, 0,1]);
 DS.nextGreatestWithStack([1,20,3]);
@@ -489,3 +489,12 @@ _graph9.addEdge(2, 3, true, 1);
 console.log(_graph9.mColorNaive(3), 'color naive');
 console.log(_graph9.coloring(3), 'color hoshiyar');
 //coloring
+
+var _graph10 = require("./GraphADT").GraphADTUsingAdjacencyList();
+_graph10.setVertices(4);
+_graph10.addEdge(0, 1, true, 1);
+_graph10.addEdge(0, 3, true, 1);
+_graph10.addEdge(2, 3, true, 1);
+_graph10.addEdge(0, 1, true, 1);
+console.log(_graph10.isBipartite());
+console.log(_graph10.biparateInDFS());
