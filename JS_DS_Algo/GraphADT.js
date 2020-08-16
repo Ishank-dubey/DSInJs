@@ -838,7 +838,104 @@ function GraphADTUsingAdjacencyList(){
 		    }
 			return false;
 		}
-	}//(V + E)
+	}//O(n!)
+	
+	/*
+	 * In a graph with v vertices we can have 2^(n-2) trees or spanning trees- as the number of edges in a tree 
+	 * and spanning tree are the same
+	 * */
+	
+	
+	/*
+	 * Bipartite graph - when there are two disjoint sets and each vertix of one set is connected to other set vertix
+	 * None of the vertixes in the same set are connected via edges OR - 
+	 * U, V then any edge e(u, v) belongs to u and v belong to either U or V
+	 * */
+	
+	// this is directly trying to find color set w/o considering the adjecent vertixes
+	// this is a pre-reqisite for the Bipartite graph matching problems
+	
+	function mColorNaive(m){
+		var color = []; //this array will have color for each vertix, color from 1 to m;
+		
+		//to check if the colors formed are ok i.e. adjacent vetixes are assigned different color
+		function isOK(){
+			for(let j=0;j < V;j++){
+				var nextNode = array[j].next;
+				while(nextNode){
+					var v = nextNode.vertix;
+					if(color[j]== color[v]) return false;
+					nextNode = nextNode.next;
+				}
+			}
+			return true;
+		}
+		
+		return mColorNaiveUtil(0);
+		
+		function mColorNaiveUtil(v){
+			if(v == V){
+				if(isOK()){
+					console.log(color);
+					return true;
+				}else{
+					return false;
+				}
+			}
+			for(let i=1;i <= m;i++){
+				color[v] = i;
+				if(mColorNaiveUtil(v+1)){
+					return true;
+				}else{
+					color[v] = 0;
+				}
+			}
+			return false;
+		}
+		
+	}//O(m * V) in time, O(V) in space
+	
+	//Coloring problem using some adjacent criteria 
+	function coloring(m){
+		
+		
+		
+		//Since, this is an undirected graph
+		function checkAdjacent(col, u){
+			var nextNode = array[u].next;
+			while(nextNode){
+				var v = nextNode.vertix;
+				if(color[v] === col)return false;
+				nextNode = nextNode.next;
+			}
+			return true;
+		}
+		
+		
+		var color = [];
+		
+		for(let j=0;j < V;j++){
+			color[j] = 0;
+		}
+		return coloringInner(0);
+		function coloringInner(u){
+			if( u == V){
+				return true;
+			}
+			for(let c=1;c <= V;c++){
+				if(checkAdjacent(c, u)){
+					color[u] = c;
+					if(coloringInner(u+1)){
+						return true;
+					} else{ 
+						color[u]=0;
+					}
+				}
+			}
+			return false;
+		} 
+	}//O(m * V) in time, O(V) in space
+	
 	
 	return {
 		setVertices,
@@ -862,7 +959,9 @@ function GraphADTUsingAdjacencyList(){
 		eulersPath,
 		transposeTheAdjecencyList,
 		SCC,
-		hameltoninPathWithBackTracking
+		hameltoninPathWithBackTracking,
+		mColorNaive,
+		coloring
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

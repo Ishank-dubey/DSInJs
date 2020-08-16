@@ -476,3 +476,16 @@ _graph8.addEdge(1, 4, true, 1);
 _graph8.addEdge(2, 4, true, 1);
 _graph8.addEdge(3, 4, true, 1);
 console.log(_graph8.hameltoninPathWithBackTracking(), 'hameltoninPathWithBackTracking');
+
+
+var _graph9 = require("./GraphADT").GraphADTUsingAdjacencyList();
+_graph9.setVertices(4);
+_graph9.addEdge(0, 1, true, 1);
+_graph9.addEdge(0, 2, true, 1);
+_graph9.addEdge(0, 3, true, 1);
+_graph9.addEdge(1, 2, true, 1);
+_graph9.addEdge(0, 1, true, 1);
+_graph9.addEdge(2, 3, true, 1);
+console.log(_graph9.mColorNaive(3), 'color naive');
+console.log(_graph9.coloring(3), 'color hoshiyar');
+//coloring
