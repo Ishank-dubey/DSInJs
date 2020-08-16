@@ -150,4 +150,8 @@ Adding the SCC(strongly connected components) - E + V
 
 Hamiltonian Path With Back-Tracking
 
+Graph coloring
+
+Checking Bipartite in BFS and DFS manner
+
 Adding more with time..
