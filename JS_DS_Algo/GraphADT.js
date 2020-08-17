@@ -1007,7 +1007,7 @@ function GraphADTUsingAdjacencyList(){
      }//O(V + E)
 	
      /* 
-      * Find paths from Source to Destination
+      * Find paths from Source to Destination - BFS way
       * */
     function findPaths(src, dest){
     	var queue = require('./QueueADT').QueueADT();
@@ -1034,7 +1034,33 @@ function GraphADTUsingAdjacencyList(){
     	}
     }
     
-    
+    /*
+     * Find all the paths in a DJFS way
+     * */
+    function pathsDFS(src, dest){
+    	var visited = [];
+    	for(let j=0;j < V;j++){
+    		visited[j] = false;
+    	}
+    	pathsDFSInner(src, dest, []);
+    	function pathsDFSInner(src, dest, path){
+    		visited[src] = true;
+    		var newPath = [...path];
+    		newPath.push(src);
+    		var next = array[src].next;
+    		while(next){
+    			var v = next.vertix;
+    			if(!visited[v] && v!=dest ){
+    				pathsDFSInner(v, dest, newPath);
+    			}else if( v == dest ){
+    				console.log(...newPath, v, "Path via DFS");
+    			}
+    			next = next.next;
+    		}
+    		visited[src] = false;
+    	}
+    	
+    }
 	return {
 		setVertices,
 		initialize,
@@ -1062,7 +1088,8 @@ function GraphADTUsingAdjacencyList(){
 		coloring,
 		isBipartite,
 		biparateInDFS,
-		findPaths
+		findPaths,
+		pathsDFS
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

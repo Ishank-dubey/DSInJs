@@ -511,3 +511,4 @@ _graph11.addEdge(4, 0, false, 1);
 _graph11.addEdge(4, 1, false, 1);
 _graph11.addEdge(4, 5, false, 1);
 _graph11.findPaths(0, 5);
+_graph11.pathsDFS(0, 5);
