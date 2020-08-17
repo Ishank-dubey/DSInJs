@@ -1006,6 +1006,35 @@ function GraphADTUsingAdjacencyList(){
     	}
      }//O(V + E)
 	
+     /* 
+      * Find paths from Source to Destination
+      * */
+    function findPaths(src, dest){
+    	var queue = require('./QueueADT').QueueADT();
+    	var path = [];
+    	path[0] = src;
+    	queue.enQueue(path);
+    	while(!queue.isEmpty()){
+    		var aPath = queue.deQueue();
+    		var u = aPath[aPath.length-1];
+    		if(u == dest){
+    			console.log(aPath, 'PATH');
+    		}else{
+    		var next = array[u].next;
+    		while( next ){
+    			var v = next.vertix;
+    			if(aPath.indexOf(v) == -1){
+    				var newPath = [...aPath];
+    				newPath.push(v);
+    				queue.enQueue(newPath);
+    			}
+    			next = next.next;
+    		}
+    		}
+    	}
+    }
+    
+    
 	return {
 		setVertices,
 		initialize,
@@ -1032,7 +1061,8 @@ function GraphADTUsingAdjacencyList(){
 		mColorNaive,
 		coloring,
 		isBipartite,
-		biparateInDFS
+		biparateInDFS,
+		findPaths
 	};
 }// Its costlier to find if an edge exists between two vertixes and this was constant time in matrix representation
    

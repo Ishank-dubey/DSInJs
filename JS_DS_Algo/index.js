@@ -498,3 +498,16 @@ _graph10.addEdge(2, 3, true, 1);
 _graph10.addEdge(0, 1, true, 1);
 console.log(_graph10.isBipartite());
 console.log(_graph10.biparateInDFS());
+
+var _graph11 = require("./GraphADT").GraphADTUsingAdjacencyList();
+_graph11.setVertices(6);
+_graph11.addEdge(0, 1, false, 1);
+_graph11.addEdge(0, 2, false, 1);
+_graph11.addEdge(1, 2, false, 1);
+_graph11.addEdge(1, 3, false, 1);
+_graph11.addEdge(3, 4, false, 1);
+_graph11.addEdge(2, 3, false, 1);
+_graph11.addEdge(4, 0, false, 1);
+_graph11.addEdge(4, 1, false, 1);
+_graph11.addEdge(4, 5, false, 1);
+_graph11.findPaths(0, 5);
