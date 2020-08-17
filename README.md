@@ -154,4 +154,8 @@ Graph coloring
 
 Checking Bipartite in BFS and DFS manner
 
+Find path from src to dest in a directed graph in a DFS way
+
+Find path from src to dest in a directed graph in a BFS way
+
 Adding more with time..
