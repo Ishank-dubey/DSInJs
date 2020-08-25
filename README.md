@@ -158,4 +158,6 @@ Find path from src to dest in a directed graph in a DFS way
 
 Find path from src to dest in a directed graph in a BFS way
 
+Bubble Sort, Selection Sort, Insertion sort, Shell Sort, Merge Sort
+
 Adding more with time..
