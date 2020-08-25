@@ -512,3 +512,11 @@ _graph11.addEdge(4, 1, false, 1);
 _graph11.addEdge(4, 5, false, 1);
 _graph11.findPaths(0, 5);
 _graph11.pathsDFS(0, 5);
+
+
+var _sort = require('./Sorting').Sorting();
+_sort.bubbleSort([2, 10, 43, 0]);
+_sort.selectionSort([2, 10, 43, 10, 0, 5]);
+_sort.insertionSort([2, 10, 43, 10, 0, 5]);
+_sort.shellSort([2, 10, 43, 10, 0, 5, 1]);
+_sort.mergeSort([2, 10, 43, 10, 0, 5, 1]);
