@@ -97,10 +97,11 @@ function Sorting(){
 			var leftArray = [];
 			var rightArray = [];
 			
+			//from left to mid- inculde the mid
 			for(let i=0; i < len1;i++){
 				leftArray.push(array[l + i]);
 			}
-			
+			//from mid+1 to right
 			for(let j=0; j < len2;j++){
 				rightArray.push(array[m + 1 + j]);
 			}
@@ -134,7 +135,48 @@ function Sorting(){
 		
 	}//O(n*log n)
 	
-	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort};
+	
+	/*
+	 * This is a divide and conquer technique
+	 * 1. Partition an array and choose a pivot point then have the elements lesser on the left and bigger
+	 * on the right
+	 */
+	function quickSort(array){
+		
+		quickSortInner(0, array.length-1);
+		console.log("Quick Sort :: ", array);
+		function quickSortInner(l, h){
+			if(l < h){
+			var pivot = partition(l, h);
+			quickSortInner(l, pivot-1);
+			quickSortInner(pivot+1, h);
+			}
+			
+		}
+		
+		function partition(l, h){
+			var pi = array[h];
+			var j = l-1;
+			var k = l;
+			for(;k <= h-1 ;k++){
+				if(array[k] < pi){
+					j++;
+					let temp = array[k];
+					array[k] = array[j];
+					array[j] = temp;
+				}
+			}
+			j++;
+			//console.log("", j);
+			var temp2 = array[j];
+			array[j] = array[h];
+			array[h] = temp2;
+			//console.log("CONSOLE ", j, array[h], h);
+			return j;
+		}
+	}//O(n^2) in worst case when the pivot is from the right most and its already sorted in and average case - O(nLog n) 
+	
+	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort};
 }
 
 module.exports = {Sorting}

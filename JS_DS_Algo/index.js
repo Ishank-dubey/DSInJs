@@ -520,3 +520,4 @@ _sort.selectionSort([2, 10, 43, 10, 0, 5]);
 _sort.insertionSort([2, 10, 43, 10, 0, 5]);
 _sort.shellSort([2, 10, 43, 10, 0, 5, 1]);
 _sort.mergeSort([2, 10, 43, 10, 0, 5, 1]);
+_sort.quickSort([2, 10, 43, 10, 0, 5, 1]);
