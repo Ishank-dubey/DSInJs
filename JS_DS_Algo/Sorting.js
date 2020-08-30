@@ -87,53 +87,55 @@ function Sorting(){
 				var m = Math.floor((l+r)/2)
 				mergeSortInner(l, m);
 				mergeSortInner(m+1, r);
-				merge(l, m, r);
+				merge(l, m, r, array);
 			}
-		}
-		function merge(l, m , r){
-			var len1 = m - l + 1;
-			var len2 = r - m;
-			
-			var leftArray = [];
-			var rightArray = [];
-			
-			//from left to mid- inculde the mid
-			for(let i=0; i < len1;i++){
-				leftArray.push(array[l + i]);
-			}
-			//from mid+1 to right
-			for(let j=0; j < len2;j++){
-				rightArray.push(array[m + 1 + j]);
-			}
-			
-			var leftIndex = 0;
-			var rightIndex = 0;
-			var k = l;
-			while(leftIndex < len1 && rightIndex < len2){
-				if(leftArray[leftIndex] <= rightArray[rightIndex]){
-					array[k] = leftArray[leftIndex];
-					leftIndex++;
-				}else {
-					array[k] = rightArray[rightIndex];
-					rightIndex++;
-				}
-				k++;
-			}
-			
-			while(leftIndex < len1){
-				array[k] = leftArray[leftIndex];
-				leftIndex++;
-				k++;
-			}
-			while(rightIndex < len2){
-				array[k] = rightArray[rightIndex];
-				rightIndex++;
-				k++;
-			}
-			
 		}
 		
 	}//O(n*log n)
+	
+	
+	function merge(l, m , r, array){
+		var len1 = m - l + 1;
+		var len2 = r - m;
+		
+		var leftArray = [];
+		var rightArray = [];
+		
+		//from left to mid- inculde the mid
+		for(let i=0; i < len1;i++){
+			leftArray.push(array[l + i]);
+		}
+		//from mid+1 to right
+		for(let j=0; j < len2;j++){
+			rightArray.push(array[m + 1 + j]);
+		}
+		
+		var leftIndex = 0;
+		var rightIndex = 0;
+		var k = l;
+		while(leftIndex < len1 && rightIndex < len2){
+			if(leftArray[leftIndex] <= rightArray[rightIndex]){
+				array[k] = leftArray[leftIndex];
+				leftIndex++;
+			}else {
+				array[k] = rightArray[rightIndex];
+				rightIndex++;
+			}
+			k++;
+		}
+		
+		while(leftIndex < len1){
+			array[k] = leftArray[leftIndex];
+			leftIndex++;
+			k++;
+		}
+		while(rightIndex < len2){
+			array[k] = rightArray[rightIndex];
+			rightIndex++;
+			k++;
+		}
+		
+	}
 	
 	
 	/*
@@ -147,36 +149,83 @@ function Sorting(){
 		console.log("Quick Sort :: ", array);
 		function quickSortInner(l, h){
 			if(l < h){
-			var pivot = partition(l, h);
+			var pivot = partition(l, h, array);
 			quickSortInner(l, pivot-1);
 			quickSortInner(pivot+1, h);
 			}
 			
 		}
-		
-		function partition(l, h){
-			var pi = array[h];
-			var j = l-1;
-			var k = l;
-			for(;k <= h-1 ;k++){
-				if(array[k] < pi){
-					j++;
-					let temp = array[k];
-					array[k] = array[j];
-					array[j] = temp;
-				}
-			}
-			j++;
-			//console.log("", j);
-			var temp2 = array[j];
-			array[j] = array[h];
-			array[h] = temp2;
-			//console.log("CONSOLE ", j, array[h], h);
-			return j;
-		}
 	}//O(n^2) in worst case when the pivot is from the right most and its already sorted in and average case - O(nLog n) 
 	
-	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort};
+	function partition(l, h, array){
+		var pi = array[h];
+		var j = l-1;
+		var k = l;
+		for(;k <= h-1 ;k++){
+			if(array[k] < pi){
+				j++;
+				let temp = array[k];
+				array[k] = array[j];
+				array[j] = temp;
+			}
+		}
+		j++;
+		//console.log("", j);
+		var temp2 = array[j];
+		array[j] = array[h];
+		array[h] = temp2;
+		//console.log("CONSOLE ", j, array[h], h);
+		return j;
+	}
+	
+	
+	/*
+	 * here we try to do the sorting like this -
+	 * (0, 1), (2, 3), (4, 5) then increase the size and merge (0,3), (0, 5)
+	 * this order is a bit different from the recursive merge sort version
+	 * */
+	function iterativeMergeSort(array){
+		var rightMost = array.length-1;
+		for(let size=1;size <= rightMost;size = 2*size){
+			for(let left=0;left< rightMost;left=left+2*size){
+				let mid = Math.min(left+size-1, rightMost);
+				let rightEnd = Math.min(left+2*size-1, rightMost);
+				merge(left, mid, rightEnd, array);
+			}
+		}
+		console.log("Iterative merge sort:: ", array);
+	}//O(nlog n)
+	
+	
+	/*
+	 * This will require a stack that will store left and right points then use the same partition
+	 * function on the range received
+	 * the points are pushed in the stack only when they are in correct range 
+	 * */
+	function iterativeQuickSort(array){
+		var stack = require("./DS").stackFunction();
+		stack.push(0);
+		stack.push(array.length - 1);
+		while(!stack.isEmpty()){
+			var right = stack.pop();
+			var left = stack.pop();
+			var pi = partition(left, right, array);
+			if(pi - 1 > left){
+				stack.push(left);
+				stack.push(pi - 1);
+			}
+			if(pi + 1 <  right){
+				stack.push(pi + 1);
+				stack.push(right);
+			}
+		}
+		console.log("Iteration - Quick Sort:   ", array);
+	}
+	
+	
+	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
+		    iterativeMergeSort, iterativeQuickSort 
+	       };
 }
 
 module.exports = {Sorting}
