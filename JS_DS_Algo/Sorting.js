@@ -223,8 +223,80 @@ function Sorting(){
 	}
 	
 	
+	/*
+	 * This is useful when there is a predefined array length or range
+	 * 1. create a count array that will have the counts of all the occurances 
+	 *    of all the charaters at their index
+	 * 2. Create another output array and fill it at the indexs obtained while iterating on the input array
+	 * 3. Lastly after the o/p array is in place we can change the i/p array
+	 * */
+	//K is the range
+	function countSort(array, K){
+      var count = [];
+      
+      //initialize the count array with all 0 values
+      for(let i=0 ;i < K;i++){
+    	  count[i] = 0;
+      }
+      //fill the count array with the counts of the array elements
+      for(let i = 0;i < array.length;i++){
+        count[array[i]] = count[array[i]] +1;
+      }
+      
+      //modify the count array so that an element contains the sum of the previous
+      //element occurances and its own
+      //we dont see for zero th index since ots value will be the same as found just above
+      for(let i=1;i< K ;i++){
+    	  count[i] = count[i] + count[i-1]; 
+      }
+      
+      var op = [];
+      for(let j=0;j< array.length;j++){
+        op[count[array[j]]-1] = array[j];
+        count[array[j]] = count[array[j]] - 1;
+      }
+      
+      for(let j=0;j< array.length;j++){
+        array[j] = op[j];
+      }
+      console.log("Count Sort::  ", array);
+	}//O(n+K)
+	
+	
+	/*
+	 * This is useful when there is a decimal range
+	 * When decimal is present than we can not use the above count sort
+	 * We will save the decimal number in the bucket - n*array[i]th bucket
+	 * Now the buckets are uniformly distributes so insertion sort has a complexity of log n
+	 * */
+	function bucketSort(array){
+		var bucket = [];
+		for(let i=0;i < array.length;i++){
+			bucket[i] = [];
+		}
+		
+		for(let i=0;i < array.length;i++){
+			bucket[Math.floor(array.length* array[i])].push(array[i]);
+		}
+		
+		//Now sort the array in the bucket array - as these are uniform so log n
+		for(let j=0 ; j < array.length ; j++){
+			bucket[j].sort();
+		}
+		
+		//Now append the results
+		var index = 0;
+		for(let j=0 ; j < bucket.length ; j++){
+          for(let k=0;k < bucket[j].length;k++){
+        	  array[index] = bucket[j][k];
+        	  index++;
+          }
+		}
+		console.log("Bucket Sort:: ", array);
+	}//O(N + K)
+	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
-		    iterativeMergeSort, iterativeQuickSort 
+		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort
 	       };
 }
 

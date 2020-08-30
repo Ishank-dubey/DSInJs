@@ -523,3 +523,5 @@ _sort.mergeSort([2, 10, 43, 10, 0, 5, 1]);
 _sort.quickSort([2, 10, 43, 10, 0, 5, 1]);
 _sort.iterativeMergeSort([2, 10, 43, 10, 0, 5, 1]);
 _sort.iterativeQuickSort([2, 10, 43, 10, 0, 5, 1]);
+_sort.countSort([1, 4, 1, 2, 7, 5, 2], 9);
+_sort.bucketSort([0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]);
