@@ -295,8 +295,60 @@ function Sorting(){
 		console.log("Bucket Sort:: ", array);
 	}//O(N + K)
 	
+	
+	/*
+	 * 1. Find the maximum of the array
+	 * 2. Use the max of the array to find the digits in the max number found
+	 * 3. Start the count sort starting with the least significant digit in the array numbers
+	 * 4. Its complexity is compareble to Quick sort but its Space complexity is more that Quick sort
+	 * */
+	function radixSort(array){
+		function findMax(array){
+			var max = -Infinity;
+			for(let i=0;i < array.length ;i++){
+				if(array[i] > max){
+					max = array[i];
+				}
+			}
+			return max;
+		}
+		
+		function countSortWithRadixFacility(exp, base){
+			var count = [];
+			
+			//the range is the base i.e the number of unique digits
+			for(let i=0;i< base;i++){
+				count[i] = 0;
+			}
+			
+			for(let i=0;i < array.length;i++){
+				count[Math.floor(array[i]/exp) % 10] = count[Math.floor(array[i]/exp) % 10] + 1;
+			}
+			
+			for(let i=1;i < base;i++){
+				count[i] = count[i] + count[i-1];
+			}
+			var op = [];
+			
+			//this order is important here in Radix sort
+			for(let i=array.length - 1; 0 <= i ;i--){
+				op[ count [(Math.floor(array[i]/exp) % 10)] -1 ] = array[i];
+				count[(Math.floor(array[i]/exp) % 10)] = count[(Math.floor(array[i]/exp) % 10)] - 1;
+			}
+			
+			for(let i=0 ; i < array.length ; i++){
+				array[i] = op[i];
+			}
+		}
+		var max = findMax(array);//'d' i.e. the number of digits in max number
+		for(let exp=1 ; Math.floor(max/exp) > 0 ; exp = exp*10){
+			countSortWithRadixFacility(exp, 10);
+		}
+		console.log("Radix Sort:: ", array);
+	}//O(d( n+ base))
+	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
-		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort
+		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort
 	       };
 }
 
