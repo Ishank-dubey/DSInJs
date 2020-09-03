@@ -1,13 +1,13 @@
 function Sorting(){
 	
 	function bubbleSort(array){
-		console.log("Before Sort:: ", array);
+		//console.log("Before Sort:: ", array);
 		var pass = array.length - 1;
 		//var length = pass;
 		var swapped = 1;
 		for(;(swapped && pass>=0);pass--){
 			swapped = 0;
-			 for(let i = 0;i < pass-1 ;i++){
+			 for(let i = 0;i <= pass-1 ;i++){
 				if(array[i] > array[i+1]){
 					let temp = array[i];
 					array[i] = array[i+1];
@@ -16,9 +16,9 @@ function Sorting(){
 				}
 			 }
 		}
-		console.log("After Sort:: ", array);
+		console.log("After Bubble Sort:: ", array);
 	}//O(n^2) in worst case, O(n) when is already sorted- this is one advantage of Bubble sort that it can detect an already sorted array
-	//O(1) is extra(auxilliary) space
+	//O(1) is extra(auxilliary) space, Stable
 	
 	
 	//here we find the minimum and iterate
@@ -37,8 +37,31 @@ function Sorting(){
 			array[pass] = array[min];
 			array[min] = temp;
 		}
-		console.log("Sorted:: ", array);
-	}
+		console.log("Sorted via Selection aort:: ", array);
+	}//O(n^2), 
+	 //unstable, for example consider - 4, 3, 2, 4, 1, the earlier 4 ends after the later 4
+	
+	//Here we want to stablize the above bubble sort
+	//Instead of swapping the min we will shift the min to its postion
+	function stableSelectionSort(array){
+		for(let i=0;i < array.length-1;i++){
+			let min = i;
+			for(let j=i+1;j < array.length;j++){
+				if(array[min] > array[j]){
+					min = j;
+				}
+			}
+			var lowKey = array[min];
+			while(min > i){
+				array[min] = array[min-1];
+				min = min-1; 
+			}
+			array[i] = lowKey;
+		}
+		console.log("After Stable Selection Sort:: ", array);
+	}// Stable slection sort, time complexity is same
+	
+	
 	
 	function insertionSort(array){
 		var length = array.length;
@@ -54,7 +77,7 @@ function Sorting(){
 		}
 		console.log("Sorted Array via insertion sort:: ", array);
 	}//O(n^2) in worst case, O(n) when its already sorted as the while loop is not started, O(1) auxilliary space
-	
+	 //Stable - consider the same sequence - 4, 5, 3 ,2 ,4 , 1
 	
 	//This is similar to insertion sort but the Gap is bigger and that goes to 1 implying that the array is sorted
 	function shellSort(array){
@@ -91,7 +114,7 @@ function Sorting(){
 			}
 		}
 		
-	}//O(n*log n)
+	}//O(n*log n), Stable
 	
 	
 	function merge(l, m , r, array){
@@ -156,7 +179,7 @@ function Sorting(){
 			
 		}
 	}//O(n^2) in worst case when the pivot is from the right most and its already sorted in and average case - O(nLog n) 
-	
+	 //Not stable
 	function partition(l, h, array){
 		var pi = array[h];
 		var j = l-1;
@@ -348,7 +371,8 @@ function Sorting(){
 	}//O(d( n+ base))
 	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
-		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort
+		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort,
+		    stableSelectionSort
 	       };
 }
 
