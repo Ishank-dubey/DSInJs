@@ -166,4 +166,8 @@ Count sort, Bucket sort
 
 Nearly sorted
 
+Sort Linked list via Merge Sort
+
+Sort Linked list via Quick Sort
+
 Adding more with time..
