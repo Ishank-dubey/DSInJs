@@ -164,4 +164,6 @@ Merge and Quick sort with iteration
 
 Count sort, Bucket sort
 
+Nearly sorted
+
 Adding more with time..
