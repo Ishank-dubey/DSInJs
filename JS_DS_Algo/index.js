@@ -527,3 +527,4 @@ _sort.iterativeQuickSort([2, 10, 43, 10, 0, 5, 1]);
 _sort.countSort([1, 4, 1, 2, 7, 5, 2], 9);
 _sort.bucketSort([0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]);
 _sort.radixSort([170, 45, 75, 90, 802, 24, 2, 66]);
+_sort.nearlySorted([2, 6, 3, 12, 56, 8, 20], 3);

@@ -370,9 +370,29 @@ function Sorting(){
 		console.log("Radix Sort:: ", array);
 	}//O(d( n+ base))
 	
+	function nearlySorted(array, K){
+		var minHeap = require("./HeapADT").HeapADT();
+		var op = [];
+		var heapifyArray = [];
+		for(let k=0;k< K+1;k++){
+			heapifyArray.push(array[k]);
+		}//Consider this as O(K) due to a proof in GFG
+		minHeap.heapifyInaMInHeap(heapifyArray);
+		console.log("DELETE START");
+		var opIndex = 0;
+		for(let j=K+1;j < array.length;j++){
+			op[opIndex++] = minHeap.deleteRootMinHeap();
+			minHeap.insertMinHeap(array[j]);
+		}
+		while(minHeap.getCount()){
+			op[opIndex++] = minHeap.deleteRootMinHeap();
+		}
+		console.log("Sorted after nearlySorted:: ",op);//As we have arrayHeafity only for MAx heap
+	}//O(n log K)
+	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
 		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort,
-		    stableSelectionSort
+		    stableSelectionSort, nearlySorted
 	       };
 }
 

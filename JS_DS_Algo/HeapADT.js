@@ -77,6 +77,23 @@ function HeapADT(){
 		return data;
 	}//O(log n)
 	
+	function deleteRootMinHeap(){
+		if(count == 0) return -1;
+		var data = array[0];
+		
+		if(count>0){
+			array[0] = array[count-1];
+			count--;
+		}
+		else{
+			return -1;
+		}
+		topBottomOfMinHeap(0);
+		console.log("DELETE:: ", array);
+		return data;
+	}//O(log n)
+	
+	
 	function getMax(){
 		if(count == 0) return -1;
 		return array[0];
@@ -92,6 +109,18 @@ function HeapADT(){
 		array[i] = data;
 	}//O(log n)
 	
+	
+	function insertMinHeap(data){
+		count = count+1;
+		var i = count-1;
+		while(i >= 1 && data < array[Math.floor((i-1)/2)]){
+			array[i] = array[Math.floor((i-1)/2)];
+			i = Math.floor((i-1)/2);
+		}
+		array[i] = data;
+		console.log("insert::", array);
+	}//O(log n)
+	
 	function destroyHeap(){
 		array = [];
 		count = 0;
@@ -104,7 +133,7 @@ function HeapADT(){
 	 * The sum of heights of all the nodes is approx n - h -1 = n - log(n) -1
 	 * this way we get a complexity of O(n)
 	 * 
-	 * Brute force method is to have an empty heap and insert the array elements one by one in it.
+	 * Brute force method is to have an empty heap and insert the array elements one by one in it with n*Log n.
 	 * */
 	
 	function heapifyArray(ipArray){
@@ -118,6 +147,40 @@ function HeapADT(){
 		//note that leaves are compared with the parent 
 		//as left and right children in the topBottom method
 	}//O(n) as sum of all the heights of the nodes in a tree is almost n
+	
+	function heapifyInaMInHeap(ipArray){
+		array = ipArray;
+		count = ipArray.length;
+		let i = Math.floor((count - 1 - 1)/2);// = n/2 -1
+		for( ;i>=0; i--){
+			topBottomOfMinHeap(i);
+		}
+		console.log("Min Heap:: ", array);
+	}
+	
+	
+	function topBottomOfMinHeap(index){
+		if(index < 0 || index >= array.length){
+			return;
+		}
+		var rChild = rightChild(index);
+		var lChild = leftChild(index);
+		
+		var minIndex = index;
+		if(lChild < count && lChild != -1 && array[lChild] < array[minIndex]){
+			minIndex = lChild;
+			console.log(array[minIndex], "Mehhhhh");
+		}
+        if(rChild < count && rChild != -1 && array[rChild] < array[minIndex]){
+        	minIndex = rChild;
+		}
+        if(minIndex != index){
+        	var temp = array[index];
+        	array[index] = array[minIndex];
+        	array[minIndex] = temp;
+        	topBottomOfMinHeap(minIndex);
+        }
+	}
 	
 	/*
 	 * 1. Create the heap with the above heapifyArray method to create a max heap
@@ -417,7 +480,10 @@ function HeapADT(){
 		     heapifyTheArrayOfObjectToMinHeap,
 		     reduceTheDistanceValInObjectHeap,
 		     deleteMinFromObjectMinHeap,
-		     isPresentInObjectMinHeap
+		     isPresentInObjectMinHeap,
+		     heapifyInaMInHeap,
+		     deleteRootMinHeap,
+		     insertMinHeap
 		    };
 }
 
