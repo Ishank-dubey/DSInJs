@@ -528,3 +528,54 @@ _sort.countSort([1, 4, 1, 2, 7, 5, 2], 9);
 _sort.bucketSort([0.897, 0.565, 0.656, 0.1234, 0.665, 0.3434]);
 _sort.radixSort([170, 45, 75, 90, 802, 24, 2, 66]);
 _sort.nearlySorted([2, 6, 3, 12, 56, 8, 20], 3);
+
+
+function formLL(){
+	var head = null;
+	
+	function add(data){
+		if(!head){
+			head = {data, next: null};
+		}else{
+			var current = head;
+			while(current.next){
+				current = current.next;
+			}
+			current.next = {data, next: null};
+		}
+	}
+	function getHead(){
+		return head;
+	}
+	function setHead(arg){
+		head = arg;
+	}
+	function getEnd(){
+		var current = head;
+		while(current.next){
+			current = current.next;
+		}
+		return current;
+	}
+	function print(){
+		var current = head;
+		while(current){
+			console.log(current.data);
+			current = current.next;
+		}
+	}
+	return {add, getHead, getEnd, print, setHead};
+}
+var ll = formLL();
+ll.add(10);
+ll.add(0);
+ll.add(20);
+ll.add(5);
+ll.print();
+console.log(ll.getEnd());
+console.log(ll.getHead());
+//DS.getEndOfLL();
+ll.setHead(_sort.sortLinkedListViaMergeSort(ll.getHead()));
+//_sort.sortLinkedListViaQuickSort(ll.getHead(), ll.getEnd());
+console.log("-------------");
+ll.print();

@@ -193,11 +193,9 @@ function Sorting(){
 			}
 		}
 		j++;
-		//console.log("", j);
 		var temp2 = array[j];
 		array[j] = array[h];
 		array[h] = temp2;
-		//console.log("CONSOLE ", j, array[h], h);
 		return j;
 	}
 	
@@ -390,9 +388,84 @@ function Sorting(){
 		console.log("Sorted after nearlySorted:: ",op);//As we have arrayHeafity only for MAx heap
 	}//O(n log K)
 	
+	function getMiddleOfLL(head){
+		var slow = head, fast = head;
+		while(fast && fast.next && fast.next.next){
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		return slow;
+	}
+	function mergeSortedLL(left, right){
+		if(!left){
+			return right;
+		}
+		if(!right){
+			return left;
+		}
+		var op;
+		if(left.data < right.data){
+			op = left;
+			op.next = mergeSortedLL(left.next, right);
+		}else{
+			op = right;
+			op.next = mergeSortedLL(left, right.next);
+		}
+		return op;
+	}
+	function sortLinkedListViaMergeSort(head){
+		if(!head || !head.next){
+			return head;
+		}
+		var middle = getMiddleOfLL(head);
+		var nextToMiddle = middle.next;
+		
+		middle.next = null;
+		var left = sortLinkedListViaMergeSort(head);
+		var right = sortLinkedListViaMergeSort(nextToMiddle);
+		return mergeSortedLL(left, right);
+	}//O(n Log n)
+	function sortLinkedListViaQuickSort(start, end){
+		if(start == end){
+			return;
+		}
+		var prev = partitionForLL(start, end);
+		sortLinkedListViaQuickSort(start, prev);
+		
+		if(prev && prev!=start){
+			sortLinkedListViaQuickSort(prev.next, end);
+		}else if(prev && prev.next){
+			sortLinkedListViaQuickSort(prev.next.next, end);
+		}
+		
+		function partitionForLL(start, end){
+			if(start == end || !start || !end){
+				return start;
+			}
+			var pivot = end.data;
+			var previous_pivot = start;
+			var current = start;
+			while(end != start){
+				if(start.data < pivot){
+					var temp = current.data;
+					current.data = start.data;
+					start.data = temp;
+					previous_sort = current;
+					current = current.next;
+				}
+				start = start.next;
+			}
+			var temp1 = current.data;
+			current.data = pivot;
+			start.data = temp1;
+			return previous_pivot;
+		}
+	}
+	
+	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
 		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort,
-		    stableSelectionSort, nearlySorted
+		    stableSelectionSort, nearlySorted, sortLinkedListViaQuickSort, sortLinkedListViaMergeSort
 	       };
 }
 
