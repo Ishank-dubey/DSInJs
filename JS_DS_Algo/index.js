@@ -579,3 +579,4 @@ ll.setHead(_sort.sortLinkedListViaMergeSort(ll.getHead()));
 //_sort.sortLinkedListViaQuickSort(ll.getHead(), ll.getEnd());
 console.log("-------------");
 ll.print();
+_sort.mergeTwoSortedArrays([1, 3, 0, 0, 0],[0, 2, 5], 2, 3);

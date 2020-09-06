@@ -462,10 +462,34 @@ function Sorting(){
 		}
 	}
 	
+	/*
+	 * Size of A is m + n of which m are having values
+	 * Size of B is n
+	 * Merge these arrays in O(1) space complexity 
+	 * */
+	function mergeTwoSortedArrays(A, B, m, n){
+		var k = m + n -1;
+		var j = m-1, i = n-1;
+		for(;k>=0;k--){
+			if(B[i] > A[j] || j< 0){
+				A[k] = B[i];
+				i--
+				if(i < 0){
+					break;
+				}
+			}else{
+				A[k] = A[j];
+				j--
+			}
+		}
+		console.log("Merged array in O(1) space and O(m+n) time cplxity : ", A);
+	}
+	
 	
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
 		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort,
-		    stableSelectionSort, nearlySorted, sortLinkedListViaQuickSort, sortLinkedListViaMergeSort
+		    stableSelectionSort, nearlySorted, sortLinkedListViaQuickSort, sortLinkedListViaMergeSort,
+		    mergeTwoSortedArrays 
 	       };
 }
 
