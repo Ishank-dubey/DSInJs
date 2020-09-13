@@ -100,13 +100,41 @@ function Search(){
 		console.log("No Duplicates");
 	}//O(n) but will have the limitations that are discussed above
 	
+	
+	//This is a brute force way to find the element with highest repetations
+	function findTheElementWithMaxRepetations(array){
+		var max = 0;
+		var counter = 0;
+		var element = -1;
+		var maxElement;
+		for(let i=0;i < array.length;i++){
+			counter = 0;
+			for(let j=i+1; j < array.length;j++){
+				if(array[j] == array[i]){
+					element = array[j];
+					counter++;
+				}
+			}
+			if(counter > max){
+				max = counter;
+				maxElement = element;
+			}
+		}
+		console.log("The maximum occuring element ", maxElement, "It occured: ", max+1, " times");
+	}//O(n^2)
+	/*
+	 * We can solve the above problem after sorting and then checking for the max repetations-- O(n log n)
+	 * Or we can have a hash that solves this in O(n) time and space complexity
+	 * The O(n), O(1) in space is discussed in the following function
+	 * */
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
 		    recursiveBinarySearch,
 		    checkIfAnyDupplicate,
 		    checkIfDuplicateExistsAfterSorting,
 		    checkIfDuplicateUsingHashTable,
-		    findDuplicate
+		    findDuplicate,
+		    findTheElementWithMaxRepetations
 		   };
 }
 module.exports = {Search};

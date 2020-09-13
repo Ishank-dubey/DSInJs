@@ -580,3 +580,10 @@ ll.setHead(_sort.sortLinkedListViaMergeSort(ll.getHead()));
 console.log("-------------");
 ll.print();
 _sort.mergeTwoSortedArrays([1, 3, 0, 0, 0],[0, 2, 5], 2, 3);
+
+
+var _search = require("./Searching").Search();
+//_search.checkIfDuplicateExistsAfterSorting([10, 10, 90, 3, 1, 2]);
+//_search.checkIfDuplicateUsingHashTable([10, 11, 3, 1, 2]);
+_search.findDuplicate([1, 2, 3, 0]);
+_search.findTheElementWithMaxRepetations([1, 1, 2, 3, 1, 2, 2, 2, 1, 1, 1]);
