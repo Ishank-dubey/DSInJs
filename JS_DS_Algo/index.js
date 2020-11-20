@@ -590,3 +590,7 @@ _search.findDuplicate([1, 2, 3, 0]);
 _search.findMaxOccuring([1, 1, 2, 3, 1, 2, 2, 2, 1, 1, 1, 1, 3, 3,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3]);
 _search.findFirstRepeatingBruteForce([3, 2, 1, 2, 2, 3]);
 _search.findFirstRepeatingUsingMap([3, 2, 1, 2, 2, 3]);
+_search.findMissing([1, 2, 4, 5], 5);
+_search.findMissingXOR([1, 2, 3, 4], 5);
+_search.findNumbersWithsum([2, 5, 0], 6);
+_search.findNumbersWithSumUsingMap([3, 4, 01], 6);

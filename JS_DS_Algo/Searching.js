@@ -200,6 +200,111 @@ function Search(){
 		console.log("First repetation via Map - ", number);
 	}//O(n)
 	
+	
+	/*
+	 * Find the missing number form a list when its a list of n-1 numbers
+	 * In Range 1 to n
+	 * none is repeated
+	 * Brute force is been performed here, sort can help in O(n log n)
+	 * We can also have a Map with all the initial values as 0 now, in one iteration all will have a 
+	 * value 1 except the one thats missing
+	 * Another way is using n*(n+1)/2 - (sum of all the numbers in the array)
+	 * 
+	 * */
+	function findMissing(array, n){
+		for(let i=1; i<= n;i++){
+			var found = 0;
+			for(let j=0; j < array.length ;j++){
+				if(array[j]==i ){
+					found = 1;
+					break;
+				}
+			}
+				if(!found){
+				console.log(i+" is not found");
+			}
+		}
+	}//O(n^2)
+	
+	/*
+	 * Finding the missing number via XOR operations
+	 * 1. XOR all the numbers from 1 to n = X (say)
+	 * 2. XOR all the numbers in the array = Y(say)
+	 * 3. XOR X with Y is the missing number.
+	 * */
+	function findMissingXOR(array, N){
+		let X = array[0], Y = 1;
+		for(let j=2;j <= N;j++){
+			Y = Y ^ j;
+		}
+		for(let k=1;k < array.length;k++){
+			X = X ^array[k];
+		}
+		
+		let missingNumber = X ^ Y;
+		console.log("missingNumber ", missingNumber);
+	}//O(n) in time and O(1) in space
+	
+	
+	/*
+	 * To find the number that is ossuring ODD number of times
+	 * Just XOR all the elements of the Array
+	 * The numbers that are even will become zero leaving the one thats occuring Odd number of times
+	 * */
+	
+	/*
+	 * Given an array of size n+2 out of which n are occuring one time and only 2 are
+	 * occuring 2 times, rang from 1 to n
+	 * 1. Use a Map 
+	 * 2. x+y = n*(n+1)/2 - S, x*y = P/n!
+	 * */
+	
+	/*
+	 * Given that there are n-1 numbers that are occuring 3 times and one is occuring 2 times
+	 * to find the one occuring 2 times -
+	 * XOR all the elements in the array with all the numbers in 1 to n 
+	 * */
+	
+	/*
+	 * to find of any two numbers have a sum equal to a given number
+	 * */
+	function findNumbersWithsum(array, SUM){
+		array.sort((a, b)=> a - b);
+		let low =0;
+		let high = array.length-1;
+		while(low < high){
+			let temp = array[low]+ array[high];
+			if(temp==SUM){
+				console.log(array[low]+" "+array[high]+" are the elements with Sum "+SUM);
+				return;
+			}else{
+				if(temp < SUM){
+					low++;
+				}else{
+					high--
+				}
+			}
+		}
+		console.log("No such elements");
+	}//O(n log n)
+	
+	/*
+	 * Above problem using a Map in O(n) time
+	 * */
+	function findNumbersWithSumUsingMap(array, SUM){
+		let map = {};
+		for(let i=0;i< array.length;i++){
+			map[array[i]] = i;
+		}
+		for(let k=0;k < array.length;k++){
+			if(map[SUM - array[k]]){
+				console.log(array[k] + " " +(SUM - array[k])+" "+" sum to "+ SUM);
+				return;
+			}
+		}
+		console.log("none so");
+	}//O(n) in time and space
+	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
 		    recursiveBinarySearch,
@@ -210,7 +315,11 @@ function Search(){
 		    findTheElementWithMaxRepetations,
 		    findMaxOccuring,
 		    findFirstRepeatingBruteForce,
-		    findFirstRepeatingUsingMap
+		    findFirstRepeatingUsingMap,
+		    findMissing,
+		    findMissingXOR,
+		    findNumbersWithsum,
+		    findNumbersWithSumUsingMap
 		   };
 }
 module.exports = {Search};
