@@ -339,7 +339,7 @@ function TreeADT(){
             
             return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
     	}
-    }
+    }//O(n) since any node is accessed at max one time
     
     function diameterUsingHeight(){
     	return diameterUsingHeightInner(root);
@@ -841,6 +841,7 @@ function TreeADT(){
 	/*
 	 * If the right subtree is present than find the leftest of the right tree
 	 * If right is not present then start from the root and maintain the successor
+	 * Successor is updated only when there is a left traversal
 	 * This method finds successor w/o parent pointer
 	 * */
 	function inOrderSuccessor(node){
@@ -1516,17 +1517,17 @@ function TreeADT(){
 			}
 			var leftHeight, rightHeight;
 			leftHeight = isAVLInner(node.left);
-			if(!leftHeight){
+			if(leftHeight == -1 ){
 				return -1;
 			}
 			rightHeight = isAVLInner(node.right);
-			if(!rightHeight){
+			if(rightHeight == -1 ){
 				return -1;
 			}
 			if(Math.abs(leftHeight - rightHeight) > 1){
 				return -1;
 			}
-			return Math.max(leftHeight + rightHeight) + 1;
+			return Math.max(leftHeight ,  rightHeight) + 1;
 			
 		}
 	}

@@ -62,7 +62,7 @@ function reverseQueue(queueLocal){
 	while(!stack.isEmpty()){
 		queueLocal.enQueue(stack.pop());
 	}
-}
+}//O(n) in time
 
 
 function findConsecutivePairsWise(localStack){
