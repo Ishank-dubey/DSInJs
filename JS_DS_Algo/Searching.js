@@ -299,11 +299,277 @@ function Search(){
 		for(let k=0;k < array.length;k++){
 			if(map[SUM - array[k]]){
 				console.log(array[k] + " " +(SUM - array[k])+" "+" sum to "+ SUM);
-				return;
+				let j = findIndexWithVal(array, SUM - array[k]);
+				return [k, j];
 			}
 		}
 		console.log("none so");
+		return null;
 	}//O(n) in time and space
+	
+	
+	//Get the index where the value is the given value
+	function findIndexWithVal(array, val){
+		for(let i=0;i < array.length;i++){
+			if(array[i]==val){
+				return i;
+			}
+		}
+	}
+	
+	
+	//find i, j, k such that - A[i]^2 + A[j]^2 = A[z]^2
+	/*
+	 * 1. Square the numbers
+	 * 2. Sort the array
+	 * 3. for any element at ith index, linearly search from 0 to i-1
+	 * */
+	function threeIndexes(array){
+		
+		for(let i=0;i< array.length;i++){
+			array[i] = array[i]* array[i];
+		}
+		
+		array.sort(function(a, b){return a-b;});//nlog(n)
+		
+		for(let j=0;j < array.length;j++){
+			let result = findNumbersWithSumUsingMap(array, array[j]);
+			if(result){
+				console.log(result, j);
+				return result;
+			}
+		}
+		console.log("No such number");
+	}//n*O(n) = O(n^2)
+	//Book Narasimha says to sort first that might fail when -(ives) are present in the array
+	
+	
+	//Brute force
+	function findThePairWithSumClosestToZero(array){
+		let minI = 0;
+		let minJ = 1;
+		let minSum = Math.abs(array[0]+ array[1]);
+		for(let i=0;i< array.length-1;i++){
+			for(let j=i+1;j< array.length;j++){
+				if(Math.abs(array[j]+ array[i]) < minSum){
+					minSum = Math.abs(array[j]+ array[i]);
+					minI = i;
+					minJ = j;
+				}
+			}
+		}
+		console.log("Closest to zero sum for indexes- ", minI, minJ);
+	}//O(n^2) and O(1)
+	
+	//Optimal way to find the closest to zero sum and the indexes
+	function findThePairWithSumClosestToZeroOptimal(array){
+		array.sort((a, b)=> a-b);
+		let positiveClosest = Infinity;
+		let negativeClosest = -Infinity;
+		let i = 0;
+		let j = array.length -1;
+		let sum= 0;
+		let indexesP = [i, j];
+		let indexesN = [i, j];
+		while(i < j){
+			sum = array[i]+ array[j];
+			if(sum < 0){
+				if(sum > negativeClosest){
+					negativeClosest = sum;
+					indexesN = [i, j];
+					i++;
+				}
+			}else if(sum > 0){
+				if(sum < positiveClosest){
+					positiveClosest = sum;
+					indexesP = [i, j];
+					j--;
+				}
+			}else{
+				positiveClosest = negativeClosest = 0;
+				break;
+			}
+		}
+		if(Math.abs(positiveClosest) < Math.abs(negativeClosest)){
+			console.log("Closest Sum:: ", positiveClosest, indexesP, array);
+		}else{
+			console.log("Closest Sum:: ", negativeClosest, indexesN, array);
+		}
+		
+	}//nlog(n)
+	
+	
+	/*
+	 * to find if three indexes sum up to K like - K = A[i]+A[j]+A[k]
+	 * find i, j, k
+	 * */
+	//Brute force way
+	function findThreeIndexesThatSumToK(array, K){
+		for(let i=0;i < array.length-2;i++){
+			for(let j=i+1;j< array.length-1;j++){
+				for(let k=j+1;k< array.length-1;k++){
+					if(array[i]+array[j]+array[k] == K){
+						console.log("The three indexes are: ", i, j, k);
+						return;
+					}
+				}
+			}
+		}
+		console.log('No such three indcies');
+	}
+	
+	/*
+	 * 1. Sort
+	 * 2. Use two for loops
+	 * */
+	function findTheThreeIndexesInOptimal(array, K){
+		array.sort((a, b)=> a-b);
+		for(let k=0; k < array.length;k++){
+			for(let i=k+1, j = array.length-1;i<j;){
+				if(array[i]+ array[j]+ array[k]===K){
+					console.log(i, j, k);
+					return;
+				}else if(array[i]+ array[j]+ array[k] < K){
+					i++;
+				}else{
+					j--;
+				}
+			}
+		}
+		console.log('No three indices');
+	}//O(n^2)
+	
+	
+	/*
+	 * 1. Bitonic array - the element increase initially monotinically then decreases
+	 * 2. To find the element thats the maximum 
+	 * 3. Time complexity must be O(log n)
+	 * */
+	
+	function bitonicPoint(array){
+		let i = 0;
+		let j = array.length-1;
+		while(i <= j){
+			if(i==j){
+				console.log("Bitonic Point: ",array[i]);
+				return array[i];
+			}else if(i == j-1){
+				console.log("Bitonic Point: ", array[i]);
+				return array[i];
+			}else{
+				let mid = Math.floor((i+j)/2);
+				if(array[mid-1] < array[mid] && array[mid] > array[mid+1]){
+					console.log("Bitonic Point: ", array[mid]);
+					return array[mid];
+				}else if(array[mid-1]< array[mid] && array[mid]< array[mid+1]){
+					i = mid+1;
+				}else if(array[mid-1] > array[mid] && array[mid]> array[mid+1]){
+					j = mid-1;
+				}else{
+					console.log("no bitonic");
+					return;
+				}
+			}	
+		}
+		console.log("no bitonic");
+	}//O(log n)
+	
+	
+	/*
+	 * Find pivot
+	 * */
+	function findPivot(array, start, last){
+		if(start == last){
+			return start;
+		}else if(start == last-1){
+			if(array[start] > array[last]){
+				return start;
+			}
+			return last;
+		}else{
+			let mid = Math.floor((start+last)/2);
+			if(array[start] >= array[mid]){
+				return findPivot(array, start, mid);
+			}else{
+				return findPivot(array, mid, last);
+			}
+		}
+	}
+	
+	/*
+	 * To find the element in log(n) time in an array - 
+	 * The array is sorted and has been rotated unknown number of times
+	 * 1. Find Pivot - the element whose next element is smaller then it
+	 * 2. Apply binary search on the left or the right of the pivot 
+	 * */
+	function findElementInRotatedSortedArray(array, element){
+		let pivot = findPivot(array, 0, array.length - 1);
+		if(array[pivot] == element){
+			return pivot;
+		}else if(array[pivot] > element){
+			return binarySearch(array, pivot+1, array.length-1, element);
+		}else{
+			return binarySearch(array, 0, pivot-1, element);
+		}
+	}//O(log n)
+	
+	function binarySearch(array, s, l, e){
+		if(s <= l){
+			let mid = Math.floor((s+l)/2);
+			if(array[mid] == e){
+				return mid;
+			}else if(array[mid] > e){
+				binarySearch(array, s, mid-1, e);
+			}else{
+				binarySearch(array, mid+1, l, e);
+			}
+		}
+		return -1;
+	}
+	
+	
+	/*
+	 * Find repeated element's first index in the array
+	 * 1. array[mid]==data && array[mid-1]< data || array[mid] == data && low == mid
+	 * */
+	
+	function findFirstIndex(array, s, l, element){
+		if(s <= l){
+			let mid = Math.floor((s+l)/2);
+			if(array[mid]==element && array[mid-1] < element || array[mid]==data && low==mid ){
+				return mid;
+			}else if(array[mid] < element){
+				findFirstIndex(array, mid+1, l, element);
+			}else{
+				findFirstIndex(array, s, mid-1, element);
+			}
+		}
+		return -1;
+	}//Log(n)
+	
+	/*
+	 * Find the last index of a repeated element
+	 * 1. array[mid]==data && array[mid+1] > data || array[mid]==data && high == mid
+	 * */
+	function findLastIndex(array, s, l, element){
+		if(s <= l){
+			let mid = Math.floor((s+l)/2);
+			if(array[mid]==element && array[mid+1]> element || array[mid]==data && high==mid ){
+				return mid;
+			}else if(array[mid] <= element){
+				findLastIndex(array, mid+1, l, element);
+			}else{
+				findLastIndex(array, s, mid-1, element);
+			}
+		}
+		return -1;
+	}//Log(n)
+	
+	/*
+	 * Use the above two methods to find the total repeatations
+	 * find first index, find last index, difference between them + 1 
+	 * */
+	
 	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
@@ -319,7 +585,14 @@ function Search(){
 		    findMissing,
 		    findMissingXOR,
 		    findNumbersWithsum,
-		    findNumbersWithSumUsingMap
+		    findNumbersWithSumUsingMap,
+		    threeIndexes,
+		    findThePairWithSumClosestToZero,
+		    findThePairWithSumClosestToZeroOptimal,
+		    findThreeIndexesThatSumToK,
+		    findTheThreeIndexesInOptimal,
+		    bitonicPoint,
+		    findElementInRotatedSortedArray
 		   };
 }
 module.exports = {Search};
