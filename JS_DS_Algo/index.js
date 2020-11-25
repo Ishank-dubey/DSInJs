@@ -599,4 +599,7 @@ _search.findThePairWithSumClosestToZeroOptimal([-15, -5, 50, 200]);
 _search.findThreeIndexesThatSumToK([1,2,3, 45,6, 7], 50);
 _search.findTheThreeIndexesInOptimal([1,2,3, 45,6, 7], 500);
 _search.bitonicPoint([1, 2, 3, 4, 5, 6, 50, 3, 0]);
-console.log(_search.findElementInRotatedSortedArray([15, 16, 19, 20, 25, 1, 3, 4, 5, 7, 10, 14], 25), ' Pivot');
+console.log(_search.findElementInRotatedSortedArray([ 1, 3, 4, 5, 7, 10, 14], 3), ' Pivot');
+console.log(_search.findLastIndex([1, 2, 3, 4, 5, 5, 5,5, 6, 7], 0, 9, 5), "  -First/Last Index");
+_search.seperateOddAndEven([1, 2, 3, 4, 5, 6]);
+_search.maxIndexDiff([34, 8, 10, 3, 2, 80, 30, 33]);

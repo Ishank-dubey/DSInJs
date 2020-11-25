@@ -506,7 +506,7 @@ function Search(){
 		let pivot = findPivot(array, 0, array.length - 1);
 		if(array[pivot] == element){
 			return pivot;
-		}else if(array[pivot] > element){
+		}else if(array[pivot] > element && pivot != array.length-1){
 			return binarySearch(array, pivot+1, array.length-1, element);
 		}else{
 			return binarySearch(array, 0, pivot-1, element);
@@ -519,9 +519,9 @@ function Search(){
 			if(array[mid] == e){
 				return mid;
 			}else if(array[mid] > e){
-				binarySearch(array, s, mid-1, e);
+				return binarySearch(array, s, mid-1, e);
 			}else{
-				binarySearch(array, mid+1, l, e);
+				return binarySearch(array, mid+1, l, e);
 			}
 		}
 		return -1;
@@ -536,12 +536,12 @@ function Search(){
 	function findFirstIndex(array, s, l, element){
 		if(s <= l){
 			let mid = Math.floor((s+l)/2);
-			if(array[mid]==element && array[mid-1] < element || array[mid]==data && low==mid ){
+			if(array[mid]==element && array[mid-1] < element || array[mid]== element && s ==mid ){
 				return mid;
 			}else if(array[mid] < element){
-				findFirstIndex(array, mid+1, l, element);
+				return findFirstIndex(array, mid+1, l, element);
 			}else{
-				findFirstIndex(array, s, mid-1, element);
+				return findFirstIndex(array, s, mid-1, element);
 			}
 		}
 		return -1;
@@ -554,22 +554,76 @@ function Search(){
 	function findLastIndex(array, s, l, element){
 		if(s <= l){
 			let mid = Math.floor((s+l)/2);
-			if(array[mid]==element && array[mid+1]> element || array[mid]==data && high==mid ){
+			if(array[mid]==element && array[mid+1]> element || array[mid]== element && l == mid ){
 				return mid;
 			}else if(array[mid] <= element){
-				findLastIndex(array, mid+1, l, element);
+				return findLastIndex(array, mid+1, l, element);
 			}else{
-				findLastIndex(array, s, mid-1, element);
+				return findLastIndex(array, s, mid-1, element);
 			}
 		}
 		return -1;
 	}//Log(n)
 	
 	/*
-	 * Use the above two methods to find the total repeatations
+	 * Use the above two methods to find the total repeatations of an element
 	 * find first index, find last index, difference between them + 1 
 	 * */
 	
+	
+	
+	function swap(array, i, j){
+		let temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+	
+	
+	/*
+	 * To get the even on the left and odd on the right of the Array
+	 * */
+	function seperateOddAndEven(array){
+		let left = 0;
+		let right = array.length-1;
+		while(left < right){
+			while(array[left]%2==0 && left < right){
+				left++;
+			}
+			while(array[right]%2==1 && left < right){
+				right--;
+			}
+			if(left < right){
+				swap(array, left, right);
+				left++;
+				right--;
+			}
+		}
+		console.log("Odd and Even Seperated Array: ", array);
+	}
+	
+	/*
+	 * Finding i and j such that j - i is maximum and A[j] > A[i]
+	 * Brute force O(n^2)
+	 * */
+	function maxIndexDiff(array){
+		let maxDiff = -Infinity;
+		for(let i=0;i< array.length-1;i++){
+			for(let j=i+1;j< array.length;j++){
+				if(array[j] > array[i]){
+					if(maxDiff < j-i){
+						maxDiff = j-i;
+					}
+				}
+			}
+		}
+		console.log('Max Diff', maxDiff);
+	}//O(n^2)
+	
+	
+	/*
+	 * Max index diff for the above problem in O(n)
+	 * 
+	 * */
 	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
@@ -592,7 +646,11 @@ function Search(){
 		    findThreeIndexesThatSumToK,
 		    findTheThreeIndexesInOptimal,
 		    bitonicPoint,
-		    findElementInRotatedSortedArray
+		    findElementInRotatedSortedArray,
+		    findFirstIndex,
+		    findLastIndex,
+		    seperateOddAndEven,
+		    maxIndexDiff
 		   };
 }
 module.exports = {Search};
