@@ -603,3 +603,5 @@ console.log(_search.findElementInRotatedSortedArray([ 1, 3, 4, 5, 7, 10, 14], 3)
 console.log(_search.findLastIndex([1, 2, 3, 4, 5, 5, 5,5, 6, 7], 0, 9, 5), "  -First/Last Index");
 _search.seperateOddAndEven([1, 2, 3, 4, 5, 6]);
 _search.maxIndexDiff([34, 8, 10, 3, 2, 80, 30, 33]);
+console.log(_search.maxIndexDiffOptimal([34, 8, 10, 3, 2, 80, 30, 33]), "index diff");
+_search.getFrequencyOptimal([1, 2, 3, 3, 4, 4, 4]);

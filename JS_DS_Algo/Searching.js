@@ -622,8 +622,74 @@ function Search(){
 	
 	/*
 	 * Max index diff for the above problem in O(n)
-	 * 
+	 * 1. Maintain the array of Mins - the first element and the min values in the rest
+	 * 2. Maintain the array of Maxs - the last element is the same and the left ones are max
 	 * */
+	function maxIndexDiffOptimal(array){
+		let minArray = [];
+		minArray[0] = array[0];
+		let i=1;
+		while(i < array.length){
+			minArray[i] = Math.min(array[i], minArray[i-1]);
+			i++;
+		}
+		
+		let maxArray = [];
+		maxArray[array.length-1] = array[array.length-1];
+		let j = array.length -2;
+		while(j >=  0){
+			maxArray[j] = Math.max(maxArray[j+1], array[j]);
+			j--;
+		}
+		i = j = 0;
+		let maxDiff = -Infinity;
+		while(i < array.length && j < array.length){
+			if(minArray[i] < maxArray[j]){
+				if(maxDiff < j -i ){
+					maxDiff = j -i;
+				}
+				j++;
+			}else{
+				i++;
+			}
+		}
+		return maxDiff;
+	}//O(n)
+	
+	/*
+	 * Check of the array is pair wise sorted -i.e.  A[i] < A[i+1]
+	 * */
+	function checkIfArrayIsPairWiseSorted(array){
+		for(let i=0;i < array.length-1;i++){
+			if(array[i] > array[i+1]){
+				return 'no';
+			}
+		}
+		return 'yes';
+	}
+	
+	/*
+	 * Count the frequency of the elements where - 
+	 * all the element are lesser than n, positive
+	 * 1. Find the expected position of an element and negate it or increase the negative value if already touched
+	 * 2. If a position is encountered thats been negated already dont do anything and move to next element
+	 * */
+	function getFrequencyOptimal(array){
+		let pos = 0;
+		while(pos < array.length){
+			let expectedPosition = array[pos]-1;
+			if(array[pos] > 0 && array[expectedPosition] > 0){
+				swap(array, pos, expectedPosition);
+				array[expectedPosition] = -1;
+			}else if(array[pos] > 0){
+				array[expectedPosition]--;
+				array[pos++] = 0;
+			}else{
+				pos++;
+			}
+		}
+		console.log(array);
+	}
 	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
@@ -650,7 +716,10 @@ function Search(){
 		    findFirstIndex,
 		    findLastIndex,
 		    seperateOddAndEven,
-		    maxIndexDiff
+		    maxIndexDiff,
+		    maxIndexDiffOptimal,
+		    checkIfArrayIsPairWiseSorted,
+		    getFrequencyOptimal
 		   };
 }
 module.exports = {Search};
