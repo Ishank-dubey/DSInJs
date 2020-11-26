@@ -600,8 +600,12 @@ _search.findThreeIndexesThatSumToK([1,2,3, 45,6, 7], 50);
 _search.findTheThreeIndexesInOptimal([1,2,3, 45,6, 7], 500);
 _search.bitonicPoint([1, 2, 3, 4, 5, 6, 50, 3, 0]);
 console.log(_search.findElementInRotatedSortedArray([ 1, 3, 4, 5, 7, 10, 14], 3), ' Pivot');
-console.log(_search.findLastIndex([1, 2, 3, 4, 5, 5, 5,5, 6, 7], 0, 9, 5), "  -First/Last Index");
+console.log(_search.findLastIndex([0, 1, 2, 3, 3, 4, 5, 5,5, 6, 7], 0, 9, 5), "  -First/Last Index");
 _search.seperateOddAndEven([1, 2, 3, 4, 5, 6]);
 _search.maxIndexDiff([34, 8, 10, 3, 2, 80, 30, 33]);
 console.log(_search.maxIndexDiffOptimal([34, 8, 10, 3, 2, 80, 30, 33]), "index diff");
-_search.getFrequencyOptimal([1, 2, 3, 3, 4, 4, 4]);
+_search.getFrequencyOptimal([0, 1, 2, 3, 4, 5]);
+
+
+var median = require('./Medians').Median();
+median.getMinAndMax([1,2,3]);

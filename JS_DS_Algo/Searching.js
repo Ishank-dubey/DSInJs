@@ -673,17 +673,18 @@ function Search(){
 	 * all the element are lesser than n, positive
 	 * 1. Find the expected position of an element and negate it or increase the negative value if already touched
 	 * 2. If a position is encountered thats been negated already dont do anything and move to next element
+	 * 3. No extra space and 0 is included in the input data
 	 * */
 	function getFrequencyOptimal(array){
 		let pos = 0;
 		while(pos < array.length){
-			let expectedPosition = array[pos]-1;
-			if(array[pos] > 0 && array[expectedPosition] > 0){
+			let expectedPosition = array[pos];
+			if(array[pos] >= 0 && (array[expectedPosition] >= 0 || array[expectedPosition]=='x') ){
 				swap(array, pos, expectedPosition);
 				array[expectedPosition] = -1;
-			}else if(array[pos] > 0){
+			}else if(array[pos] >= 0){
 				array[expectedPosition]--;
-				array[pos++] = 0;
+				array[pos++] = 'x';
 			}else{
 				pos++;
 			}
