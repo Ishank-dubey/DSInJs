@@ -101,6 +101,64 @@ function Hashing(){
     	console.log("Pairs: ", uniqueMap);
     }//O(n)
     
+    /*
+     * To find all the pairs that sum to K via sorting and binary search
+     * */
+    function getPairsWithSumSpaceOptimised(K, array){
+    	array.sort((a, b)=> a-b);
+    	let s = 0;
+    	let l = array.length - 1;
+    	console.log("Sorted Array:: ", array);//Please note that the indices will be found accordingly
+    	while(s < l){
+    		if(array[s]+ array[l]==K){
+    			console.log("Pair", s, l);
+    			s++; l--;
+    		}else if(array[s]+ array[l] < K){
+    			s++;
+    		}else{
+    			l--;
+    		}
+    	}
+    }//O(nlog n) in time and O(1) in space
+    
+    /*
+     * To find the first repeating char in an array/string
+     * */
+    function findFirstRepeating(array){
+    	let map = {};
+    	for(let j=0;j< array.length;j++){
+    		if(map[array[j]] != undefined){
+    			return array[j];
+    		}else{
+    			map[array[j]] = j;
+    		}
+    	}
+    }//O(n) in time and space
+    
+    
+    
+    /*
+     * To find the first character that is repeating char in an array/string
+     * [3, 2, 2, 3] the output must be 3 not 2
+     * */
+    function findFirstCharaterThatIsRepeating(array){
+    	let map = {};
+    	for(let j=0;j< array.length;j++){
+    		if(map[array[j]] != undefined){
+    			map[array[j]] = -1*map[array[j]];
+    		}else{
+    			map[array[j]] = j+1;
+    		}
+    	}
+    	let max = -Infinity;
+    	for(k of Object.values(map)){
+    		if(max < k && k < 0){
+    			max = k;
+    		}
+    	}
+    	console.log("Frist Repeat element at the first is having the index:", Math.abs(max+1));
+    }//O(n) in time and space
+    
     
     
     
@@ -109,7 +167,10 @@ function Hashing(){
 		    removeDuplicates,
 		    checkIfTwoArraysHaveSameElements,
 		    checkIfTwoArraysHaveSameElementsOptimal,
-		    getPairsWithSum
+		    getPairsWithSum,
+		    findFirstRepeating,
+		    findFirstCharaterThatIsRepeating,
+		    getPairsWithSumSpaceOptimised
 	       };
 }
 module.exports = {Hashing};
