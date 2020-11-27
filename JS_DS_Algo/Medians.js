@@ -22,6 +22,8 @@ function Median(){
 			i = i+2;
 		}
 		
+		
+		//used when the length is odd
 		if(i === array.length-1){
 			if(small > array[i]){
 				small = array[i];
