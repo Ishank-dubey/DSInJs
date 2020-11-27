@@ -156,7 +156,7 @@ function Hashing(){
     			max = k;
     		}
     	}
-    	console.log("Frist Repeat element at the first is having the index:", Math.abs(max+1));
+    	console.log("First Repeat element at the first is having the index:", Math.abs(max+1));
     }//O(n) in time and space
     
     
