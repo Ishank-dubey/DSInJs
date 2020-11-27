@@ -620,3 +620,5 @@ console.log(hashing.checkIfTwoArraysHaveSameElementsOptimal([0, 1, 1, 2], [1, 0,
 hashing.getPairsWithSum(5, [1, 2, 4 , 3, .5, 4.5, 5]);
 hashing.getPairsWithSumSpaceOptimised(5, [1, 2, 4 , 3, .5, 4.5, 5]);
 hashing.findFirstCharaterThatIsRepeating([0,1,  2, 3, 4, 5, 7, 5, 4]);
+hashing.getFirstNonRepeatingViaMap([2, 2, 3, 4, 5, 6]);
+hashing.getFirstNonRepeatingCharacter([2, 2, 3, 4, 5, 6]);

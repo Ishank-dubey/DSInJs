@@ -109,7 +109,7 @@ function Hashing(){
     	let s = 0;
     	let l = array.length - 1;
     	console.log("Sorted Array:: ", array);//Please note that the indices will be found accordingly
-    	while(s < l){
+    	while(s < l){                         //Will not be the same as the ones got in the above function  
     		if(array[s]+ array[l]==K){
     			console.log("Pair", s, l);
     			s++; l--;
@@ -160,6 +160,44 @@ function Hashing(){
     }//O(n) in time and space
     
     
+    /*
+     * to find the first non repeating character
+     * 1. Two for loops approch
+     * 2. Using map approach
+     * */
+    function getFirstNonRepeatingCharacter(array){
+    	for(let i=0;i < array.length ;i++){
+    		let repeated = 0;
+    		for(let j=0;j < array.length;j++){
+    			if(array[j]==array[i] && j != i){
+    				repeated = 1;
+    				break;
+    			}
+    		}
+    		if(!repeated){
+    			console.log("First non repeating: ", array[i]);
+    			break;
+    		}
+    	}
+    }//O(n^2)
+    
+    function getFirstNonRepeatingViaMap(array){
+    	let map = {};
+    	for(let i=0;i < array.length;i++){
+    		if(!map[array[i]]){
+    			map[array[i]] = i + 1;
+    		}else{
+    			map[array[i]] = -1 * map[array[i]];
+    		}
+    	}
+    	for(let j=0;j < array.length ;j++){
+    		if(map[array[j]] > 0){
+    			console.log("First Non Repeating: ", array[j]);
+    			break;
+    		}
+    	}
+    }//O(n), O(n) space
+    
     
     
 	return {linearProbingInsert,
@@ -170,7 +208,9 @@ function Hashing(){
 		    getPairsWithSum,
 		    findFirstRepeating,
 		    findFirstCharaterThatIsRepeating,
-		    getPairsWithSumSpaceOptimised
+		    getPairsWithSumSpaceOptimised,
+		    getFirstNonRepeatingCharacter,
+		    getFirstNonRepeatingViaMap
 	       };
 }
 module.exports = {Hashing};
