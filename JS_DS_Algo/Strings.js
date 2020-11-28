@@ -58,10 +58,59 @@ function Strings(){
     		}
     	}
     }//O(m*n)
-
+    function Trie(){
+    	let sNode = {data:'', isEndOfString: true, next: null};
+    	
+    	//to check if the char is child of the given node
+    	function subNode(node, char){
+    		return node.nodes.find(node=> node.data==char);
+    	}
+    	function getSnode(){
+    		return sNode;
+    	}
+    	function printString(){
+    		let node = sNode;
+    		while(node){
+    			console.log(node.data);
+    			node = node.next;
+    		}
+    	}
+    	function addWord(word){
+    		let index = 0;
+    		if(!sNode.next){
+    			sNode = {data:word[index], isEndOfString: true, next: null};
+    			index++;
+    		}
+    		let node = sNode;
+    		while(node.next){
+    			node = node.next;
+    		}
+    		node.next = add(word, index);
+    		function add(word, index){
+    			let newNode = {data: word[index], isEndOfString: false, next:null};
+        		
+        		if(index == word.length-1 ){
+        			newNode.isEndOfString = true;
+        		}   
+        		else{
+        			newNode.isEndOfString = false;
+        			newNode.next = add(word, index+1);
+        		}
+        		return newNode;
+    		}
+    		
+    	}
+    	//function (){}
+    	return {
+    		     addWord,
+    		     getSnode,
+    		     printString
+    		    };
+    }
     return {
     	    searchSubstring,
-    	    KMP
+    	    KMP,
+    	    Trie
     	   };
 }
 module.exports = {Strings};

@@ -626,3 +626,7 @@ hashing.getFirstNonRepeatingCharacter([2, 2, 3, 4, 5, 6]);
 var Strings = require('./Strings').Strings();
 Strings.searchSubstring('test123123avfgg123_1234','123');
 Strings.KMP('test123123avfgg123_1234','123');
+var tri = Strings.Trie();
+tri.addWord('abc');
+tri.addWord('_def_');
+console.log(tri.printString());
