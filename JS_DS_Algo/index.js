@@ -634,3 +634,13 @@ Strings.combinations('tux');
 Strings.interLeavingStrings('ab','cd');
 //console.log(tri.printString());
 Strings.findPatternIn2DMatrix([], [], 3, 3);
+
+
+var Greedy = require('./Greedy').Greedy();
+let intervals = Greedy.intervalScheduling([{start:0, end: 4},{start:1, end: 2},{start:2, end:4},{start:3, end:5},{start:3, end:6},
+	                       {start:5, end:6}, {start:5, end:7}, {start:6, end:7}, {start:7, end:9},
+	                       {start:8, end:10}]);
+console.log(intervals);
+Greedy.findMaximumoverlapsAndTime([1, 2, 9, 5, 5], [4, 5, 12, 9, 12]);
+console.log(Greedy.areOverlaping({start: 2, end: 7}, {start:6, end:10}));
+Greedy.assignIntervalsToClasses([{start:2, end: 4},{start: 3, end: 8},{start:10, end: 20}, {start: 9, end: 15}]);

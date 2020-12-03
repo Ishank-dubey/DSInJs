@@ -690,7 +690,7 @@ function Search(){
 			}
 		}
 		console.log(array);
-	}
+	}//O(n)
 	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
