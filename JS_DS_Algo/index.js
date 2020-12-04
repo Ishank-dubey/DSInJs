@@ -644,3 +644,9 @@ console.log(intervals);
 Greedy.findMaximumoverlapsAndTime([1, 2, 9, 5, 5], [4, 5, 12, 9, 12]);
 console.log(Greedy.areOverlaping({start: 2, end: 7}, {start:6, end:10}));
 Greedy.assignIntervalsToClasses([{start:2, end: 4},{start: 3, end: 8},{start:10, end: 20}, {start: 9, end: 15}]);
+
+
+
+var DnC = require('./Divide&Conquer').DandC();
+console.log(DnC.stockBuyAndSellDandC([2, 1, 12, 24 , 30]));
+DnC.stockBuyAndSellBruteForce([2, 1, 12, 24 , 30]);

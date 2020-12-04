@@ -175,6 +175,18 @@ function Greedy(){
 		console.log(classes);
 	}//O(n log n)
 	
+	/*
+	 * 1. Given an array of events whose value is the profit it makes and the key is the time
+	 * 2. If an event occurs before or on its time then it yields profit
+	 * 3. Find a way to maximise the profit. 
+	 * */
+	/*
+	 * 1. Sort the array as per the time
+	 * 2. Add the events on that time into a max heap
+	 * 3. Delete max
+	 * 4. Reduce the time and then push the events associated with that time and so on till the n slots are complete 
+	 * */
+	
 	
 	return {
 		intervalScheduling,
