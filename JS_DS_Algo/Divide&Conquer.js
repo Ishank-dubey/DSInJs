@@ -72,13 +72,7 @@ function DandC(){
 			}
 		}//T(n/2) + T(n/2) + O(n) = O(n logn)
 		
-		/*
-		 * Best continous window summation
-		 * 1. 
-		 * */
-		
-		
-		
+		/*Util methods to the min and max in an array within a givne index*/
 		function getMin(array, s, l){
 			let min = Infinity;
 			let minIndex;
@@ -101,11 +95,63 @@ function DandC(){
 			}
 			return {max, maxIndex};
 		}
-		
 	}
+	
+	/*
+	 * Best continous window summation
+	 * 1. Similar to the above where we check the left and right and then also the cross
+	 * */
+	
+	function maximumContinousSum(array){
+		return maximumContinousSumInner(0, array.length-1);
+		function maximumContinousSumInner(s, l){
+			if(s == l){
+				return array[s] > 0 ? array[s] : 0;
+			}else if(s+1 == l){
+				if((array[s]+ array[l]) > array[s] && (array[s]+ array[l]) > array[l]){
+					return array[s]+ array[l];
+				}else{
+					if(array[s] > 0){
+						return array[s];
+					}else if(array[l] > 0){
+						return array[l];
+					}else{
+						return 0;
+					}
+				}
+			}else if(s < l){
+				let mid = Math.floor((s+l)/2);
+				let sumLeft = maximumContinousSumInner(s, mid);
+				let sumRight = maximumContinousSumInner(mid+1, l);
+				let crossLeftMax = 0;
+				let crossRightMax = 0;
+				
+				let crossLeftSum = 0;
+				let crossRightSum = 0;
+				console.log(mid, s, 'MID');
+				for(let i=mid;i >= s;i--){
+					crossLeftSum = crossLeftSum + array[i];
+					if(crossLeftSum > crossLeftMax){
+						crossLeftMax = crossLeftSum;
+					}
+				}
+				
+				for(let i=mid+1;i <= l;i++){
+					crossRightSum = array[i]+ crossRightSum;
+					if(crossRightSum > crossRightMax){
+						crossRightMax = crossRightSum;
+					}
+				}
+				console.log(crossLeftMax, crossRightMax);
+				return Math.max(crossRightMax + crossLeftMax, sumLeft, sumRight);
+			}
+		}
+	}//2T(n/2) + O(n) = O(n logn)
+	
 	return {
 		     stockBuyAndSellBruteForce,
-		     stockBuyAndSellDandC
+		     stockBuyAndSellDandC,
+		     maximumContinousSum
 		};
 }
 module.exports = {DandC};

@@ -650,3 +650,4 @@ Greedy.assignIntervalsToClasses([{start:2, end: 4},{start: 3, end: 8},{start:10,
 var DnC = require('./Divide&Conquer').DandC();
 console.log(DnC.stockBuyAndSellDandC([2, 1, 12, 24 , 30]));
 DnC.stockBuyAndSellBruteForce([2, 1, 12, 24 , 30]);
+console.log(DnC.maximumContinousSum([1, -3, 4, -2, -1, 6]));
