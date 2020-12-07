@@ -651,3 +651,4 @@ var DnC = require('./Divide&Conquer').DandC();
 console.log(DnC.stockBuyAndSellDandC([2, 1, 12, 24 , 30]));
 DnC.stockBuyAndSellBruteForce([2, 1, 12, 24 , 30]);
 console.log(DnC.maximumContinousSum([1, -3, 4, -2, -1, 6]));
+console.log(DnC.closestPair([{x:2, y:3}, {x:12, y:30}, {x:40, y:50}, {x:5, y:1}, {x:12, y:10}, {x:3, y:4}, {x:11, y:1}, {x:11.1, y:1.1}]));
