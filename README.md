@@ -170,4 +170,9 @@ Sort Linked list via Merge Sort
 
 Sort Linked list via Quick Sort
 
+
+Dp - Partition Problem
+Dp - Find all the sub sets with Sum equaling K
+Dp - Factorial and fibonacci
+
 Adding more with time..
