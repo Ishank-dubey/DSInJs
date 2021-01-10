@@ -155,7 +155,82 @@ function DP(){
 		}
 		
 		return DP[SUM/2][array.length];
-	}//O(sum * n)
+	}//O(sum * n)in time complexity
+	
+	
+	/*
+	 * 1. Matrix chain multiplication
+	 * 2. 
+	 * 
+	 * */
+	
+	
+	/*
+	 * 1. Maximum Palindrominc sub-sequence
+	 * 2. Its different form a Sub string, its a sub sequence - 
+	 *    abca => aa is a sub sequence and is a palindrome
+	 * 3. The below is a recursive approach
+	 * 4. Since this is a sub sequence we can consider - 
+	 *    a. L(i, j) is the longest sub sequence possible between i and j
+	 *    b. if array[i] = array[j] then L(i, j) = 2 + L(i+1, j-1)
+	 *    c. if array[i] = array[j] and j = i+1 then L(i, j) = 2
+	 *    d. if i = j, L(i, j) = 1
+	 *    e. check for L(i+1, j) or L(i, j-1) and select the Max of either
+	 * */
+	function longestPalendromicSubSequenceRecurssive(array){
+		return longestPalendromicSubSequenceRecurssiveInner(0, array.length-1);
+		
+		function longestPalendromicSubSequenceRecurssiveInner(i, j){
+			if(i == j){
+				return 1;
+			}
+			if(array[i] == array[j] && j == i+1){
+				return 2;
+			}
+			if(array[i] == array[j]){
+				return 2 + longestPalendromicSubSequenceRecurssiveInner(i+1, j-1);
+			}else{
+				return Math.max(longestPalendromicSubSequenceRecurssiveInner(i+1, j)
+						, longestPalendromicSubSequenceRecurssiveInner(i, j-1));
+			}
+		}
+	}//Exponential time complexity
+	
+	/*
+	 * 1. Same problem as above via DP
+	 * 2. table[i][i] = 1 since each character is a plaindrom
+	 * 3. point 2 gives this is table a bottom values for along the Diagonal
+	 * 4. Since Diagonal elements are available we will need to go for bottom-up approach along the diagonal
+	 * 5. The diagonal is the same approach for the Matrix multiplication chain problem 
+	 * 6. We will follow the iteration that revolves around the diagonal
+	 * */
+	
+	function longestPalindromeSubSeqViaDP(array){
+		var DP = [];
+		
+		for(let j=0;j < array.length;j++){
+			DP.push([]);
+		}
+		
+		for(let j=0;j < array.length;j++){
+			DP[j][j] = 1;
+		}
+		var N = array.length;
+		for(let len=2;len <= N ;len++){
+			for(let i=0;i < N-len+1;i++){
+				j = len + i - 1;
+				
+				if(len ==2 && array[i]== array[j]){
+					DP[i][j] = 2;
+				}else if(array[i]== array[j]){
+					DP[i][j] = DP[i+1][j-1] + 2;
+				}else {
+					DP[i][j] = Math.max(DP[i+1][j], DP[i][j-1]);
+				}
+			}
+		}
+		return DP[0][N-1];
+	}
 	
 	return {
 		factorialRecurssion,
@@ -165,7 +240,9 @@ function DP(){
 		fibonacciWithDP,
 		setsWithSumOfK,
 		recursivePartitionProblem,
-		partitionProblemViaDP
+		partitionProblemViaDP,
+		longestPalendromicSubSequenceRecurssive,
+		longestPalindromeSubSeqViaDP
 		};
 }
 module.exports = {DP}

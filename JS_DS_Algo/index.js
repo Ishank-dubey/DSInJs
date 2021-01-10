@@ -663,3 +663,5 @@ var DP = require('./DP').DP();
 //DP.setsWithSumOfK([1, 2, 3 , 2, 4,7, 8], 15);
 console.log(DP.recursivePartitionProblem([5, 5, 12], 22));
 console.log(DP.partitionProblemViaDP([5, 5, 11, 1], 22));
+//console.log(DP.longestPalendromicSubSequenceRecurssive(['G','E','E','K','S','F','O','R','G','E','E','K','S']));
+console.log(DP.longestPalindromeSubSeqViaDP(['G','E','E','K','S','F','O','R','G','E','E','K','S']))
