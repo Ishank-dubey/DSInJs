@@ -218,7 +218,7 @@ function DP(){
 		var N = array.length;
 		for(let len=2;len <= N ;len++){
 			for(let i=0;i < N-len+1;i++){
-				j = len + i - 1;
+				var j = len + i - 1;
 				
 				if(len ==2 && array[i]== array[j]){
 					DP[i][j] = 2;
@@ -230,6 +230,72 @@ function DP(){
 			}
 		}
 		return DP[0][N-1];
+	}//O(n^2)
+	
+	/*
+	 * Longest Palindrome sub string
+	 * 1. Three nested loops
+	 * 2. Outer loops maintain the sub string
+	 * 3. The inner most loop will check if the string in question is a palindrom
+	 * 4. Brute force with O(n^3)
+	 * */
+	function longestSubString(array){
+		let length = 1;
+		let start;
+		for(let i=0;i < array.length;i++){
+			for(let j=i+1;j < array.length;j++){
+				let flag = true;
+				
+				for(let k=0;k < Math.floor(( j - i + 1)/2);k++){
+					if(array[i+k] != array[j-k]){
+						flag = false;
+						break;
+					}
+				}
+				
+				if(flag && (j-i+1) > length){
+					start = i;
+					length = (j-i+1);
+				}
+			}
+		}
+		console.log("Substring: ", start, length);
+	}
+	
+	/*
+	 * 1. the above problem via DP
+	 * 2. table[i][i] is one as a single letter is a palindrome
+	 * 3. due to point 2 we can follow the diagonal approach
+	 * 4. 
+	 * */
+	function longestPalindromeDP(array){
+		let DP = [];
+		let length = 1;
+		let start;
+		for(let i=0;i < array.length;i++){
+			DP.push([]);
+		}
+		for(let i=0;i < array.length;i++){
+			DP[i][i] = true;
+		}
+		for(let len=2;len <= array.length;len++){
+			for(let i=0;i < array.length - len +1 ;i++){
+				var j = len + i - 1;
+				
+				if(len ==2 && array[i]== array[j]){
+					DP[i][j] = true;
+				}else if(array[i]== array[j]){
+					DP[i][j] = DP[i+1][j-1];
+				}
+				console.log('in');
+				if(DP[i][j] && length < len){
+					start = i;
+					length = len;
+				}
+				
+			}
+		}
+		console.log("Start: ", start, length);
 	}
 	
 	return {
@@ -242,7 +308,9 @@ function DP(){
 		recursivePartitionProblem,
 		partitionProblemViaDP,
 		longestPalendromicSubSequenceRecurssive,
-		longestPalindromeSubSeqViaDP
+		longestPalindromeSubSeqViaDP,
+		longestSubString,
+		longestPalindromeDP
 		};
 }
 module.exports = {DP}
