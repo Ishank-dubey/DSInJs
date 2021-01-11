@@ -174,5 +174,6 @@ Sort Linked list via Quick Sort
 Dp - Partition Problem
 Dp - Find all the sub sets with Sum equaling K
 Dp - Factorial and fibonacci
+Dp - Longest sub string
 
 Adding more with time..
