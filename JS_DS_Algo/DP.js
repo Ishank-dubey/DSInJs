@@ -287,7 +287,7 @@ function DP(){
 				}else if(array[i]== array[j]){
 					DP[i][j] = DP[i+1][j-1];
 				}
-				console.log('in');
+				
 				if(DP[i][j] && length < len){
 					start = i;
 					length = len;
@@ -297,6 +297,206 @@ function DP(){
 		}
 		console.log("Start: ", start, length);
 	}
+	
+	
+	/*
+	 * 1. tiling Problem via DP
+	 * 2. Boils down to this - F[N] = F[N-1] + F[N-2]
+	 * 3. Given a tile of size 2 x 1
+	 * 4. We can arrange them to tile(fill) an arean vertically or horizontally
+	 * 5. How many ways we can fill an area of size - 2 x n
+	 * 6. The equation says that for the length of n - can be filled by adding one vertical tile to 
+	 *    what has been used to fill the length of n-1 OR
+	 *    we can add two horizontal tiles to what has filles the lengt of n-2
+	 * 7. F[1] can be filled only in one way
+	 * 8. F[2] can be filled in two ways to begin with
+	 * */
+	function tilingProblem(N){
+		var DP = [];
+		
+		DP[1] = 1;
+		DP[2] = 2;
+		
+		for(let i = 3; i <= N; i++){
+			DP[i] = DP[i-1] + DP[i-2];
+		}
+		return DP[N];
+	}//O(n) in time and space
+	
+	
+	/*
+	 * Above problem via recurssion
+	 * */
+	function tilingProblemRecurssion(N){
+		return tilingProblemRecusrrionInner(N);
+		function tilingProblemRecusrrionInner(n){
+			if(n == 1){
+				return 1;
+			}
+			if(n == 2){
+				return 2;
+			}
+			return (tilingProblemRecusrrionInner( n-1 ) + tilingProblemRecusrrionInner( n-2 ));
+		}
+	}//O(n ^ 2) in time
+	
+	
+	/*
+	 * 1. To check of a given string is present in a Text
+	 * 2. Its not necessary to find the characters in a continous manner 
+	 * 3. DP[length of sub string][length of the text] = number of sub strings found
+	 * */
+	function subStrNotInOrder(s1, s2){
+		var DP =[];
+		for(let i=0;i <= s1.length;i++){
+			DP.push([]);
+		}
+		for(let z=0;z <= s2.length;z++){
+			DP[0][z] = 1;
+		}
+		for(let l=1;l <= s1.length;l++){
+			DP[l][0] = 0;
+		}
+		DP[0][0] = 1;
+		
+
+		for(let k=0;k < s2.length;k++){
+		for(let j=0;j < s1.length;j++){
+				if(s1[j] == s2[k]){
+					DP[j+1][k+1] = DP[j][k] + DP[j+1][k];
+				}else{
+					DP[j+1][k+1] = DP[j+1][k];
+				}
+			}
+		}
+		return (DP[s1.length][s2.length]);
+	}//O(m*n) in time and space
+	
+	
+	/* 1. To find the maximum points that be acquired while going down or right in a 2-D matrix
+	 * 
+	 * */
+	function collectMaximumApples(matrix){
+		let rows = matrix.length;
+		let columns = matrix[0].length;
+		var s = [];
+		for(let i=0;i < rows;i++){
+			s.push([]);
+		}
+		for(let row=0;row < 1;row++){
+			for(let column=0;column < columns;column++){
+				if(column >=1 )
+				 s[row][column] = matrix[row][column] +s[row][column-1];
+				else
+					s[row][column] = matrix[row][column];
+			}
+		}
+		
+		for(let column=0;column < 1;column++){
+			for(let row=0;row < rows;row++){
+				if(row >=1 )
+				 s[row][column] = matrix[row][column] +s[row-1][column];
+				else
+					s[row][column] = matrix[row][column];
+			}
+		}
+		
+		for(let row=1;row < rows;row++){
+			for(let column=1;column < columns;column++){
+				s[row][column] = matrix[row][column] + Math.max(s[row-1][column], s[row][column-1]);
+			}
+		}
+		console.log(s[rows-1][columns-1]);
+	}//O(n^2) in time and space
+	
+	
+	/*
+	 * 1. The above problem when its possible to go diagonally
+	 * 2. Since all the values are going to be positive the diagonal wont actually occur as we can always take
+	 *    either the vertical or horizontal path along with the diagonal element
+	 * */
+	
+	function collectMaximumApplesWithDiagonallyPossible(matrix){
+		let rows = matrix.length;
+		let columns = matrix[0].length;
+		var s = [];
+		for(let i=0;i < rows;i++){
+			s.push([]);
+		}
+		for(let row=0;row < 1;row++){
+			for(let column=0;column < columns;column++){
+				if(column >=1 )
+				 s[row][column] = matrix[row][column] +s[row][column-1];
+				else
+					s[row][column] = matrix[row][column];
+			}
+		}
+		
+		for(let column=0;column < 1;column++){
+			for(let row=0;row < rows;row++){
+				if(row >=1 )
+				 s[row][column] = matrix[row][column] +s[row-1][column];
+				else
+					s[row][column] = matrix[row][column];
+			}
+		}
+		
+		for(let row=1;row < rows;row++){
+			for(let column=1;column < columns;column++){
+				s[row][column] = matrix[row][column] + Math.max(s[row-1][column], 
+						                                  Math.max(s[row][column-1], s[row-1][column-1]));
+			}
+		}
+		console.log(s[rows-1][columns-1]);
+	}//O(n^2) in time and space
+	
+	/*
+	 * 1. To find the biggest square of 1s in a 2-D binary matrix
+	 * 2. Have an auxialliary matrix with the same 1sth row ans 1st column as the binary matrix
+	 * 3. Now for every other element we need to see of the upper, left and diagonal are having 1
+	 *    if they are all one and the element too is 1 then add 1 more to the min of the three from the Aux
+	 * 4. Finally the Auxilliary matrix need to scanned for the max size of the 1s Square
+	 * */
+	function maximumSizeSquareOf1s(matrix){
+		var columns = matrix[0].length;
+		var rows = matrix.length;
+		var aux = [];
+		for(let r=0;r < rows;r++){
+			aux.push([]);
+		}
+		for(let j=0; j < columns;j++){
+			aux[0][j] = matrix[0][j];
+		}
+		for(let j=0; j < rows;j++){
+			aux[j][0] = matrix[j][0];
+		}
+		let x=-1, y=-1, size=0;
+		for(let row=1;row < rows;row++){
+			for(let column=1;column < columns;column++){
+				if(matrix[row][column] == 1){
+					aux[row][column] = 1 + Math.min(aux[row-1][column], Math.min(aux[row][column-1], 
+							                                                      aux[row-1][column-1]));
+					if(aux[row][column] > size){
+						size = aux[row][column];
+						x = row;
+						y = column;	
+					}
+				}else{
+					aux[row][column] = 0;
+				}
+			}
+		}
+		console.log(size, x-size+1, y-size+1);
+	}//O(m*n)
+	
+	
+	/*  
+	 * 
+	 * 
+	 * 
+	 * */
+	
+	
 	
 	return {
 		factorialRecurssion,
@@ -310,7 +510,13 @@ function DP(){
 		longestPalendromicSubSequenceRecurssive,
 		longestPalindromeSubSeqViaDP,
 		longestSubString,
-		longestPalindromeDP
+		longestPalindromeDP,
+		tilingProblem,
+		tilingProblemRecurssion,
+		subStrNotInOrder,
+		collectMaximumApples,
+		collectMaximumApplesWithDiagonallyPossible,
+		maximumSizeSquareOf1s
 		};
 }
 module.exports = {DP}

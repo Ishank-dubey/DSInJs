@@ -667,4 +667,27 @@ console.log(DP.partitionProblemViaDP([5, 5, 11, 1], 22));
 //console.log(DP.longestPalindromeSubSeqViaDP(['G','E','E','K','S','F','O','R','G','E','E','K','S']))
 //console.log(DP.longestSubString(['f','o','r','g','e','e','k','s','s','k','e','e','g','f','o','r']));
 DP.longestSubString(['1','m','a','m','a']);
-DP.longestPalindromeDP(['1','m','m','1']);
+DP.longestPalindromeDP(['1','m','m','e']);
+console.log(DP.tilingProblem(4));
+console.log(DP.tilingProblem(3));
+console.log(DP.tilingProblemRecurssion(4));
+console.log(DP.tilingProblemRecurssion(3));
+console.log(DP.subStrNotInOrder('ab','bb'));
+DP.collectMaximumApples([
+	[10, 200, 4],
+	[10, 6, 7],
+	[10, 10, 10]
+]);
+DP.collectMaximumApplesWithDiagonallyPossible([
+	    [10, 200, 4],
+		[10, 600, -70],
+		[10, -10, 10]
+	    ]);
+
+
+var DS3 = require('./DS');
+DP.maximumSizeSquareOf1s([
+	                                              [1, 1, 1],
+	                                              [1, 1, 1],
+	                                              [1, 1, 1]
+	                                              ]);
