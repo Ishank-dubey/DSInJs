@@ -490,14 +490,134 @@ function DP(){
 	}//O(m*n)
 	
 	
-	/*  
-	 * 
-	 * 
-	 * 
+	/*
+	 * 1. Find the max continous sum in an array, also called kadane's
 	 * */
 	
+	function maxContinousSum(array){
+		var max = -Infinity;
+		var local = 0;
+		var startIndex;
+		var lastIndex;
+		for(let i=0;i < array.length ;i++){
+			if(array[i] >= array[i]+local){
+				startIndex = i;
+			}
+			
+			local = Math.max(array[i], array[i]+local);
+			if(local > max){
+				max = local;
+				lastIndex = i;
+			}
+		}
+		console.log(max, startIndex, lastIndex);
+	}
 	
 	
+	/* 1. To find the maximum sum possible in a matrix n x n in a sub-matrix
+	 * 2. The matrix can have negative values
+	 * 3. Now, we can have the entire sum first
+	 * 4. The we can go row by row and see if including an element in this row w/o the 0th, 1st, 2nd an d so on..
+	 * 5. The aux martix will have the sum of all the rows till its row including itself. 
+	 * 
+	 * */
+	function findMaxSum(matrix){
+		var aux = [];
+		var columns = matrix[0].length;
+		for(let i=0;i < matrix.length;i++){
+			aux.push([]);
+		}
+		for(let j=0;j < columns;j++){
+			aux[0][j] = matrix[0][j];
+		}
+		for(let i=1;i < matrix.length;i++){
+			for(let j=0;j < columns ;j++){
+				aux[i][j] = aux[i-1][j] + matrix[i][j];
+			}
+		}
+		var maxOverall = 0;
+		var min = 0, 
+		    subMatrixSum = 0;//this sum is for the sub matrixes
+		for(let i=0;i < columns;i++){
+			for(let j=i;j < matrix.length;j++){
+				subMatrixSum = 0;
+				min = 0;
+				
+				for(let k=0;k < columns ;k++){
+					if(i==0){
+						subMatrixSum = subMatrixSum + aux[j][k];
+					}else{
+						subMatrixSum = subMatrixSum - aux[i-1][k] + aux[j][k]; 
+					}
+					if(min > subMatrixSum){
+						min = subMatrixSum;
+					}
+					if(subMatrixSum - min > maxOverall){
+						maxOverall = subMatrixSum - min;
+					}
+				}
+			}
+		}
+		console.log(maxOverall);
+		
+	}//O(n^3)
+	
+	/*
+	 * 1. Min jumps needed to reach from start to ending
+	 * 2. The value of an element is the max we can jumps from there
+	 * 3. We will need to fill the result array bottom-up
+	 * */
+	
+	function minSteps(array){
+		var result = [];
+		result[0] = 0;
+		for(i=1;i < array.length;i++){
+			result[i] = Infinity;
+			for(j=0;j < i ;j++){
+				if(array[j] >= i-j){
+					if(result[j] + 1 < result[i]){
+						result[i] = result[j] + 1;
+					}
+				}
+			}
+		}
+		console.log(result[array.length-1]);
+	}//O(n^2)
+	
+	/*
+	 * 1. Find biggest sub-matrix with all 1s
+	 * 2. From an auxilliary matrix that has the sum of 1s for each row in a column
+	 * 3. For each row please use the Stack chapter's max area in Histogramj and update the Max accordingly
+	 * DS.highestRectangularAreaInHistogram([2, 5,6, 7, 2, 1, 10, 10])
+	 * */
+	function maxSubMatrix(matrix){
+		var aux = [];
+		var cols = matrix[0].length;
+		for(let i=0;i < matrix.length;i++){
+			aux.push([]);
+		}
+		for(let i=0;i < cols;i++){
+			aux[0][i] = matrix[0][i];
+		}
+		for(let i=1;i < matrix.length;i++){
+			for(let j=0;j < cols;j++){
+				if(matrix[i][j]==1){
+					aux[i][j] = aux[i-1][j]+1;
+				}
+			}
+		}
+		
+		var DS = require('./DS');
+		var max = 0;
+		var local;
+		for(let i=0;i < matrix.length;i++){
+			local = DS.highestRectangularAreaInHistogram(aux[i]);
+			if(local > max){
+				max = local;
+			}
+		}
+		console.log(local);
+	}
 	return {
 		factorialRecurssion,
 		factorialWithiteration,
@@ -516,7 +636,11 @@ function DP(){
 		subStrNotInOrder,
 		collectMaximumApples,
 		collectMaximumApplesWithDiagonallyPossible,
-		maximumSizeSquareOf1s
+		maximumSizeSquareOf1s,
+		findMaxSum,
+		maxContinousSum,
+		minSteps,
+		maxSubMatrix
 		};
 }
 module.exports = {DP}

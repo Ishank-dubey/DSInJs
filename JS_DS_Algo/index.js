@@ -691,3 +691,16 @@ DP.maximumSizeSquareOf1s([
 	                                              [1, 1, 1],
 	                                              [1, 1, 1]
 	                                              ]);
+
+DP.maxContinousSum([-50, 10, -5, 30, -100]);
+DP.findMaxSum([
+	[1, 2, 3],
+	[2, 4, -10],
+	[-1, -2, -3]
+]);
+DP.minSteps([2, 3, 1, 1, 4]);
+DP.maxSubMatrix([
+	[1, 1, 0],
+	[1, 1, 0],
+	[1, 1, 0]
+]);
