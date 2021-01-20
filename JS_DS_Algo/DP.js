@@ -618,6 +618,62 @@ function DP(){
 		}
 		console.log(local);
 	}
+	
+	/*
+	 * 1. Longest increasing Sub Sequence
+	 * 2. Via recurssion
+	 * 3. L[i] = 1 + L[j] where 1 < j < n, array[j] < array[i]
+	 * 4. For Loop + Recurssion
+	 * */
+	function lisRecurssion(array){
+		var max = 1;
+		return lisRecurssionInner(array.length-1);
+		function lisRecurssionInner(N){
+			var maxInner = 1;
+			if(N === 1){
+				return 1;
+			}
+			for(let i=1;i < N;i++){
+				var result = lisRecurssionInner(i);
+				if(array[i-1] < array[N-1] && res+1 > maxInner){
+					maxInner = res + 1;
+				}
+			}
+			
+			max = Math.max(max, maxInner);
+			return max;
+		}
+	}//Time complexity is O(n*n)
+	
+	
+	/*
+	 * 1. Above LIS problem via DP
+	 * 2. L[i] = Max(L[i-1]...L[0])+1
+	 * 3. LIS[x] = 1;
+	 * 4. Use 2 for loops the seconed is nested
+	 * */
+	
+	function LISviaDP(array){
+		var LIS = [];
+		LIS[0] = 1;
+		
+		for(let i=1;i < array.length;i++){
+			LIS[i] = 1;
+			for(let j=0;j < i;j++){
+				if(array[j] < array[i] && LIS[i] < LIS[j]+1){
+					LIS[i] = LIS[j]+1;
+				}
+			}
+		}
+		var max = -Infinity;
+		for(let k=0;k < LIS.length;k++){
+			if(LIS[k] > max){
+				max = LIS[k];
+			}
+		}
+		return max;
+	}//O(n^2) in time and O(n) in space
+	
 	return {
 		factorialRecurssion,
 		factorialWithiteration,
@@ -640,7 +696,9 @@ function DP(){
 		findMaxSum,
 		maxContinousSum,
 		minSteps,
-		maxSubMatrix
+		maxSubMatrix,
+		lisRecurssion,
+		LISviaDP
 		};
 }
 module.exports = {DP}

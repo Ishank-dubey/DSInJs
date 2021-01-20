@@ -704,3 +704,7 @@ DP.maxSubMatrix([
 	[1, 1, 0],
 	[1, 1, 0]
 ]);
+
+
+console.log(DP.LISviaDP([10, 22, 9, 33, 21, 50, 41, 60]));
+console.log(DP.LISviaDP([10, 22, 9, 33, 21, 50, 41, 60]));
