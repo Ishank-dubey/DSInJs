@@ -627,50 +627,70 @@ function DP(){
 	 * */
 	function lisRecurssion(array){
 		var max = 1;
-		return lisRecurssionInner(array.length-1);
+		return lisRecurssionInner(array.length);
 		function lisRecurssionInner(N){
-			var maxInner = 1;
-			if(N === 1){
+			var maxInner = 1, result;
+			if(N == 1){
 				return 1;
 			}
 			for(let i=1;i < N;i++){
-				var result = lisRecurssionInner(i);
-				if(array[i-1] < array[N-1] && res+1 > maxInner){
-					maxInner = res + 1;
+				 result = lisRecurssionInner(i);
+				if(array[i-1] < array[N-1] && (result + 1) > maxInner){
+					maxInner = result + 1;
 				}
 			}
-			
 			max = Math.max(max, maxInner);
-			return max;
+			return maxInner;
 		}
-	}//Time complexity is O(n*n)
+	}//Time complexity is O(exponential)
 	
 	
 	/*
 	 * 1. Above LIS problem via DP
 	 * 2. L[i] = Max(L[i-1]...L[0])+1
 	 * 3. LIS[x] = 1;
-	 * 4. Use 2 for loops the seconed is nested
+	 * 4. Use 2 for loops the second is nested
 	 * */
 	
 	function LISviaDP(array){
 		var LIS = [];
+		var getTheIndexesArray = [];
 		LIS[0] = 1;
+		
+		for(let q=0;q < array.length;q++){
+			getTheIndexesArray.push(-1);
+		}
 		
 		for(let i=1;i < array.length;i++){
 			LIS[i] = 1;
 			for(let j=0;j < i;j++){
 				if(array[j] < array[i] && LIS[i] < LIS[j]+1){
 					LIS[i] = LIS[j]+1;
+					getTheIndexesArray[i] = j;
 				}
 			}
 		}
 		var max = -Infinity;
+		var theIndexAtLast;
 		for(let k=0;k < LIS.length;k++){
 			if(LIS[k] > max){
 				max = LIS[k];
+				theIndexAtLast = k;
 			}
 		}
+		let k = theIndexAtLast;
+		console.log('TEST', array);
+		
+		print(theIndexAtLast);
+		function print(index){
+			if(getTheIndexesArray[index] == -1 ){
+				console.log(array[index]);
+				return 
+			}
+			print(getTheIndexesArray[index]);
+			console.log(array[index]);
+		}
+		
 		return max;
 	}//O(n^2) in time and O(n) in space
 	
