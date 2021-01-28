@@ -708,3 +708,6 @@ DP.maxSubMatrix([
 
 console.log(DP.lisRecurssion([10, 22, 9, 33, 21, 50]), 'ERC');
 console.log(DP.LISviaDP([10, 22, 9, 33, 21, 50]), "DP");
+console.log(DP.expression1(6));
+console.log(DP.catalanViaDP(3));
+console.log(DP.matrixChain([1,2 , 3, 4]));

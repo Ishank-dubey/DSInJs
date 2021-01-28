@@ -693,6 +693,176 @@ function DP(){
 		return max;
 	}//O(n^2) in time and O(n) in space
 	
+	
+	
+	/*
+	 * 1. Given T[n] = Σ 2 * T[i] * T[i-1], where i varies from 1 to n-1
+	 * 2. Given that T[0] = T[1] = 2; 
+	 * */
+	
+	function expression1(N) {
+		var DP = [];
+		var T = [];
+		DP[0] = DP[1] = 2;
+		DP[2] = 8;
+		var sum = 0;
+		for(let i=1;i <= N-1;i++){
+			DP[ i+1 ] = 2 * DP[i] * DP[i-1] + sum;
+			sum = DP[i + 1 ];
+		}
+		return sum;
+		
+		/*
+		 * The book way is a bit different, it is - 
+		 *  function test(N){
+              var DP = [];DP[0] = DP[1] = 2; DP[2] = 8;
+                for(let i=2;i <= N-1;i++){
+		          DP[i+1] = (2*DP[i]*DP[i-1]) + DP[i];
+		        }
+		        return DP[N];
+             }
+
+		 * 
+		 * 
+		 * */
+		
+		
+	}//O(n) in space and time
+	
+	/*
+	 * 1. To find the maximum continous sum given that the sequence is not to have two continous elements
+	 * 2. 
+	 * 
+	 *      M[i] = A[i] when i =1, M[i] = Max(A[i], A[i+1]) when i = 2 ====> base conditions
+	 *      M[i] = Max(A[i] + M[i-2], M[i-1]) when i >= 3
+	 *  
+	 * */
+	function findMaxSumWhenTWOContinousNOTAllowed(array) {
+	   var M = [];
+	   M[0] = array[0];
+	   M[1] = Math.max(array[0], array[1]);
+	   for(let j=2;j < array.length;j++){
+		   M[j] = Math.max(array[i]+M[i-2], M[i-1]);
+	   }
+	   return M[array.length - 1];
+	}//O(n) in time and Space
+	
+	
+	/*
+	 * M[i] = max of either A[i]+A[i-1]+M[i-3] or
+	 *                      A[i] + M[i-2] or
+	 *                      M[i-1]
+	 * 
+	 * */
+	function findMaxSumWhenTHREEContinousNOTAllowed(A) {
+		var k = 3;
+		var n = A.length;
+		var M = [];
+		M[0] = A[0];
+		M[1] = Math.max(A[1]+A[0], Math.max(A[1], A[0]));
+		M[2] = Math.max(A[2], M[1]);//Don't check for A[2]+ M [1] as three aren't allowed
+		
+		for(let i=3;i < A.length;i++){
+			M[i] = Math.max(A[i]+A[i-1]+M[i-3], Math.max(A[i], M[i-2], M[i-1]));
+		}
+		return M[n-1];
+	}//O(n) in time and space
+	
+	/*
+	 * Catalan Numbers
+	 * Given N vertices, how many binary Trees are possible
+	 * Observation - C[n] =  Σ C[i-1] * C[N-i] where i varies from 1 to N
+	 *               C[0] = 0;
+	 *               C[1] = 1;
+	 *               C[2] = 2;
+	 *               C[3] = 5;
+	 *   for C[3] consider the following - 
+	 *   
+	 *               
+	 *               
+	 *                2          1                   1               3                  3
+	 *               / \          \                    \            /                  /
+	 *              1   3 ,        2       ,            3   ,      1       ,          2
+	 *                               \					/           \                /
+	 *                               3				   2             2              1
+	 *                               
+	 *  This shows that there are 5 combination that are obtained from 3 vertixes
+	 * */
+	function catalanRecursive (N) {
+		return catalanRecursiveInner(N);
+		function catalanRecursiveInner (n) {
+			if (n == 0){
+				return 1;
+			}
+			if (n==1 || n==2){
+				return n;
+			}
+			var count = 0;
+			for(let i=1;i <= n;i++){
+				count = count + catalanRecursiveInner(i-1) * catalanRecursiveInner(n-i);
+			}
+			return count;
+		}
+	}//Goes to exponential
+	
+	function catalanViaDP(N) {
+		var DP = [];
+		for (let i=1;i <= N;i++) {
+			DP[i] = 0;
+		}
+		
+		DP[0] = 0;
+		DP[1] = 1;
+		DP[2] = 2;
+		return catalanDPInner(N);
+		function catalanDPInner (n) {
+			console.log(DP[n]);
+			if(DP[n]){
+				return DP[n];
+			}
+			if(n==0){
+				return 1;
+			}
+			for (let j=1;j <= n;j++) {
+			 	DP[n] = catalanDPInner(j-1) * catalanDPInner(n - j) + DP[n];
+			}
+			return DP[n];
+		}
+	}//O(n^2)
+	
+	/*
+	 * 1. Matrix chain multiplication
+	 * 2. Let M[i][j] be the min number of multiplicatons
+	 * 3. Dimensions of a Matrix from the array are of the form p[k-1], p[k] are of kth matrix
+	 * 4. Now, the multiplications needed for ith to be multiplied by ith matrix is 0
+	 * 5. This indicates that we know the diagonal of the 2D matrix so the L way
+	 * 6. p[0] * p[1] * p[3] + M[1][1] +M[2][3] indicates - A*(B*C), p[0], p[1] are dimensins of 1st Matrix
+	 * 7. p[0] * p[2] * p[3] + M[1][2] + M[3][3] indicates - (A*B)*C, p[2], p[3] is the dimension of 3rd matrix 
+	 * */
+	function matrixChain(A) {
+		var n = A.length;
+		var M = [];
+		for(let i=0;i < n;i++){
+			M.push([]);
+		}
+		for(let k=0;k < n;k++){
+			M[k][k] = 0;
+		}
+		for(let L=2;L < n;L++){
+			for(let i=1;i < n - L +1;i++){
+				let j = i + L -1;
+				M[i][j] = Infinity;
+				for (let k=i;k <=j-1;k++){
+					let sum = M[i][k] + M[k+1][j] + A[i-1]*A[k]*A[j];
+					if(sum < M[i][j]){
+						M[i][j] = sum;
+					}
+				}
+			}
+		}
+		return M[1][n-1];
+	}
+	
 	return {
 		factorialRecurssion,
 		factorialWithiteration,
@@ -717,7 +887,13 @@ function DP(){
 		minSteps,
 		maxSubMatrix,
 		lisRecurssion,
-		LISviaDP
+		LISviaDP,
+		expression1,
+		findMaxSumWhenTWOContinousNOTAllowed,
+		findMaxSumWhenTHREEContinousNOTAllowed,
+		catalanRecursive,
+		catalanViaDP,
+		matrixChain
 		};
 }
 module.exports = {DP}
