@@ -679,7 +679,6 @@ function DP(){
 			}
 		}
 		let k = theIndexAtLast;
-		console.log('TEST', array);
 		
 		print(theIndexAtLast);
 		function print(index){
