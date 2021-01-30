@@ -711,3 +711,7 @@ console.log(DP.LISviaDP([10, 22, 9, 33, 21, 50]), "DP");
 console.log(DP.expression1(6));
 console.log(DP.catalanViaDP(3));
 console.log(DP.matrixChain([1,2 , 3, 4]));
+console.log(DP.knapsackWithDuplicateAllowed([10, 30, 20], [5, 2, 15], 3));
+console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
+console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
+console.log(DP.knapsack01Recurssion([60, 100, 120], [10, 20, 30], 50));

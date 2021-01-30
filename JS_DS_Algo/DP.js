@@ -861,7 +861,95 @@ function DP(){
 			}
 		}
 		return M[1][n-1];
-	}
+	}//O(n^3)
+	
+	
+	/*
+	 * 1. Unbounded Kanpsack problem
+	 * 2. Dupliactes are allowed
+	 * 3. items with weight and value are given
+	 * 4. We need to maximise the amount that fills that weight
+	 * 5. Eg. - W=100, given items with value = [1, 30] and weight = [1, 50]
+	 *          a. 2 items of (30)*2 value lead to 100 weight
+	 *          b. 100 items of (1)*100 value lead to 100 weight
+	 *          c. 50 items of value 1*50 + item of 30*1 giving total of 51 items
+	 *  6. let DP[i] indicate the max value for i Weight
+	 *     a. DP[0] = 0
+	 *     b. DP[i] = max(DP[i], DP[i - wt[j]] + val[j]) where j is from 0 to n-1 and wt[j] <= i 
+	 *  7. NOTE: the value may not end up having exact wieght         
+	 * */
+	
+	function knapsackWithDuplicateAllowed (values, weights, W) {
+		var DP = [];
+		for(let k=0;k <= W;k++) {
+			DP[k] = 0;
+		}
+		for(let i=0;i <= W;i++) {
+			for(let j=0;j < weights.length;j++) {
+				if(weights[j] <= i) {
+					DP[i] = Math.max(DP[i], values[j] + DP[i - weights[j]]);
+				}
+			}
+		}
+		return DP[W];
+	}//O(n^2) in time, O(n) in space
+	
+	
+	/* 0-1 Kanpsack 
+	 * Given the values and weights array and a wieight W 
+	 * We can select an item only once or 0
+	 * Need to maximize the the total value that leads to W or less then W
+	 * Theory - we can see this via recurssion and DP 
+	 *     1. Recurssion
+	 *        a. We will check recurssively that when weight of an item is <= W then we may take it or we may not take it
+	 *        b. If the item's wieght is greater than W we can not take it
+	 *        c. Base condition will be either no items are left or W is completed
+	 * */
+	function knapsack01Recurssion (values, weights, W) {
+		return knapsack01RecurssionInner(values.length, W);
+		function knapsack01RecurssionInner (n, w) {
+			if(n==0 || w==0){
+				return 0;
+			}
+			if(weights[n-1] > w){
+				knapsack01RecurssionInner(n-1, w);
+			}
+			return Math.max(
+					values[n-1] + knapsack01RecurssionInner(n-1, w - weights[n-1]),
+					knapsack01RecurssionInner(n-1, w)
+			
+			);
+		}
+	}//O(2^n)
+	
+	/*
+	 * Same above problem using DP
+	 * DP[i][j] is the max value when the weight is  j and the items are i
+	 * Eventually the DP[n][W] will be the answer
+	 * Base condition DP[0][j] = DP[i][0] = 0
+	 * */
+	function knapsack01DP (values, weights, W) {
+		var DP = [];
+		for (let k=0;k <= values.length;k++) {
+			DP.push([]);
+		}
+		for(let i=0;i <= values.length;i++){
+			for (let wt=0;wt <= W;wt++) {
+				if(i==0 || wt==0){
+					DP[i][wt] = 0;
+				} else {
+					if(weights[i-1] <= wt){
+						DP[i][wt] = Math.max(DP[i-1][wt], values[i-1]+ DP[i-1][wt - weights[i-1]]);
+					} else {
+						DP[i][wt] = DP[i-1][wt];
+					}
+				}
+			}
+		}
+		return DP[values.length][W];
+	}//O(N*W) in time and space
+	
+	
 	
 	return {
 		factorialRecurssion,
@@ -893,7 +981,10 @@ function DP(){
 		findMaxSumWhenTHREEContinousNOTAllowed,
 		catalanRecursive,
 		catalanViaDP,
-		matrixChain
+		matrixChain,
+		knapsackWithDuplicateAllowed,
+		knapsack01Recurssion,
+		knapsack01DP
 		};
 }
 module.exports = {DP}
