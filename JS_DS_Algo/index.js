@@ -715,3 +715,5 @@ console.log(DP.knapsackWithDuplicateAllowed([10, 30, 20], [5, 2, 15], 3));
 console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
 console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
 console.log(DP.knapsack01Recurssion([60, 100, 120], [10, 20, 30], 50));
+console.log(DP.coinChange([1 , 5, 10], 12));
+console.log(DP.coinChangeMin([1, 5, 10], 12));

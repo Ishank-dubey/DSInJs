@@ -950,6 +950,56 @@ function DP(){
 	}//O(N*W) in time and space
 	
 	
+	/*
+	 * 1. Coin Change problem
+	 * 2. What are all the ways we can get a sum using a given coins
+	 * 3. A coin can be used multiple times
+	 * 4. DP[i] is the number of ways the that i change can be obtained from the given coins
+	 * 5. DP values will be updated when coin[i] <= N then the DP[i] = DP[i - coin[j]] + DP[i]
+	 * 6. initialize DP[0] = 1
+	 * */
+	function coinChange(coins, N) {
+		var DP = [];
+		DP[0] = 1;
+		for (let j=1;j <= N;j++) {
+			DP[j] = 0;
+		}
+		
+		
+	    //Please note that the order is important here i.e. coins need to the outer loop
+		// We need to calculate for each coin and all the weights
+		for (let c=0;c < coins.length;c++) {
+			for (let i=1;i <= N;i++) {
+			if (coins[c] <= i) {
+				DP[i] = DP[i] + DP[i - coins[c]];
+			}
+		}
+	}
+	return DP[N];
+	}
+	
+	/*
+	 * 1. Coin Change problem
+	 * 2. The coins needed are to be minimized
+	 * 3. DP[i] indicates the min coins needed to have change of i
+	 * 4. If a coin is less than i we can add 1 to DP[i - coin[c]]and compare with the existing DP[i]
+	 * 5. DP[0] = 0;
+	 * 6. Bottom up
+	 * */
+	function coinChangeMin (coins, N) {
+		var DP = [];
+		DP[0] = 0;
+		for (let amount=1;amount <= N;amount++) {
+			DP[amount] = Infinity;
+			for (let c=0;c < coins.length;c++) {
+				if(coins[c] <= amount){
+					DP[amount] = Math.min(DP[amount], DP[amount- coins[c]]+1);
+				}
+			}
+		}
+		return DP[N];
+	}
+	
 	
 	return {
 		factorialRecurssion,
@@ -984,7 +1034,9 @@ function DP(){
 		matrixChain,
 		knapsackWithDuplicateAllowed,
 		knapsack01Recurssion,
-		knapsack01DP
+		knapsack01DP,
+		coinChange,
+		coinChangeMin
 		};
 }
 module.exports = {DP}
