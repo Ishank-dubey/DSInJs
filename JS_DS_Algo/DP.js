@@ -1121,7 +1121,82 @@ function DP(){
 			}
 		}
 		return DP[array.length][K];
+	}//O(K^N) in time and space
+	
+	/* Edit Distance
+	 * Given two Strings A(m length) and B(n lenght)
+	 * Now A needs to be made equal to B
+	 * 1. If m > n - delete some in A
+	 * 2. m==n - replace in A
+	 * 3. m < n - add to A
+	 * 4. Let DP[i][j] be the min cost for matching first i chars of A and first j chars of B
+	 *    Recurssive formula- 
+	 *        DP[i][j] is 
+	 *        a. If we delete ith character in A then i-1 be converted into j chars of B
+	 *        b. If we at ith character in A then j-1 of B  need be matched now with upto i of A
+	 *        c. When A[i]==A[j] - just go to i-1 and j-1 
+	 *        d. Simply replace then go to i-1 and j-1
+	 *        e. DP[0][j] = j
+	 *        f. DP[i][0] = i
+	 *        
+	 *        consider A = "sunday", B = "saturday"
+	 *        
+	 *        "sun" and "satur"
+	 *        - replace 'n' with 'r' (i=2 -> i-1, j=4-> j-1)
+	 *        - 'u' and 'u' so (i-> i-1=0, j-> j-1=2)
+	 *        - insert 't' so i=0, j= j-1 = 1
+	 *        - insert 'a' so i=0, j= j-1 = 0
+	 *        - A[0]==B[0] so no action
+	 * */
+	function editDistance(A, B) {
+		return editDistanceInner(A.length, B.length);
+		function editDistanceInner (n, m) {
+			if(n==0) {
+				return m;
+			}
+			if(m==0) {
+				return n;
+			}
+			if(A[n-1]==B[m-1]){
+				return editDistanceInner(n-1, m-1);
+			} else {
+				return 1 + Math.min(
+						editDistanceInner(n-1, m), //Remove
+						editDistanceInner(n, m-1), //Insert
+						editDistanceInner(n-1, m-1) // Replace
+				);
+			}
+		}
+	}//Exponential complexity
+	
+	/*
+	 * Above edit distance problem with DP
+	 * */
+	function editDistanceDP(A, B) {
+		var DP = [];
+		for (let i=0;i<=A.length;i++) {
+			DP.push([]);
+		}
+		for(let i=0;i <= A.length;i++){
+			for (let j=0;j <=  B.length;j++) {
+				
+				if(i==0){
+					DP[i][j] = j;
+				}else if (j==0) {
+					DP[i][j] = i;
+				} else if (A[i-1]==B[j-1]){
+					DP[i][j] = DP[i-1][j-1];
+				} else {
+					DP[i][j] = 1 + Math.min(
+							               DP[i][j-1],
+							               Math.min(DP[i-1][j], DP[i-1][j-1])
+							);
+				}
+			}
+		}
+		return DP[A.length][B.length];
 	}
+	
 	
 	return {
 		factorialRecurssion,
@@ -1161,7 +1236,9 @@ function DP(){
 		coinChangeMin,
 		boxStacking,
 		subSetRecurssion,
-		subSetDP
+		subSetDP,
+		editDistance,
+		editDistanceDP
 		};
 }
 module.exports = {DP}
