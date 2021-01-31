@@ -848,7 +848,7 @@ function DP(){
 		for(let k=0;k < n;k++){
 			M[k][k] = 0;
 		}
-		for(let L=2;L < n;L++){
+		for(let L=2;L <= n;L++){
 			for(let i=1;i < n - L +1;i++){
 				let j = i + L -1;
 				M[i][j] = Infinity;
@@ -1195,7 +1195,60 @@ function DP(){
 			}
 		}
 		return DP[A.length][B.length];
+	}//O(m*n) in time and space
+	
+	/*
+	 * 1. Optimal Stratergy for a Game
+	 * 2. Given a row of coins v1, v2, v3..vn
+	 * 3. Given that user can pick in the first turn find the max score
+	 * 4. DP[i][j] is the max score for i to j range
+	 *    - if i is picked the opponent can pick i+1  that leaves the user with option to select from i+2 to j
+	 *    - the opponent can also pick j that leaves the user with option to select i+1 to j-1
+	 *    - above two points imply that opponent leaves the user to have min of what was left after the user picked so
+	 *    - min(DP[i+2][j], DP[i+1][j-1])
+	 *    - if the user selects the j th item then the opponent can pick i so the user can pick from i+1 to j-1
+	 *    - if the user selects the j th item then the opponent can pick j-1 so the uset can pick from i tp j-2
+	 *    - the user is left with min(DP[i+1][j-1], DP[i][j-2])
+	 *    - in order to maximise the score the user needs to take the Max thats left of the above two min expressions 
+	 *    - The score will be the addition of the array[i] or array[j] respectively 
+	 * */
+	function optimalStratergyForGame (array) {
+		var DP = [];
+		for (let i=0;i < array.length ;i++){
+			DP.push([]);
+		}
+		for(let i=0;i < array.length;i++){
+			DP[i][i] = array[i];
+		}
+		
+		for(let L=2;L<= array.length;L++){
+			for(i=0;i < array.length - L + 1 ;i++){
+				var x = y = z = 0;
+				var j = i + L -1;
+				if(i+2 <=j ){
+					x = DP[i+2][j];
+				}
+				if(i+1 <= j-1){
+					y = DP[i+1][j-1];
+				}
+				if(i <= j-2) {
+					z = DP[i][j-2];
+				}
+				
+				if(i+1 == j){
+					DP[i][j] = Math.max( array[i] ,array[j] );
+				}else{
+					DP[i][j] = Math.max(
+						     array[i] + Math.min(x, y),
+						     array[j] + Math.min(y, z)
+						);
+				}
+				
+			}
+		}
+		return DP[0][array.length-1];
 	}
+	
 	
 	
 	return {
@@ -1238,7 +1291,8 @@ function DP(){
 		subSetRecurssion,
 		subSetDP,
 		editDistance,
-		editDistanceDP
+		editDistanceDP,
+		optimalStratergyForGame
 		};
 }
 module.exports = {DP}
