@@ -979,7 +979,7 @@ function DP(){
 	}
 	
 	/*
-	 * 1. Coin Change problem
+	 * 1. Minimum Coin Change problem
 	 * 2. The coins needed are to be minimized
 	 * 3. DP[i] indicates the min coins needed to have change of i
 	 * 4. If a coin is less than i we can add 1 to DP[i - coin[c]]and compare with the existing DP[i]
@@ -998,8 +998,130 @@ function DP(){
 			}
 		}
 		return DP[N];
+	}//O(n^2) in time and O(n) in space
+	
+	
+	
+	/*
+	 * 1. Box Stacking
+	 * 2. Given the boxes with h height, width w, depth d
+	 * 3. Now we need to find the max height that can be obtained while a block can be used multiple times
+	 * 4. A box can be placed on top of the box whose 2-D area is more than it
+	 * 5. By 2-D area being greater we mean that w and d both need be greater respectively
+	 * 5. Prepare another array that has all the possible rotations and thus will have 3n length
+	 * 6. Need to traverse the rotated elements array similar to the LIS problem
+	 * */
+	function boxStacking (array) {
+		var rotatedArray = [];
+		var index = 0;
+		for (let i=0;i< array.length;i++) {
+			
+			rotatedArray.push({
+				h: array[i].h,
+				w: Math.min(array[i].w, array[i].d),
+				d: Math.max(array[i].w, array[i].d)
+			});
+			
+			
+			
+			rotatedArray.push({
+				h: array[i].d,
+				w: Math.min(array[i].h, array[i].w),
+				d: Math.max(array[i].h, array[i].w)
+			});
+			
+			
+			
+			
+			rotatedArray.push({
+				h: array[i].w,
+				w: Math.min(array[i].h, array[i].d),
+				d: Math.max(array[i].h, array[i].d)
+			});
+			
+			
+		}
+		
+		rotatedArray.sort((a, b)=> {return  b.w*b.d - a.w*a.d});
+		
+		
+		var DP = [];
+		for(let i=0;i < rotatedArray.length ;i++){
+			DP[i] = rotatedArray[i].h;
+		}
+		for (let i=0;i < rotatedArray.length;i++) {
+			for (let j=0;j < i;j++) {
+				if(
+				   DP[i] < DP[j] + rotatedArray[i].h &&
+				   rotatedArray[i].w < rotatedArray[j].w &&
+				   rotatedArray[i].d < rotatedArray[j].d &&
+				   i != j
+				  ) {
+					DP[i] = DP[j] + rotatedArray[i].h;
+				}
+			}
+		}
+		
+		var max = -Infinity;
+		for (let i=0;i < DP.length;i++) {
+			if (DP[i] > max) {
+				max = DP[i];
+			} 
+		}
+		return max;
 	}
 	
+	
+	/*
+	 * 1. Check if a Given Sum K can be obtained for subset of array
+	 * 2. using recurssion
+	 * 3. Similar to earlier problems - we may consider an element or we may not
+	 * */
+	function subSetRecurssion (array, K) {
+		return subSetRecurssionInner(K, array.length-1);
+		function subSetRecurssionInner (sum, n){
+			if(sum == 0){
+				return true;
+			} 
+			if(n < 0){
+				return false;
+			}
+			return subSetRecurssionInner(sum - array[n], n-1) || subSetRecurssionInner(sum, n-1);
+		}
+	}
+	
+	
+	/*
+	 * 1. Above Sub Set sum via DP
+	 * 2. DP[i][j] is the value when i elements are leading to j sum
+	 * 3. So DP[0][0] = true, DP[i][0] = true, DP[0][j] = false
+	 * */
+	function subSetDP(array, K){
+		var DP = [];
+		for(let i=0;i <= array.length;  i++){
+			DP.push([]);
+		}
+		
+		//base conditions - 
+		for(let i=0;i<=array.length;i++){
+			DP[i][0] = true;
+		}
+		for(let s=0;s<=K;s++){
+			DP[0][s] = false;
+		}
+		DP[0][0] = true;
+		
+		for(let sum=1;sum <=K;sum++){
+			for(let i=1;i<=array.length;i++){
+				if(array[i-1]<= sum){
+					DP[i][sum] = DP[i-1][sum - array[i-1]] || DP[i-1][sum];
+				} else {
+					DP[i][sum] = DP[i-1][sum];
+				}
+			}
+		}
+		return DP[array.length][K];
+	}
 	
 	return {
 		factorialRecurssion,
@@ -1036,7 +1158,10 @@ function DP(){
 		knapsack01Recurssion,
 		knapsack01DP,
 		coinChange,
-		coinChangeMin
+		coinChangeMin,
+		boxStacking,
+		subSetRecurssion,
+		subSetDP
 		};
 }
 module.exports = {DP}
