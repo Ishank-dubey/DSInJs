@@ -86,6 +86,171 @@
        
        var newObj = new myFunc();
        console.log(newObj.name);
+       
                   
+       (Boolean) var b = new Boolean();
+       typeof b;//object
+       typeof b.valueOf();//false
+       
+       (String)  var s = new String("Couch potato");
+       (Math) has static methods so new keyword is not needed
+       (Error) try, catch and finally
+         #Pattern
+         throw {
+          name: "MyError",
+          message: "OMG! Something terrible has happened"
+         }
+       (Prototype) 
+         Every function has a prototype property and it contains an object
+         __proto__, the secret link every object keeps to its prototype
+         Can be used to Enhance built-in Objects
+         In-Built functions like - call, apply
+         - function myFunction() {}
+         - myFunction.constructor is Function() {}
+         - myFunction.prototype.constructor is myFunction() {}
+         - the myFunction.prototype is used only when the function myFunction is used as a constructor
+         - 'this' keyword is the object or value to be returned by the constructor function
+         
+       (Add properties and methods via prototype)  
+       (All object have the constructor property thats a function, function in turn has a prototype object
+       that in-turn has a constructor and so on till object is reached)
+         function Gadget(name, color) {
+              this.name = name;
+              this.color = color;
+              this.whatAreYou = function(){
+                  return 'I am a ' + this.color + ' ' + this.name;
+              }
+         }
+         Gadget.prototype.price = 100;
+         Gadget.prototype.rating = 3;
+         Gadget.prototype.getInfo = function () {return this.name+"-"+this.color + this.price}
+         is different from -
+         Gadget.prototype.getInfo = function () {return this.name+"-"+this.color + Gadget.prototype.price}
+         as the this will point to the object in getInfo but the Gadget.protoype.price will remain same
+         
+         
+         (__proto__) is the  secret link as consider =>
+         
+         function Human() {}
+         var human1 = new Human();
+         Human.name = 'test';
+         human1.name is test
+         
+         that means the secret __proto__ is doing this even if we chage the prototype fully, the __proto__ 
+         of the already instantiated obj will still have the earlier prototype =>
+         
+         Human.prototype = {name:'i am ironman'};
+         human1.name is still 'test' 
+         
+         but,
+         var human2 = new Human(); human2.name = 'i am ironman'; 
+         
+         (Efficiency)
+         function Shape(name){
+           this.name = name;
+           this.getName = function () {
+                return this.name;
+           }
+         }  VS        
+         
+         this is more efficient -> function Shape(name) {
+                         this.name = name;
+                      }
+                      Shape.protype.getName = function () {return this.name;}
+        the common function is NOT going to be created again and again when the objects are created from this constructor
+        This Does adds one more lookup to Shape.prototype to find the getName function
+        //hasOwnProperty
+        Even better we could just use only the prototype of the parent=>
+        2DShape.prototype = Shape.prototype;
+        Tiangle.prototype = 2DShape.prototype;
+        2DShape.prototype.constructor = 2DShape;
+        Triangle.prototype.constructor = Triangle;
+        now if we change the Triangle.prototype.name = 'test'; everyone's prototype will have same name property
+        
+        (Use intermediate F() to have different prototypes)
+        function Shape(){}
+        // augment prototype
+        Shape.prototype.name = 'shape';
+        Shape.prototype.toString = function() {return this.name;};
+        function TwoDShape(){}
+          // take care of inheritance
+        var F = function(){};
+        F.prototype = Shape.prototype; 
+        TwoDShape.prototype = new F(); 
+        TwoDShape.prototype.constructor = TwoDShape; 
+        // augment prototype TwoDShape.prototype.name = '2D shape';
+        function Triangle(side, height) {
+          this.side = side;
+          this.height = height;
+        }
+        var F = function(){};
+         F.prototype = TwoDShape.prototype;
+        Triangle.prototype = new F();
+        Triangle.prototype.constructor = Triangle;
+       // augment prototype
+        Triangle.prototype.name = 'Triangle';
+        Triangle.prototype.getArea = function(){return this.side * this.height / 2;};
+        
+        (Child having the reference to the Parent prototype)
+        function Shape() {
+        
+        }
+        Shape.prototype.name = 'Shape';
+        Shape.prototype.toString() = function () {
+          var result = [];
+          if(this.constructor.uber){
+            result[result.length] = this.constructor.uber.toString(); 
+          }
+          result[result.length] = this.name;
+        }
+        
+             function TwoDShape(){}
+             
+             var F = function() {};
+             F.prototype = Shape.prototype;
+             
+             TwoDshape.prototype = new F();
+             TwoDshape.prototype.constructor = TwoDShape;
+             TwoDShape.prototype.name = '2DObject';
+             TwoShape.uber = Shape.prototype;
+             
+             
+             function Triangle() {}
+             
+             var F = function () {}
+             F.prototype = TwoShape.prototype;
+             Triangle.prototype = new F();
+             Triangle.prototype.name = 'Triangle';
+             Triangle.prototype.constructor = Triangle;
+             Triangle.uber = TwoShape.prototype;
+             
+             
+             var myTriangle = new Triangle();
+             myTriangle.toString();// O/P= shape, 2D shape, Triangle
+             
+             Or, in general-
+             function extend(Chile, Parent) {
+               var F = function () {};
+               F.prototype = Parent.prototype;
+               Child.prototype = new F();
+               Child.prototype.constructor = Child;
+               Child.uber = Parent.prototype;
+             }
+             
+             Another example where we can call the parent from the child- 
+             function Shape () {}
+             Shape.prototype.name = 'Shape';
+             Shape.prototype.test = function () {console.log(this.name);}
+             var F = function() {};
+             function Triangle() {};
+             F.prototype = Shape.prototype;
+             Triangle.prototype = new F();
+             Triangle.uber = Shape.prototype;
+             Triangle.prototype.constructor = Triangle
+             Triangle.prototype.name = 'Triangle';
+             Triangle.prototype.test = function () {this.constructor.uber.test(); console.log(this.name);}
+             var myVar = new Triangle();
+             myVar.test();// Shape and Triangle
+   
  * 
  * */
