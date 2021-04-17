@@ -229,7 +229,7 @@
              myTriangle.toString();// O/P= shape, 2D shape, Triangle
              
              Or, in general-
-             function extend(Chile, Parent) {
+             function extend(Child, Parent) {
                var F = function () {};
                F.prototype = Parent.prototype;
                Child.prototype = new F();
@@ -239,7 +239,7 @@
              
              Another example where we can call the parent from the child- 
              function Shape () {}
-             Shape.prototype.name = 'Shape';
+             Shape.	prototype.name = 'Shape';
              Shape.prototype.test = function () {console.log(this.name);}
              var F = function() {};
              function Triangle() {};
@@ -251,6 +251,77 @@
              Triangle.prototype.test = function () {this.constructor.uber.test(); console.log(this.name);}
              var myVar = new Triangle();
              myVar.test();// Shape and Triangle
-   
+             
+             (Copy the properties as in inheritance)
+             
+             function extend2 (Child, Parent) {
+               var c = Child.prototype;
+               var p = Parent.prototype;
+               for (var i in p) {
+                  c[i] = p[i];
+               }
+               Child.uber = Parent.prototype;
+             }
+             
+             Lets compare the extend and extend2 method ->
+             Consider - 
+             
+             function Shape() {}
+             Shape.prototype.name = 'Shape';
+             function TwoDShape() {}
+             extend(TwoDShape, Shape);
+             var t = new TwoShape();
+             t.__proto__.hasOwnProperty('name');//false
+             t.__proto__.__proto__.hasOwnProperty('name');//true
+             t.hasOwnProperty('name');//false
+             
+             extend2(TwoDShape, Shape);
+             Shape.prototype.name = 'Shape';
+             var t2 = new TwoDShape();
+             t2.__proto__.hasOwnProperty('name');//true
+             
+             Do note that while using extend if the non promitive value is changes in the child's prototype like
+             B.prototype.stuff = [1, 2];
+             extend2(A, B);
+             A.prototype.stuff.push(3);
+             B.prototype.stuff// is now [1, 2, 3]; as well
+             
+             (Inherit via Objects)
+             Not using the constructor
+             
+             function extendCopy(parent) {
+               var c = {};
+               for(var i in p){
+                 c[i] =p[i];
+               }
+               c.uber = p;
+               return c;
+             }
+             var shape = {
+                    name: 'shape',
+                    toString: function() {return this.name;}
+                 }
+             var twoDShape = extendCopy(shape);
+             twoDShape.name = '2D Shape';
+             twoDShape.toString = function() {
+                 console.log(this.uber.toString(), this.name);
+             }
+             //only draw back is that properties can't be passed as arguments
+             //to resolve that we can have a function that in turn accepts arguments
+             
+             (Deep Copy)
+             function deepCopy(p, c){
+                var c = c || {};
+                for(var i in p){
+                if(typeof p[i] === 'object'){
+                   c[i] = p[i].constructor === Array ? []: {}; 
+                   deepCopy(p[i], c[i]);
+                }else{
+                  c[i] = p[i]
+                }
+                }
+             }
+
+             
  * 
  * */
