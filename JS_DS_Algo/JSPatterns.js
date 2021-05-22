@@ -280,7 +280,7 @@
              var t2 = new TwoDShape();
              t2.__proto__.hasOwnProperty('name');//true
              
-             Do note that while using extend if the non promitive value is changes in the child's prototype like
+             Do note that while using extend if the non primitive value is changes in the child's prototype like
              B.prototype.stuff = [1, 2];
              extend2(A, B);
              A.prototype.stuff.push(3);
@@ -321,6 +321,55 @@
                 }
                 }
              }
+             
+             
+             //Inherit via object is referred as Prototypal Inheritance
+             function prototypeInheritance(o){
+                var F = function() {};
+                F.prototype = o;
+                var newObj = new F();
+                newObj.uber =  o;
+                return newObj;
+             }
+             
+             (Borrowing the constructor) - The case when we want to inherit the constructor properties along with the
+              prototype
+              function Shape(id) {
+                this.name = ID;
+              }
+              function Triangle){
+                Shape.apply(this, arguments);
+              }
+              extend2(Triangle, Shape);
+              
+              (BOM and DOM)
+              BOM is the global window object in the browser
+              DOM is the document object
+              Feature detection is more prevelent than browser detection
+              like check - typeof window.addEventListener === 'function' - the addEventListener exists
+              widnow.navigator could be manipulated
+              iframes, popup, or browser tab. etc all have a window object
+              
+              Singleton patterns
+              var Logger = (function () {
+                 var privateObj = {};
+                 var singletonSet = false;
+                 
+                 return function Logger() {
+                    if(!singletonSet) {
+                       singletonSet = true;
+                       privateObj = this;
+                    }
+                    return privateObj;
+                 }
+                 
+              })();
+              This pattern is safe from global namespaces clashes can be used like ->
+              var logger1 = new Logger();
+              logger1.test = 'test';
+              var logger2 = new Logger();
+              logger2.test//has value test so Logger is a singleton
+              
 
              
  * 
