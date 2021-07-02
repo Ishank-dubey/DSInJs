@@ -99,6 +99,49 @@ function formCircularLinkedList(N){
   return head;
 }
 
+function josepheusProblemViaCircularLL(N, M) {
+	var head = formCircularLinkedList(N);
+	var node = head;
+	var parent = node;
+	while(node.next != node){
+		for(let i=1;i < M;i++){
+			parent = node;
+			node = node.next;
+		}
+		parent.next = node.next;
+		node = parent.next;
+	}
+	return node.data;
+}
+
+function reverseLL(head, K){
+	var previous = null;
+	var current = head;
+	var next;
+	var count = 0;
+	//if we want to reverse the entire LL than just have while(current){}
+	while(count < K && current){
+		next = current.next;
+		current.next = previous;
+		previous = current;
+		current = next;
+		count++;
+	}
+	return {previous, current};//previous is the head and current is the next to this new head
+}
+function reverseLLinGroups(K){
+	head = reverseLLinGroupsInner(head);
+	function reverseLLinGroupsInner(head) {
+		if(!head){
+			return head;
+		}
+		var {previous, current} = reverseLL(head, K);
+		head.next = reverseLLinGroupsInner(current);
+		return previous;
+	}
+}//O(n) in time and space
+
+
 function printKNodesOfLinkedList(head, K){
 	var temp = head;
 	for(let i=0;i<K && temp ;i++){
@@ -139,6 +182,64 @@ function stackFunction(){
 	  pop, push, isEmpty, top, createNewStack, get
   }
 }
+
+function ratInMaze(matrix, dx, dy){
+	var x = y = 0;
+	var stack = stackFunction();
+	stack.push({x, y, dir:0});
+	var rows = matrix.length;
+	var cols = matrix[0].length;
+	var visitable = [];
+	for (let i=0;i < rows;i++){
+		visitable[i] = [];
+		for (let j=0;j < cols;j++) {
+			visitable[i][j] = true;
+		}
+	}
+	
+	while(!stack.isEmpty()) {
+		var obj = stack.pop();
+		var i = obj.x, j = obj.y, dir = obj.dir;
+		obj.dir = obj.dir+1;
+		stack.push(obj);
+		visitable[i][j] = false;
+		if(i==dx && j==dy){
+			return true;
+		}
+		
+		if(dir==0){
+			if(i > 0 && visitable[i-1][j] && matrix[i-1][j]==1){
+				var node = {x:i-1, y:j, dir:0};
+				
+				stack.push(node);
+			}
+		} else if(dir==1){
+			if(i < rows-1 && visitable[i+1][j] && matrix[i+1][j]==1){
+				var node = {x:i+1, y:j, dir:0};
+				//visitable[i+1][j] = false;
+				stack.push(node);
+			}
+			
+		} else if(dir==2) {
+			if(j > 0 && visitable[i][j-1] && matrix[i][j-1]==1){
+				var node = {x:i, y:j-1, dir:0};
+				//visitable[i][j-1] = false;
+				stack.push(node);
+			}
+		} else if(dir==3) {
+			if(j < cols-1 && visitable[i][j+1] && matrix[i][j+1]==1){
+				var node = {x:i, y:j+1, dir:0};
+				//visitable[i][j+1] = false;
+				stack.push(node);
+			}
+		} else {
+			stack.pop(obj);
+			visitable[i][j] = true;
+		}	
+	}
+	return false;
+}
+
 
 var stack = stackFunction();
 
@@ -317,6 +418,44 @@ function removeRepeatingChars(str){
   return outputArray;
 }
 
+
+function fractionToDecimal(numerator,denominator){
+    let apply = false;
+    if((numerator < 0 && denominator >0) || (numerator > 0 && denominator < 0)){
+         apply = true;
+    }
+    numerator = Math.abs(numerator);
+    denominator = Math.abs(denominator);
+     let base = Math.floor(numerator / denominator);
+     let mod = numerator % denominator;
+     let str = base+".";
+     let decimal;
+     let map = {}; 
+     let decStr='';
+     let  index = 0;
+
+     while(mod) {
+          //console.log(index);
+         if(map[mod] != undefined) {
+               break;
+         } else {
+           //console.log(index, mod);
+           map[mod] = index;
+           mod = mod * 10;
+           decStr = decStr + '' + Math.floor(mod/denominator); 
+           mod =  mod % denominator;
+}
+index++;
+
+}
+if(mod){
+  decStr = decStr.slice(0, map[mod]) + '('+decStr.slice(map[mod], decStr.length) + ')';
+} 
+//console.log(map);
+     if(apply) {return '-'+ str + decStr;}
+     return str + decStr;
+}
+
 function nextGreatestNumberWithForLoop(arg){
 	for(let i=0;i<arg.length;i++){
 		let j=i+1;
@@ -378,10 +517,10 @@ function sequentialRemoval(parent, child){
 
 module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinkedList,
 		printLinkedList : printLinkedList, getHeadOfLinkedList: function(){return head;}, insertToLinkedListAtLast,
-		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList, printKNodesOfLinkedList, stack, findSmallest,
+		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList,reverseLLinGroups, josepheusProblemViaCircularLL,  printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
-		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,
-		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, sequentialRemoval
+		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,fractionToDecimal, 
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, ratInMaze, sequentialRemoval
 		
 };
 

@@ -1,7 +1,7 @@
 function DP(){
 	function factorialRecurssion(N){
 		if(N == 0 || N == 1){
-			return N;
+			return 1;
 		}
 		return N * factorialRecurssion(N-1);
 	}//O(n), O(n) in space
@@ -148,8 +148,8 @@ function DP(){
 		for(let i=1; i <= SUM/2 ;i++){
 			for(let j= 1; j <= array.length ;j++){
 				DP[i][j] = DP[i][j-1];
-				if(i >= array[j]){
-					DP[i][j] = DP[i][j] || DP[i - array[j]][j-1];
+				if(i >= array[j-1]){
+					DP[i][j] = DP[i][j] || DP[i - array[j-1]][j-1];
 				}
 			}
 		}
@@ -452,7 +452,7 @@ function DP(){
 	
 	/*
 	 * 1. To find the biggest square of 1s in a 2-D binary matrix
-	 * 2. Have an auxialliary matrix with the same 1sth row ans 1st column as the binary matrix
+	 * 2. Have an auxialliary matrix with the same 1sth row and 1st column as the binary matrix
 	 * 3. Now for every other element we need to see of the upper, left and diagonal are having 1
 	 *    if they are all one and the element too is 1 then add 1 more to the min of the three from the Aux
 	 * 4. Finally the Auxilliary matrix need to scanned for the max size of the 1s Square
@@ -517,7 +517,7 @@ function DP(){
 	/* 1. To find the maximum sum possible in a matrix n x n in a sub-matrix
 	 * 2. The matrix can have negative values
 	 * 3. Now, we can have the entire sum first
-	 * 4. The we can go row by row and see if including an element in this row w/o the 0th, 1st, 2nd an d so on..
+	 * 4. The we can go row by row and see if including an element in this row w/o the 0th, 1st, 2nd and so on..
 	 * 5. The aux martix will have the sum of all the rows till its row including itself. 
 	 * 
 	 * */
@@ -566,6 +566,7 @@ function DP(){
 	 * 1. Min jumps needed to reach from start to ending
 	 * 2. The value of an element is the max we can jumps from there
 	 * 3. We will need to fill the result array bottom-up
+	 * 4. Assuming that 0th element is reached in 0 steps
 	 * */
 	
 	function minSteps(array){
@@ -633,6 +634,7 @@ function DP(){
 			if(N == 1){
 				return 1;
 			}
+			//Think of N as the length
 			for(let i=1;i < N;i++){
 				 result = lisRecurssionInner(i);
 				if(array[i-1] < array[N-1] && (result + 1) > maxInner){
@@ -1133,7 +1135,7 @@ function DP(){
 	 *    Recurssive formula- 
 	 *        DP[i][j] is 
 	 *        a. If we delete ith character in A then i-1 be converted into j chars of B
-	 *        b. If we at ith character in A then j-1 of B  need be matched now with upto i of A
+	 *        b. If we add at ith character in A then j-1 of B  need be matched now with upto i of A
 	 *        c. When A[i]==A[j] - just go to i-1 and j-1 
 	 *        d. Simply replace then go to i-1 and j-1
 	 *        e. DP[0][j] = j

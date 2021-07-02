@@ -9,10 +9,11 @@ function DandC(){
 		let buyDate;
 		let sellDate;
 		for(let j=0;j < array.length-1;j++){
-			buyDate = j;
+			
 			for(let k=j+1;k < array.length;k++){
 				if(array[k]-array[j] > profit){
 					profit = array[k]-array[j];
+					buyDate = j;
 					sellDate = k;
 				}
 			}
@@ -144,7 +145,7 @@ function DandC(){
 				return Math.max(crossRightMax + crossLeftMax, sumLeft, sumRight);
 			}
 		}
-	}//2T(n/2) + O(n) = O(n logn)
+	}//2T(n/2) + O(n) = O(n logn), mind that the left is been started from the right end and right is started from the left so as to maintain the continous.
 	
 	/*
 	 * Find the Closest Pair of Points using Divide and Conquer algorithm in a 2D plane

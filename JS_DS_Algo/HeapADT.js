@@ -146,7 +146,7 @@ function HeapADT(){
 		console.log(array);
 		//note that leaves are compared with the parent 
 		//as left and right children in the topBottom method
-	}//O(n) as sum of all the heights of the nodes in a tree is almost n
+	}   //O(n) as sum of all the heights of the nodes in a tree is almost n
 	
 	function heapifyInaMInHeap(ipArray){
 		array = ipArray;
@@ -291,7 +291,7 @@ function HeapADT(){
 			topBottom(index);
 		}
 		return data;
-	}//O(n)
+	}//O(log n)
 	
 	/*
 	 * Similar to the insert method defined earlier but for a Min Heap

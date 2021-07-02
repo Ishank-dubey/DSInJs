@@ -33,9 +33,9 @@ function Search(){
 			if(array[mid] == number){
 				return number;
 			}else if(array[mid] > number){
-				recursionBinarySearchInner(low, mid-1);
+				return recursionBinarySearchInner(low, mid-1);
 			}else{
-				recursionBinarySearchInner(mid + 1, high);
+				return recursionBinarySearchInner(mid + 1, high);
 			}
 		}
 	}//O(log n)
@@ -149,7 +149,11 @@ function Search(){
 				element = array[i]% N;
 			}
 		}
-		console.log("Maximun occuring element is ", element, ",It occures ", max, " times");
+		for(let i =0;i < array.length;i++){
+			array[i] = array[i] % N;
+		}
+		element = array.indexOf(element);
+		console.log("Maximun occuring element is value--", element, ",It occures ", max, " times");
 	}//O(n)
 	
 	
@@ -247,7 +251,7 @@ function Search(){
 	
 	
 	/*
-	 * To find the number that is ossuring ODD number of times
+	 * To find the number that is occuring ODD number of times
 	 * Just XOR all the elements of the Array
 	 * The numbers that are even will become zero leaving the one thats occuring Odd number of times
 	 * */
@@ -266,7 +270,7 @@ function Search(){
 	 * */
 	
 	/*
-	 * to find of any two numbers have a sum equal to a given number
+	 * to find if any two numbers have a sum equal to a given number
 	 * */
 	function findNumbersWithsum(array, SUM){
 		array.sort((a, b)=> a - b);
@@ -407,7 +411,7 @@ function Search(){
 	function findThreeIndexesThatSumToK(array, K){
 		for(let i=0;i < array.length-2;i++){
 			for(let j=i+1;j< array.length-1;j++){
-				for(let k=j+1;k< array.length-1;k++){
+				for(let k=j+1;k< array.length;k++){
 					if(array[i]+array[j]+array[k] == K){
 						console.log("The three indexes are: ", i, j, k);
 						return;
@@ -507,8 +511,12 @@ function Search(){
 		if(array[pivot] == element){
 			return pivot;
 		}else if(array[pivot] > element && pivot != array.length-1){
-			return binarySearch(array, pivot+1, array.length-1, element);
-		}else{
+			var result = binarySearch(array, pivot+1, array.length-1, element);
+			if(result == -1){
+			result = 	binarySearch(array, 0, pivot-1, element);
+			}
+			return result;
+		}else if(pivot == array.length-1){
 			return binarySearch(array, 0, pivot-1, element);
 		}
 	}//O(log n)
@@ -526,6 +534,21 @@ function Search(){
 		}
 		return -1;
 	}
+	function binarySearch2(array, s, l, e){
+		//console.log(s, l);
+				if(s <= l){
+					let mid = Math.floor((s+l)/2);//console.log(mid, 'mid');
+					if(array[mid] == e){
+
+						return mid;
+					}else if(array[mid] > e){
+						return binarySearch2(array, mid+1, l, e);
+					}else{
+						return binarySearch2(array, s, mid-1, e);
+					}
+				}
+				return -1;
+			}
 	
 	
 	/*
@@ -556,7 +579,7 @@ function Search(){
 			let mid = Math.floor((s+l)/2);
 			if(array[mid]==element && array[mid+1]> element || array[mid]== element && l == mid ){
 				return mid;
-			}else if(array[mid] <= element){
+			}else if(array[mid] <= element){ //mind this
 				return findLastIndex(array, mid+1, l, element);
 			}else{
 				return findLastIndex(array, s, mid-1, element);
@@ -689,7 +712,7 @@ function Search(){
 				pos++;
 			}
 		}
-		console.log(array);
+		console.log(array, "getFrequencyOptimal");
 	}//O(n)
 	
 	return {unorderedLinearSort, 

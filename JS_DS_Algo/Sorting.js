@@ -322,6 +322,7 @@ function Sorting(){
 	 * 2. Use the max of the array to find the digits in the max number found
 	 * 3. Start the count sort starting with the least significant digit in the array numbers
 	 * 4. Its complexity is compareble to Quick sort but its Space complexity is more that Quick sort
+	 * 5. Mainly when the range is upto n^2
 	 * */
 	function radixSort(array){
 		function findMax(array){
@@ -333,6 +334,15 @@ function Sorting(){
 			}
 			return max;
 		}
+		function findMin(array) {
+			var min = Infinity;
+			for(var i in array){
+				if(array[i] < min){
+					min = array[i];
+				}
+			}
+			return min;
+		} 
 		
 		function countSortWithRadixFacility(exp, base){
 			var count = [];
@@ -432,10 +442,10 @@ function Sorting(){
 		var prev = partitionForLL(start, end);
 		sortLinkedListViaQuickSort(start, prev);
 		
-		if(prev && prev!=start){
+		if(prev && prev == start){
 			sortLinkedListViaQuickSort(prev.next, end);
 		}else if(prev && prev.next){
-			sortLinkedListViaQuickSort(prev.next.next, end);
+			sortLinkedListViaQuickSort(prev.next.next, end);//Since prev.next is start itself so we must go from next of it
 		}
 		
 		function partitionForLL(start, end){
@@ -450,7 +460,7 @@ function Sorting(){
 					var temp = current.data;
 					current.data = start.data;
 					start.data = temp;
-					previous_sort = current;
+					previous_pivot = current;
 					current = current.next;
 				}
 				start = start.next;

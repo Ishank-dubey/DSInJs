@@ -12,10 +12,35 @@ DS.insertToLinkedList({data:201});
 console.log("Count-->>",DS.countLinkedListItems());
 DS.printLinkedList();*/
 
+
+
+DS.insertToLinkedListAtLast({data:1});
+DS.insertToLinkedListAtLast({data:2});
+DS.insertToLinkedListAtLast({data:3});
+DS.insertToLinkedListAtLast({data:4});
+DS.insertToLinkedListAtLast({data:5});
+DS.insertToLinkedListAtLast({data:6});
+DS.insertToLinkedListAtLast({data:7});
+DS.insertToLinkedListAtLast({data:8});
+
+DS.reverseLLinGroups(3);
+
+DS.printLinkedList();
+console.log("printLinkedList12345");
+
+console.log(require('./DS').ratInMaze([
+	[1, 0, 0, 0, 0],
+	[1, 1, 0, 1, 0],
+	[0, 1, 1, 1, 0],
+	[0, 0, 0, 1, 0],
+	[0, 0, 0, 0, 0]
+], 4, 4), "ratInMaze44");
+
 console.log(DS.fiboWithoutRecurssion(11), "<<-- FIBO w/o Recursion");
 console.log(DS.fibo(11), "<<-- FIBO");
 
 var head = DS.formCircularLinkedList(5);
+//console.log(DS.josepheusProblemViaCircularLL(14, 2));
 var lasttolast = DS.printKNodesOfLinkedList(head, 7);
 
 console.log(lasttolast.next.next.data, "lTl");
@@ -102,12 +127,13 @@ var Tree3 = require('./TreeADT').TreeADT();
 
 console.log('--INserting--in AVL');
 
-Tree3.insertInAVL(4);
-Tree3.insertInAVL(7);
-Tree3.insertInAVL(2);
-Tree3.insertInAVL(6);
 Tree3.insertInAVL(8);
-Tree3.insertInAVL(5);
+Tree3.insertInAVL(7);
+//Tree3.insertInAVL(6);
+//Tree3.insertInAVL(7.5);
+//Tree3.insertInAVL(8);
+//Tree3.insertInAVL(5);
+console.log("---AVL", Tree3.getRootNode());
 Tree3.traverseRecursivePreOrder();
 var Tree4 = require('./TreeADT').TreeADT();
 
@@ -201,7 +227,7 @@ Tree1.insert(13);
 //Tree1.addingNextSiblingsUsingQueue(Tree1.getRootNode());
 Tree1.addingNextSiblingViaRecursion(Tree1.getRootNode());
 console.log(Tree1.getRootNode().left.right.nextSibling.nextSibling.right.data, ' checking');
-//console.log(Tree.findVerticalSum(Tree.getRootNode()));
+//console.log(Tree.findVerticalSum(Tree.getRootNode()), "Find Vertical Sum");
 //Tree.findMirrorOfTree();
 
 var genericTree = require('./GenericTreesADT').GenericTreeADT();
@@ -587,7 +613,8 @@ var _search = require("./Searching").Search();
 //_search.checkIfDuplicateUsingHashTable([10, 11, 3, 1, 2]);
 _search.findDuplicate([1, 2, 3, 0]);
 //_search.findTheElementWithMaxRepetations([1, 1, 2, 3, 1, 2, 2, 2, 1, 1, 1]);
-_search.findMaxOccuring([1, 1, 2, 3, 1, 2, 2, 2, 1, 1, 1, 1, 3, 3,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3 ,3]);
+console.log("findMaxOccuring");
+_search.findMaxOccuring([1, 2, 3, 1, 1]);
 _search.findFirstRepeatingBruteForce([3, 2, 1, 2, 2, 3]);
 _search.findFirstRepeatingUsingMap([3, 2, 1, 2, 2, 3]);
 _search.findMissing([1, 2, 4, 5], 5);
@@ -596,15 +623,15 @@ _search.findNumbersWithsum([2, 5, 0], 6);
 _search.findNumbersWithSumUsingMap([3, 4, 01], 6);
 _search.threeIndexes([2, 4, 6, 5]);
 _search.findThePairWithSumClosestToZeroOptimal([-15, -5, 50, 200]);
-_search.findThreeIndexesThatSumToK([1,2,3, 45,6, 7], 50);
-_search.findTheThreeIndexesInOptimal([1,2,3, 45,6, 7], 500);
+_search.findThreeIndexesThatSumToK([1,2,3, 5,60, 70], 135);
+_search.findTheThreeIndexesInOptimal([1,2,3, 5,60, 70], 135);
 _search.bitonicPoint([1, 2, 3, 4, 5, 6, 50, 3, 0]);
-console.log(_search.findElementInRotatedSortedArray([ 1, 3, 4, 5, 7, 10, 14], 3), ' Pivot');
+console.log(_search.findElementInRotatedSortedArray([ 5, 6, 2, 3, 4], 5), 'Pivot-test-pivot');
 console.log(_search.findLastIndex([0, 1, 2, 3, 3, 4, 5, 5,5, 6, 7], 0, 9, 5), "  -First/Last Index");
 _search.seperateOddAndEven([1, 2, 3, 4, 5, 6]);
 _search.maxIndexDiff([34, 8, 10, 3, 2, 80, 30, 33]);
 console.log(_search.maxIndexDiffOptimal([34, 8, 10, 3, 2, 80, 30, 33]), "index diff");
-_search.getFrequencyOptimal([0, 1, 2, 3, 4, 5]);
+_search.getFrequencyOptimal([1, 2, 2, 1]);
 
 
 var median = require('./Medians').Median();
@@ -662,7 +689,7 @@ var DP = require('./DP').DP();
 //console.log(DP.fibonacciWithDP(8));
 //DP.setsWithSumOfK([1, 2, 3 , 2, 4,7, 8], 15);
 console.log(DP.recursivePartitionProblem([5, 5, 12], 22));
-console.log(DP.partitionProblemViaDP([5, 5, 11, 1], 22));
+console.log(DP.partitionProblemViaDP([5, 5, 11, 0], 22), "partitionProblemViaDP--");
 //console.log(DP.longestPalendromicSubSequenceRecurssive(['G','E','E','K','S','F','O','R','G','E','E','K','S']));
 //console.log(DP.longestPalindromeSubSeqViaDP(['G','E','E','K','S','F','O','R','G','E','E','K','S']))
 //console.log(DP.longestSubString(['f','o','r','g','e','e','k','s','s','k','e','e','g','f','o','r']));
@@ -716,7 +743,7 @@ console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
 console.log(DP.knapsack01DP([60, 100, 120], [10, 20, 30], 50));
 console.log(DP.knapsack01Recurssion([60, 100, 120], [10, 20, 30], 50));
 console.log(DP.coinChange([5, 1], 6), "CC::");
-console.log(DP.coinChangeMin([1, 5, 10], 12));
+console.log(DP.coinChangeMin([1, 6, 10], 12), 'coinChangeMin');
 console.log(DP.boxStacking([{h: 4, w:6, d:7}, {h: 1, w: 2, d: 3}, {h:4, w:5, d:6}, {h:10, w:12, d:32}]));
 console.log(DP.subSetRecurssion([3, 34, 4, 12, 5, 2], 9));
 console.log(DP.subSetDP([3, 34, 4, 12, 5, 2], 41));

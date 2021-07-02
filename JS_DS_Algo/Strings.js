@@ -169,7 +169,7 @@ function Strings(){
     function findPatternIn2DMatrix(mat, P, xRows, yRows){
     	let used = [];
     	mat = [];
-    	P = [1, 2, 3];
+    	P = [2, 5, 8];
     	for(let i=0;i < xRows;i++){
     		used.push([]);
     	}
@@ -185,7 +185,10 @@ function Strings(){
     			mat[i][j] = i*yRows + j+1;
     		}
     	}
-    	console.log(mat);
+    	mat = [
+    		[1, 0, 2],[3, 4 , 5],[6, 7, 8]
+    	];
+    	console.log(mat, "findPatternIn2DMatrix01568x");
     	console.log(findPatternIn2DMatrixInner(0, 0, 0));
     	function findPatternIn2DMatrixInner(x, y, level){
     		if(level == P.length){

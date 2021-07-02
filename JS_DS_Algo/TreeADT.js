@@ -320,26 +320,26 @@ function TreeADT(){
 		return level;
 	}
 	
-    function findDiameter1(){
-    	return findDiameter1Inner(root, {height:0});
-    	function findDiameter1Inner(node, heightObj){
-    		
-    		
-    		if(!node){
-    			heightObj.height = 0;
-            	return 0;
-            }
-    		
-    		var nodeLeftHeight = {height:0}, 
-    		  nodeRightHeight = {height:0};
-            var leftDiameter = findDiameter1Inner(node.left, nodeLeftHeight);
-            var rightDiameter = findDiameter1Inner(node.right, nodeRightHeight);
-            
-            heightObj.height = Math.max(nodeLeftHeight.height, nodeRightHeight.height) +  1;
-            
-            return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
-    	}
-    }//O(n) since any node is accessed at max one time
+	    function findDiameter1(){
+	    	return findDiameter1Inner(root, {height:0});
+	    	function findDiameter1Inner(node, heightObj){
+	    		
+	    		
+	    		if(!node){
+	    			heightObj.height = 0;
+	            	return 0;
+	            }
+	    		
+	    		var nodeLeftHeight = {height:0}, 
+	    		  nodeRightHeight = {height:0};
+	            var leftDiameter = findDiameter1Inner(node.left, nodeLeftHeight);
+	            var rightDiameter = findDiameter1Inner(node.right, nodeRightHeight);
+	            
+	            heightObj.height = Math.max(nodeLeftHeight.height, nodeRightHeight.height) +  1;
+	            
+	            return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
+	    	}
+	    }//O(n) since any node is accessed at max one time
     
     function diameterUsingHeight(){
     	return diameterUsingHeightInner(root);
@@ -706,24 +706,26 @@ function TreeADT(){
 	 * O(n)
 	 * */
 	function formTreeFromPreOrderTraversal(preorderArray){
-		return formTreeFromPreOrderTraversalInner(preorderArray, 0);
-		function formTreeFromPreOrderTraversalInner(preorderArrayInner, index) {
+		var index = 0;
+		return formTreeFromPreOrderTraversalInner(preorderArray);
+		function formTreeFromPreOrderTraversalInner(preorderArrayInner) {
 			if(!preorderArrayInner[index]){
 				return null;
 			}
 			
 			var node = {};
 			node.data = preorderArrayInner[index];
+			index++;
 			if(node.data === 'L'){
 				node.left = null;
 				node.right = null;
 			}else{
-				node.left = formTreeFromPreOrderTraversalInner(preorderArrayInner, index+1);
-				node.right = formTreeFromPreOrderTraversalInner(preorderArrayInner, index+2);
+				node.left = formTreeFromPreOrderTraversalInner(preorderArrayInner);
+				node.right = formTreeFromPreOrderTraversalInner(preorderArrayInner);
 			}
 			return node;
 			}
-		}
+		}//O(n) in time and space
 
 	function findVerticalSum(root){
 		var map = {};
@@ -733,10 +735,10 @@ function TreeADT(){
 			if(!node)
 				return 0;
 			innerFindVerticalSum(node.left, column-1);
-			map[column] = map[column] ? (map[column] + node.data) : node.data;
+			map[column] = map[column] ? (map[column] + node.data) : node.data;// WE can have this line before as well
 			innerFindVerticalSum(node.right, column+1);
 		}
-	}
+	}//O(n) in time and space
 	
 	
 	/*

@@ -211,7 +211,8 @@ function GraphADTUsingAdjacencyList(){
 	/*
 	    * 1. Have a distance array, all elements are initalized to -1
 	    * 2. distance of src itself is 0
-	    * 3. Enque the adjacent elements and move farther away
+	    * 3. Enqueue the adjacent elements and move farther away
+	    * 4. This is unweighted graph so all the edges are of weight 1
 	    * */
 	   function unWeightedShortestPath(src){
 		   var distance = [];
@@ -511,13 +512,13 @@ function GraphADTUsingAdjacencyList(){
 	 * 6. In order to get the maximum spanning tree Use the minimum spanning algo after making the edges as negative
 	 * */
 	
-	// to find the Cut vertixes in a Guraph that make it disconnected
-	/*
-	 * We do a DFS with some additions - 
-	 * 1. When its a root node with more than one child then its a Cut vertex
-	 * 2. When its not a root and any of its child don't have connection to its ancestor then also its a cut edge
-	 * 3. We will find the 2nd condition via the comparison of the discovery time of the non parent elements even if they 
-	 *    are visited also the condition of whether its a root node or not needs be checked
+		// to find the Cut vertixes in a Guraph that make it disconnected
+		/*
+		 * We do a DFS with some additions - 
+		 * 1. When its a root node with more than one child then its a Cut vertex
+		 * 2. When its not a root and any of its child don't have connection to its ancestor then also its a cut edge
+		 * 3. We will find the 2nd condition via the comparison of the discovery time of the non parent elements even if they 
+		 *    are visited also the condition of whether its a root node or not needs be checked
 	 * */
 	function articulationPoints(){
 		var discovery = [];
@@ -600,7 +601,7 @@ function GraphADTUsingAdjacencyList(){
 				if(!visited[v]){
 					parent[v] = u;
 					dfsArticulateEdge(v);
-					low[u] = Math.min(low[v], low[v]);
+					low[u] = Math.min(low[u], low[v]);
 					if(low[v] > discovery[u]){
 						console.log(u+" - "+v);
 					}
@@ -619,7 +620,7 @@ function GraphADTUsingAdjacencyList(){
 	 * 3. Eularian Graph - a graph that contains an eulerian circuit
 	 * 4. Even vertex - a vertex that has even number of incident edges
 	 * 5. Odd vertex - a vertex that has an odd number of incident edges
-	 * 6. In an undirected graph 0 or 2 can have odd degree and others will have odd degree as
+	 * 6. In an undirected graph 0 or 2 vertixes can have odd degree and others will have odd degree as
 	 *    the sum of all the degree in a undirected path is even
 	 * */
 	
@@ -811,6 +812,8 @@ function GraphADTUsingAdjacencyList(){
 		
 		return hameltonianPathInner(1);
 		
+		// to check if the vertix is been included in the path already
+		// edge must be present as well between the last vertix in the path the new one
 		function canBeIncludedInPath(pos, v){
 			for(let j=0;j< pos;j++){
 				if(path[j] == v){
