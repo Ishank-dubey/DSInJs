@@ -65,11 +65,50 @@ function All(){
 		}
 		console.log(max, "max window", aleft);
 	}
+	/*
+	 * Given a Sorted array, arrange it for example like this - i/p array [1,2,3,4]
+	 * o/p - [4,3,2,1]
+	 * Using extra space
+	 * */
+	function arrangeAnArrayInPairsWithNewArray(array){
+		var newArray = [];
+		var lastIndex = array.length - 1;
+		var firstIndex = 0;
+		for(let i=0;i < array.length;i++){
+			if(i % 2 == 0){
+				newArray.push(array[lastIndex --]);	
+			} else{
+				newArray.push(array[firstIndex ++]);
+			}
+		}
+		return newArray;
+	}
+	
+	/*
+	 * Given a Sorted array, arrange it for example like this - i/p array [1,2,3,4]
+	 * o/p - [4,3,2,1]
+	 * Using NO extra space
+	 * */
+	function arrangeAnArrayInPairsWithNewArraySpaceOptimized(array){
+		var newArray = [];
+		var lastIndex = array.length - 1;
+		var firstIndex = 0;
+		for(let i=0;i < array.length;i++){
+			if(i % 2 == 0){
+				newArray.push(array[lastIndex --]);	
+			} else{
+				newArray.push(array[firstIndex ++]);
+			}
+		}
+		return newArray;
+	}
+	
 	//Note that the (right - left) is the width not (right - left + 1) since right is one ahead of the length of array
 	return {
 		increment,
 		findNumberOfBase,
-		reverseInteger
+		reverseInteger,
+		arrangeAnArrayInPairsWithNewArray
 	}
 }
 module.exports = All;
