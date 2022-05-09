@@ -188,6 +188,29 @@ function Greedy(){
 	 * */
 	
 	
+	
+	
+	/**
+	To find all the combinations that lead to a sum, brute force
+	**/
+	var indexArray = [];
+        var array = [1,2,3];
+        function findSummation(index, sum){
+           if(sum ===0){
+            console.log(indexArray.slice(0, index));
+            return;
+          }
+           if(sum < 0){
+             return;
+          }
+         for(let i=0;i < array.length;i++){
+               if(array[i] <= sum ){
+                indexArray[index] = array[i];
+                findSummation(index+1, sum - array[i]);
+          }
+       }
+     }
+	
 	return {
 		intervalScheduling,
 		findMaximumoverlapsAndTime,
