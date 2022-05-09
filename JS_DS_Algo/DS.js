@@ -379,6 +379,33 @@ function arrangeThreeOfThree(arg){
 	}
 	console.log(arg);
 }
+/*
+ * Equilibrium point is the one that-
+ * The sum of numbers earlier and the numbers after is the same
+ * [1, 3, 5, 2, 2], the sum of numbers before 5 is 1+3=4, sum of numbers after 5 is 2+2=4
+ * the position is index+1 = 2+1 = 3rd position
+ * When there is only one element the position is 1
+ * When there is none then position is -1 
+ * */
+
+function findEquilibrium(array, n) {
+	let sum = 0;
+    
+    if(n == 1){
+        return 1;
+    }
+    for(let i=0;i < n;i++){
+        sum += array[i];
+    }
+    let localSum = array[0];
+    for(let i=1;i < n;i++){
+        if(localSum == sum - localSum - array[i]){
+            return i+1;
+        }
+        localSum += array[i];
+    }
+    return -1;
+}
 
 function removeDuplicacyCharacters(str){
 	let currentChar = str.charAt(0);
@@ -520,7 +547,7 @@ module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinked
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList,reverseLLinGroups, josepheusProblemViaCircularLL,  printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,fractionToDecimal, 
-		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, ratInMaze, sequentialRemoval
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, ratInMaze, sequentialRemoval, findEquilibrium
 		
 };
 

@@ -64,7 +64,9 @@ function All(){
 			}
 		}
 		console.log(max, "max window", aleft);
-	}
+	}//Note that the (right - left) is the width not (right - left + 1) since right is one ahead of the length of array
+	
+	
 	/*
 	 * Given a Sorted array, arrange it for example like this - i/p array [1,2,3,4]
 	 * o/p - [4,3,2,1]
@@ -88,27 +90,74 @@ function All(){
 	 * Given a Sorted array, arrange it for example like this - i/p array [1,2,3,4]
 	 * o/p - [4,3,2,1]
 	 * Using NO extra space
+	 * 1. Get Maximun Element + 1
+	 * 2. Replace 
 	 * */
 	function arrangeAnArrayInPairsWithNewArraySpaceOptimized(array){
-		var newArray = [];
-		var lastIndex = array.length - 1;
-		var firstIndex = 0;
+		
+		var maxIndex = array.length - 1;
+		var minIndex = 0;
+		var max = array[maxIndex] + 1;
 		for(let i=0;i < array.length;i++){
 			if(i % 2 == 0){
-				newArray.push(array[lastIndex --]);	
+				array[i] += (array[maxIndex--] % max) * max;	
 			} else{
-				newArray.push(array[firstIndex ++]);
+				array[i] += (array[minIndex++] % max) * max;
 			}
 		}
-		return newArray;
+		return array.map((a) => Math.floor(a/max));
 	}
 	
-	//Note that the (right - left) is the width not (right - left + 1) since right is one ahead of the length of array
+    /*
+     * Reverse array in pairs
+     * */	
+	function reverseInGroups(arr, n, k){
+        let newArray = [];
+        for(let i=0;i < n; i = i+ k){
+            let left = i;
+            let right = Math.min(i+ k - 1, n-1);
+            while(left < right){
+                let temp = arr[left];
+                arr[left] = arr[right];
+                arr[right] = temp;
+                left++;
+                right--;
+            }
+        }
+    }
+	
+	/*
+	 * Chocolate Distribution Problem
+	 * The array elements are the number of chocolates 
+	 * These need to be distributed so that the difference between the min and max in a distribution is minimum
+	 * N = 8, M = 5
+			A = {3, 4, 1, 9, 56, 7, 9, 12}
+			Output: 6
+			Explanation: The minimum difference between 
+			maximum chocolates and minimum chocolates 
+			is 9 - 3 = 6 by choosing following M packets :
+			{3, 4, 9, 7, 9}.
+			
+			Solution - sort the given array, slide the window of given size while checking for the difference
+	 * */
+	function findMinDiff(arr,n,m){
+        arr = arr.sort((a, b)=> a-b );
+        let min = Infinity;
+        for(let i=0;i < n-m+1;i++){
+            if(min >  arr[i+m-1] - arr[i]){
+                min =  arr[i+m-1] - arr[i];
+            }
+        }
+        return min;
+    }
+	
+	
 	return {
 		increment,
 		findNumberOfBase,
 		reverseInteger,
-		arrangeAnArrayInPairsWithNewArray
+		arrangeAnArrayInPairsWithNewArray,
+		arrangeAnArrayInPairsWithNewArraySpaceOptimized
 	}
 }
 module.exports = All;
