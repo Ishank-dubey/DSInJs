@@ -150,14 +150,114 @@ function All(){
         }
         return min;
     }
+
+
+
+	function GCD(a, b){
+         if(b==0) {
+			 return a;
+		 }
+		 return GCD(b, a % b);
+	}
+
+	function GCDSimple(a, b){
+		while(a!=b){
+			if(a > b){
+				a = a - b;
+			}else{
+                b = b - a;
+			}
+		}
+		return a;
+   }
+
+
+	function isPrime(N){
+		if(N % 2==0 || N % 3==0){
+			return false;
+		}
+			 for(var i=5; i*i < N;i=i+6) {
+			     if(N % i ==0 || N % (i+2)==0){
+					 return false;
+				 }
+			 }
+			 return false;
+	}
+
+
+	function primeNumbersUptoN(N){
+		let isPrime = [];
+		for(let i=0;i <=N ;i++){
+			isPrime[i] = true;
+		}
+		for(let i=2; i <= N  ;i++){
+			if(isPrime[i]) {
+				console.log(i);
+				for(let j= i*i; j <= N; j= j + i){
+					isPrime[j] = false;
+				}
+			}
+		}
+	}
+
+	function calculatePower(x, y){
+		if(y==0) {
+			return 1;
+		}
+		let result = calculatePower(x, Math.floor(y/2));
+		result = result * result;
+		if(y%2==0){
+			return result;
+		}else {
+			return result * x;
+		}
+	}//Log(n)
 	
+
+	function findDivisorsOne(N){
+		let j = 0;
+		for(let i=1; i*i<=N; i++) {
+			j =  i;
+			if(N % i ==0){
+				console.log(i);
+			}
+		}
+		j++;
+		for(;j <= N ;j++) {
+			if(N % j ==0){
+				console.log(j);
+			}
+		}
+	}
+
+	function findDivisorsTwo(N){
+		let i;
+		for(i=1; i*i<N; i++) {
+			if(N % i ==0){
+				console.log(i);
+			}
+		}
+		
+		for(;i >= 1 ;i--) {
+			if(N % i ==0){
+				console.log(N/i);
+			}
+		}
+	}
 	
 	return {
 		increment,
 		findNumberOfBase,
 		reverseInteger,
 		arrangeAnArrayInPairsWithNewArray,
-		arrangeAnArrayInPairsWithNewArraySpaceOptimized
+		arrangeAnArrayInPairsWithNewArraySpaceOptimized,
+		GCD,
+		GCDSimple,
+		isPrime,
+		primeNumbersUptoN,
+		calculatePower,
+		findDivisorsOne,
+		findDivisorsTwo
 	}
 }
 module.exports = All;
