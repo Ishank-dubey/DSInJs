@@ -257,7 +257,155 @@ function All(){
 		}
 		return result;
 	}
+
+	function kThBitSetNive(N, k){
+	   let x = 1;
+       for(let i=0;i < (k-1);i++){
+          x = x * 2;
+	   }
+	   if(n & x !=0){
+           console.log('Set');
+	   } else{
+		console.log('UnSet');
+	   }
+	}
+
+	function isKthBitSetRightShift(N, k){
+		let x = N >> k-1;
+		if(x & 1!=0){
+           console.log('Set');
+		}else {
+			console.log('UnSet');
+		}
+	}
+
+	function isKthBitSetLeftShift(N, k){
+		let x = 1 << k-1;
+		if(N & x!=0){
+           console.log('Set');
+		}else {
+			console.log('UnSet');
+		}
+	}
 	
+    function countSetBits(N){
+		let res = 0;
+		while(N!=0){
+			if(N%2!=0){
+				res++;
+			}
+			// res = res + (N & 1) - //short
+			N = Math.floor(N/2);
+		}
+		return res;
+	}
+
+
+	function countSetBitsEfficient(N){
+		let res = 0;	  
+		while(N){
+				  N = N & (N-1);
+				  res++;
+			  }
+			  return res;
+	}
+
+	function efficientFindSetBits(N){
+	  let table = [];
+	  table[0] = 0;
+	  for(let i=1;i < 256 ;i++){
+		  table[i] = table[i & (i-1)] + 1;
+	  }
+	  return table[N & 255] + table[N >> 8 & 255] + table[N >> 16 & 255] + table[N >> 24]
+	}//O(1) - constant time after the table is in place
+
+
+    function primeFactors(N){
+		for(let i=2;i*i <=  N;i++){
+			while(N%i == 0){
+				console.log(i);
+				N = Math.floor(N/i);
+			}
+		}
+		if(N > 1){
+			console.log(N);
+		}
+	}
+
+	/*
+	* Given a number N, return if its a power of 2
+	*/
+	function powerOfTwo(N){
+		while(N){
+			if(N % 2 ==0){
+				N = Math.floor(N/2);
+			}else {
+				break;
+			}
+		}
+		return N ==1;
+	}
+
+	/*
+	* Given a number N, find an efficient way to check if its a power of 2
+	*
+	*/
+	function powerOfTwoEfficient(N){
+		if(N==0)
+		return false;
+		return (N & (N-1)) ==0 ;
+	}
+
+	/*
+	* This program takes an array of integers and displays the number that has odd occurrences in the array.
+	*/
+    function oddOccuring(array){
+	   let result = array[0];
+       for(let i=1;i < array.length;i++){
+		result = result ^ array[i];
+	   }
+	   return result;
+	}
+
+	/*
+	* Find the two numbers that occur odd number of times in a given list 
+	*/
+    function twoOddNumbers(list){
+		let result = list[0];
+		for(let i=1;i< list.length;i++){
+			result = result ^ list[i];
+		}
+		let resultWithBitSet = result & (~(result-1));
+		let result1 = 0;
+		let result2 = 0;
+		for(let j=0;j < list.length;j++){
+			if(list[j] & resultWithBitSet) {
+				result1 = result1 ^ list[j];
+			}else {
+				result2 = result2 ^ list[j];
+			}
+		}
+		console.log(result1, result2);
+	}
+
+	/*
+		Power set i.e all the combinations of a set - sub sets of a set = 2^n , Including the Blank Set
+		- Always make sure to use the small braces while using the binary operators
+	*/
+	function powerSet(list){
+		 let n = list.length;
+		 let setsCount = 1 << n;
+		 for(let i=0;i < setsCount;i++){
+			 for(let j=0;j < n;j++){
+				 if((i & (1 << j)) != 0){
+					 console.log(list[j], i);
+				 }
+			 }
+			 console.log('----')
+		 }
+	}
+
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -270,7 +418,14 @@ function All(){
 		primeNumbersUptoN,
 		calculatePower,
 		findDivisorsOne,
-		findDivisorsTwo
+		findDivisorsTwo,
+		kThBitSetNive,
+		isKthBitSetRightShift,
+		isKthBitSetLeftShift,
+		countSetBits,
+		countSetBitsEfficient,
+		powerOfTwo,
+		twoOddNumbers
 	}
 }
 module.exports = All;
