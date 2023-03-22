@@ -244,6 +244,19 @@ function All(){
 			}
 		}
 	}
+
+
+	function powerUsingBinary(x, y){
+		let result = 1;
+		while(y){
+			if(y % 2 == 1){
+				result = result * x;
+			}
+			x = x * x;
+			y = Math.floor(y/2);
+		}
+		return result;
+	}
 	
 	return {
 		increment,
