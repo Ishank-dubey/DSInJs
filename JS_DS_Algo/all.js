@@ -406,6 +406,29 @@ function All(){
 	}
 
 
+	/*
+	 Number raised to how many powers of 2
+	*/
+	function howManyPowersOfTwo(N){
+		if(N==1){
+			return 0;
+		}
+		N = Math.floor(N/2);
+		return(1 + howManyPowersOfTwo(N));
+	}
+
+	/*
+	Change to Binary representation
+	*/
+	function printBinary(N){
+		if(N ==0 ){
+			return 0;
+		}
+		X = Math.floor(N/2);
+		printBinary(X);
+		console.log(N%2);
+	}
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -425,7 +448,9 @@ function All(){
 		countSetBits,
 		countSetBitsEfficient,
 		powerOfTwo,
-		twoOddNumbers
+		twoOddNumbers,
+		howManyPowersOfTwo,
+		printBinary
 	}
 }
 module.exports = All;
