@@ -429,6 +429,14 @@ function All(){
 		console.log(N%2);
 	}
 
+	function printNto1(N){
+        if(N==0){
+			return;
+		}
+		console.log(N);
+		printNto1(N-1);
+	}//T(n) = T(n-1) + theta(1)
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -450,7 +458,8 @@ function All(){
 		powerOfTwo,
 		twoOddNumbers,
 		howManyPowersOfTwo,
-		printBinary
+		printBinary,
+		printNto1
 	}
 }
 module.exports = All;
