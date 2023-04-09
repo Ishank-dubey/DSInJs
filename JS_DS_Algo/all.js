@@ -457,6 +457,46 @@ function All(){
 		return tailRecurssionFactorial(N-1, K*N);
 	}//tailRecurssionFactorial(N, 1)//lesser auxiliary space
 
+
+	function findIfPalindrom(str, start, end){
+      if(start >= end){
+            return true;
+	  }
+      return (str[start] == str[end]) && findIfPalindrom(str, start + 1, end-1);
+	}//O(n) in time and Space, T(n) = T(n-2) + theta(1)
+
+
+	function sumOfDigitsUsingRecurssion(N){
+         if(N ==0){
+			 return 0;
+		 }
+		 return (N%10) + sumOfDigitsUsingRecurssion(Math.floor(N/10));
+	}//O(n) in time and space
+
+	function sumOfDigitsUsingIteration(N){
+		var result = 0;
+		while(N > 0){
+			result = result + (N%10);
+			N = Math.floor(N/10);
+		}
+		return result;
+   }//O(n) in time
+
+
+   function ropeCut(L, a, b, c){
+      if(L ==0){
+		  return 0;
+	  }
+	  if(L <0 ){
+		  return -1;
+	  }
+	  var result = Math.max(ropeCut(L-a, a, b, c), Math.max(ropeCut(L-b, a, b, c), ropeCut(L-c, a, b, c)));
+	  if(result == -1){
+		  return -1;
+	  }
+	  return result + 1;
+   }//O(3^n)
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -480,7 +520,11 @@ function All(){
 		howManyPowersOfTwo,
 		printBinary,
 		printNto1,
-		print1ToN
+		print1ToN,
+		findIfPalindrom,
+		sumOfDigitsUsingRecurssion,
+		sumOfDigitsUsingIteration,
+		ropeCut
 	}
 }
 module.exports = All;
