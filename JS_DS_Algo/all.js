@@ -437,6 +437,26 @@ function All(){
 		printNto1(N-1);
 	}//T(n) = T(n-1) + theta(1)
 
+
+	function print1ToN(N){
+        if(N == 0){
+			return;
+		}
+		print1ToN(N - 1);
+		console.log(N);
+	}
+
+
+	function tailRecurssionFactorial(N, K){
+		// a function is tail recurssive when the last thing that the functinon does is call itself and
+		// when that is done there is nothing left for the parent to do.
+		// example printNto1
+		if(N==1 || N==0){
+			return K;
+		}
+		return tailRecurssionFactorial(N-1, K*N);
+	}//tailRecurssionFactorial(N, 1)//lesser auxiliary space
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -459,7 +479,8 @@ function All(){
 		twoOddNumbers,
 		howManyPowersOfTwo,
 		printBinary,
-		printNto1
+		printNto1,
+		print1ToN
 	}
 }
 module.exports = All;
