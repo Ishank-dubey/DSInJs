@@ -497,6 +497,32 @@ function All(){
 	  return result + 1;
    }//O(3^n)
 
+   function findSubSets(str, curr, index){ //findSubSets('abc','',0)
+	   if(index == str.length) {
+		   console.log(curr);
+		   return;
+	   }
+	   findSubSets(str, curr, index+1);
+	   findSubSets(str, curr+str[index], index+1);
+   }// 2^n are the number of subsets
+
+   function towerOfHanoi(N, a, b, c) {//towerOfHanoi(3, 'A', 'B', 'C')
+         if(N==1){
+			 console.log(`move 1 from ${a} to ${c}`);
+			 return;
+		 }
+		 towerOfHanoi(N-1, a, c, b);
+		 console.log(`move ${N} from ${a} to ${c}`);
+		 towerOfHanoi(N-1, b, a, c);
+   }//O(2^n -1), T(n) = 2T(n-1) + 1
+
+	function josepheusProblem(N, k){//kill kth person in every iteration
+       if(N==1){
+		   return 0;
+	   }
+	   return (josepheusProblem(N-1, k) + k)%N;
+   }//T(n) = T(n-1) + C, O(N)
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -524,7 +550,10 @@ function All(){
 		findIfPalindrom,
 		sumOfDigitsUsingRecurssion,
 		sumOfDigitsUsingIteration,
-		ropeCut
+		ropeCut,
+		findSubSets,
+		towerOfHanoi,
+		josepheusProblem
 	}
 }
 module.exports = All;
