@@ -181,7 +181,7 @@ function All(){
 					 return false;
 				 }
 			 }
-			 return false;
+			 return true;
 	}
 
 
@@ -193,7 +193,7 @@ function All(){
 		for(let i=2; i <= N  ;i++){
 			if(isPrime[i]) {
 				console.log(i);
-				for(let j= i*i; j <= N; j= j + i){
+				for(let j= i*i; j <= N; j= j + i){ // !!!!This is j + i NOT j + 1!!!!!
 					isPrime[j] = false;
 				}
 			}
@@ -263,7 +263,7 @@ function All(){
        for(let i=0;i < (k-1);i++){
           x = x * 2;
 	   }
-	   if(n & x !=0){
+	   if(N & x !=0){
            console.log('Set');
 	   } else{
 		console.log('UnSet');
@@ -523,6 +523,35 @@ function All(){
 	   return (josepheusProblem(N-1, k) + k)%N;
    }//T(n) = T(n-1) + C, O(N)
 
+
+
+   function findIfArrayHasaSumWithGivenSet(Sum, array, N){
+	   //lets traverse the array from the right unlike the earlier one
+	   if( N==0 ) {
+		   return Sum == 0 ? 1 : 0;
+	   }
+	   return findIfArrayHasaSetWithGivenSet(Sum, array, N-1) + findIfArrayHasaSetWithGivenSet(Sum-array[N-1], array, N-1);
+   }//O(2^n) , findIfArrayHasaSetWithGivenSet(25, [10,20,15],3)
+
+
+   function permutation2(strArray){
+	   function swap(str, i, j){
+		   let tempChar = str[i];
+		   str[i] = str[j];
+		   str[j] = tempChar;
+	   }
+	   function premutation2Inner(str, i){
+		   if(i == str.length -1 ){
+			   console.log(str);
+		   }
+		   for(let j = i;j < str.length;j++){
+				swap(str, i, j);
+				premutation2Inner(str, i+1);
+				swap(str, i, j);
+		   }
+	   }
+   }
+
 	return {
 		increment,
 		findNumberOfBase,
@@ -553,7 +582,8 @@ function All(){
 		ropeCut,
 		findSubSets,
 		towerOfHanoi,
-		josepheusProblem
+		josepheusProblem,
+		findIfArrayHasaSetWithGivenSet
 	}
 }
 module.exports = All;
