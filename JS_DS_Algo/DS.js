@@ -8,7 +8,7 @@ function findBiggest(array){
 		}
 	}
 	console.log("Biggest Number is ", array[k]);
-}
+}//O(n)
 
 function findSmallest(array){
 	let k = 0, len = array.length;
