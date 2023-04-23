@@ -510,7 +510,7 @@ function All(){
          if(N==1){
 			 console.log(`move 1 from ${a} to ${c}`);
 			 return;
-		 }
+		 } 
 		 towerOfHanoi(N-1, a, c, b);
 		 console.log(`move ${N} from ${a} to ${c}`);
 		 towerOfHanoi(N-1, b, a, c);
