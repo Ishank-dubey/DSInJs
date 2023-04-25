@@ -38,7 +38,7 @@ function Search(){
 				return recursionBinarySearchInner(mid + 1, high);
 			}
 		}
-	}//O(log n)
+	}//O(log n) //Basically we need to find the height of the search tree and that is log(n)
 	
 	//Check of a number is been repeated in an Array
 	//using 2 for loops
@@ -559,16 +559,35 @@ function Search(){
 	function findFirstIndex(array, s, l, element){
 		if(s <= l){
 			let mid = Math.floor((s+l)/2);
-			if(array[mid]==element && array[mid-1] < element || array[mid]== element && s ==mid ){
+			if(array[mid]==element && array[mid-1] < element || array[mid]== element && s ==mid ){ // the condition can be simplified to mid==0 in place of the array[mid]==s
 				return mid;
 			}else if(array[mid] < element){
 				return findFirstIndex(array, mid+1, l, element);
 			}else{
-				return findFirstIndex(array, s, mid-1, element);
+				return findFirstIndex(array, s, mid-1, element); //Go to left half when the mid is lesser than or equal to
 			}
 		}
 		return -1;
 	}//Log(n)
+
+
+	function firstIndexIteration(array, element){
+		let s = 0, h = array.length - 1;
+		while(s <= h){
+			let mid = Math.floor((s + h)/2);
+			if(array[mid] > element){
+                 h = mid - 1;
+			} else if(array[mid] < element){
+                 s = mid + 1;
+			}else {
+                    if(mid ==0 || array[mid - 1] < array[mid]){
+						return mid;
+					} else{
+						h = mid - 1;//go left
+					}
+			}
+		}
+	}//O(Log n), [5,10,10, 20,20]
 	
 	/*
 	 * Find the last index of a repeated element
@@ -579,7 +598,7 @@ function Search(){
 			let mid = Math.floor((s+l)/2);
 			if(array[mid]==element && array[mid+1]> element || array[mid]== element && l == mid ){
 				return mid;
-			}else if(array[mid] <= element){ //mind this
+			}else if(array[mid] <= element){ //mind this to go right
 				return findLastIndex(array, mid+1, l, element);
 			}else{
 				return findLastIndex(array, s, mid-1, element);
