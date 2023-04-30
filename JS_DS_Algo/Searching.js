@@ -270,17 +270,22 @@ function Search(){
 	 * */
 	
 	/*
-	 * to find if any two numbers have a sum equal to a given number
+	 * To find if any two numbers have a sum equal to a given number
+	 * Two pointers approach
 	 * */
-	function findNumbersWithsum(array, SUM){
+	function findNumbersWithsum(array, SUM, s, e){
 		array.sort((a, b)=> a - b);
 		let low =0;
 		let high = array.length-1;
+		if(s != undefined){
+			low = s;
+			high = e;
+		}
 		while(low < high){
 			let temp = array[low]+ array[high];
 			if(temp==SUM){
 				console.log(array[low]+" "+array[high]+" are the elements with Sum "+SUM);
-				return;
+				return true;
 			}else{
 				if(temp < SUM){
 					low++;
@@ -291,6 +296,52 @@ function Search(){
 		}
 		console.log("No such elements");
 	}//O(n log n)
+
+
+	function findTripletUsingTwoPointers(array, tripletSum){
+		let N = array.length;
+		for(let i=0; i < N -2 ;i++){
+			if(findNumbersWithsum(array, tripletSum - array[i], i+1 , N - 1)){
+				return true;
+			}
+		}
+		return false;
+	}//findTripletUsingTwoPointers([2,3,4,8,9,20,40], 32);
+	 //O(n^2)
+
+	/*
+	[30, 40, 50, 60], [5, 6, 7, 8, 9]
+	array1 is a smaller length
+	*/
+    function findMedianOfTwoSortedArray(array1, array2){
+		let n1 = array1.length;
+		let n2 = array2.length;
+		let begin = 0;
+		let end = n1;// in order to find the median of the first array
+        while(begin <= end){
+			let i1 = Math.floor((end + begin)/2);
+			let i2 = Math.floor((n1 + n2 + 1)/2) - i1;
+			let max1 = i1 == 0 ? -Infinity : array1[ i1-1 ];
+			let min1 = i1 == n1 ? Infinity : array1[i1];
+			let max2 = i2 == 0 ? -Infinity : array2[ i2-1 ];
+			let min2 = i2 == n2 ? Infinity : array2[i2];
+			if(max1 <= min2 && max2 <= min1){
+				if((n1+n2) % 2 == 0){
+					return (Math.max(max1, max2) + Math.min(min1, min2))/2;
+				}else{
+					return Math.max(max1, max2);
+				}
+			}else{
+				if(max1 > min2){
+					end = i1 - 1; //move left in the smaller array
+				}else{
+                    begin = i1 + 1;  //Move right in the smaller array
+				}
+			}
+		}
+
+	}
+
 	
 	/*
 	 * Above problem using a Map in O(n) time
@@ -587,6 +638,7 @@ function Search(){
 					}
 			}
 		}
+		return -1;
 	}//O(Log n), [5,10,10, 20,20]
 	
 	/*
@@ -606,6 +658,29 @@ function Search(){
 		}
 		return -1;
 	}//Log(n)
+
+
+	function iterationFindLastIndex(array, s, l , element){
+		
+		while(s <= l){
+			let mid = Math.floor((s +l)/2);
+			if(array[mid] > element){
+                l = mid - 1;
+			}else if(array[mid] < element){
+				s = mid + 1;
+			} else if(/*(array[mid] == element && */array[mid] != array[mid+1] || /*(array[mid] == element && */l == mid){
+                return mid;
+			} else{
+				s = mid + 1;
+			}
+		}
+		return -1;
+	}
+
+	/*
+		Use the first index and last index occurance difference to find the count of occurances
+		Use the first index method to also find the first one's index and substract from the length
+	*/
 	
 	/*
 	 * Use the above two methods to find the total repeatations of an element
@@ -733,6 +808,214 @@ function Search(){
 		}
 		console.log(array, "getFrequencyOptimal");
 	}//O(n)
+
+
+	function findSquareRoot(N){
+		let start = 1, end = N, result = -1;
+		while(start <= end){
+			let mid = Math.floor((start + end)/2);
+			if(mid * mid == N){
+				return mid;
+			} else if(mid * mid > N){
+			   end = mid - 1;
+			}else {
+				start = mid + 1;
+				result = mid;
+			}
+		}
+		return result;
+	}//O(n)
+
+
+	function searchInInfiniteArrayNaive(array, N){
+		let i = 0;
+		while(true){
+			if(arr[i] == N){
+              return i;
+			}
+			if(arr[i] > N){
+				return -1;
+			}
+			i++;
+		}
+	}//O(pos)
+	
+	/*
+	  * increment the index by double until its array value is 
+		equal or greater than the given number
+		when its greater than the given number do a binarySearch for the given number between i/2+1 to i - 1
+	  *
+	*/
+	function searchInInfiniteArrayEfficient(array, N){
+		let i = 0;
+		if(array[i] == N){
+			return i;
+		}
+		i++;
+		while(array[i] < N){
+			i = i*2;
+		}
+		if(array[i]==N){
+			return i;
+		}
+		return iterativeBinarySearch(i/2 + 1, i -1);
+
+	}//The algorithm will reach 2 * position that is log(2*position) time Plus the time for binary search at last
+	 //This is commonly called the unbounded binary search
+
+
+	 /*
+	 The array is sorted and may also be rotated and we need to find the given number index
+	 [10,20,30,40,50,8,9], x= 30, index = 2
+	 [100,200,300,10,20], x= 40, index = -1
+	 Get the mid and compare it with the left most element to decide of the left half is sorted
+	 From the range in the left most element and the mid element see if the given number is present there
+	 else move to the right half
+	 */
+	 function searchInSortedBinaryArray(array, X){
+
+		let low = 0, high = array.length -1;
+		while(low <= high){
+			let mid = Math.floor((low+high)/2);
+			if(X == array[mid]){
+				return mid;
+			}
+			if(array[mid]  >= array[low]){
+				//left half is sorted
+				if(array[mid] > X && X >= array[low]){
+					//go left
+					high = mid - 1;
+				}else{
+					low = mid + 1;
+				}
+			}else{
+				//right half is sorted
+				if(X > array[mid] && X <= X[high]){
+					low = mid + 1;
+				} else{
+                    high = mid - 1;
+				}
+			}
+		}
+		return -1;
+	 }
+ 
+	 /*
+	   Peak element is the one that is greater than its right and left element
+	   The intersting property is that any array will have a peak element
+	   If the left element of a mid is greater then there will be a peak on the left for sure or if the element
+	   on the right is bigger then there is certainly going to be a peak on the right
+	   for the first number check if the one to the right is lesser then its a peak
+	   for the last element check the left to it
+	   The given array is not necessarily sorted
+	 */  
+	 function findPeakElement(array){
+		 let start  = 0;
+		 let end = array.length - 1;
+		 let length = array.length - 1;
+		 while(start <= end){
+			 let mid = Math.floor((end+start)/2);
+			 if((mid == 0 || array[mid-1] <= array[mid]) && 
+			 (mid == length || array[mid+1] <= array[mid])){
+				 return mid;
+			 }
+			 if(mid > 0 && array[mid-1]> array[mid]){
+                  end = mid - 1;
+			 } else{
+				start = mid + 1;
+			 }
+		 }
+		 return -1;
+	 }
+
+
+	 /*
+	   Use slow and fast to find the repeating element
+	   All the elements upto the max element are present but one is repeating
+	 */
+	 function findRepeatingUsingSlowFastWHenZeroNotPresent(array){
+		 let slow = array[0], fast = array[0];
+		  slow = array[slow];
+		  fast = array[array[fast]];
+		  while(slow != fast){
+			slow = array[slow];
+			fast = array[array[fast]];
+		  }
+		  slow = array[0];
+		  while(slow != fast){
+			  slow = array[slow];
+			  fast = array[fast];
+		  }
+		  return fast;
+
+	}
+    function findRepeatingUsingSlowFastWHenZeroPresent(array){
+		let slow = array[0] + 1, fast = array[0] + 1;
+		slow = array[slow] + 1;
+		fast = array[array[fast] + 1] + 1;
+		while(slow != fast){
+		  slow = array[slow] + 1;
+		  fast = array[array[fast] + 1] + 1;
+		}
+		slow = array[0] + 1;
+		while(slow != fast){
+			slow = array[slow] + 1;
+			fast = array[fast] + 1;
+		}
+		return fast - 1;
+
+  }
+
+  /**
+   * To find the minimize the max sum of pages that every student reads
+   * The the book with max number of pages is the lower limit
+   * Sum of all the books is the upper limit
+   * We can find the mid and check if that is fesable 
+   * K is the number of students
+   * ***/
+
+
+   function isFeasable(array, value, K){
+	   let required = 1;
+	   let sum = 0;
+	   for(let i=0;i < array.length;i++){
+		   if(sum + array[i] > value){
+			   required ++;
+			   sum = array[i];
+		   }else{
+			   sum = sum + array[i];
+		   }
+	   }
+	   return K >= required;
+   }
+
+   function findMinPages(array, K){
+	   let length = array.length;
+	   let max = -Infinity;
+	   let sum = 0;
+	   for(let i=0;i < length;i++){
+		  sum = sum + array[i];
+		  max = Math.max(max, array[i]);
+	   }
+
+	   let low = max;
+	   let high = sum;
+	   let result;
+	   while(low <= high){
+		   let mid = Math.floor((low + high)/2);
+		   if(isFeasable(array, mid, K)){
+			   high = high - 1;
+			   result = mid;
+		   }else{
+			   low = mid + 1;
+		   }
+	   }
+	   return result;
+   }//O(n * log(sum - max))
+
+
+	
+
 	
 	return {unorderedLinearSort, 
 		    iterativeBinarySearch,
@@ -762,7 +1045,10 @@ function Search(){
 		    maxIndexDiff,
 		    maxIndexDiffOptimal,
 		    checkIfArrayIsPairWiseSorted,
-		    getFrequencyOptimal
+			getFrequencyOptimal,
+			searchInSortedBinaryArray,
+			searchInInfiniteArrayEfficient,
+			searchInInfiniteArrayNaive
 		   };
 }
 module.exports = {Search};
