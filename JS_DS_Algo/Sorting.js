@@ -365,7 +365,7 @@ function Sorting(){
 			}
 		}
 		while(i < leftLength){
-			array[index] = left[i];
+			array[index] = left[i];	
 			index++;
 			i++;
 		}
@@ -375,6 +375,24 @@ function Sorting(){
 			j++;
 		}
 		return inversions;
+	}
+
+	/*
+	* Given the m children find the min difference distrbution
+	* Basically the difference between the highest and lowest items is to be minimum
+	* sort the array then check the difference between i and (i + m - 1)th item
+	* i.e. highest and lowest in the subarray
+	*/
+	function chocolateDistrubutionProblem(array, M){
+		console.log("before sort", array);
+		mergeSort(array);
+		console.log("after sort", array);
+		let result = Infinity;
+		let highestIndex = array.length - M;
+		for(let i=0;i <= highestIndex;i++){
+			result = Math.min(result, array[M - 1 + i] - array[i]);
+		}
+		return result;
 	}
 	
 	
