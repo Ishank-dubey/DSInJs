@@ -62,7 +62,18 @@ function Sorting(){
 	}// Stable slection sort, time complexity is same
 	
 	
-	
+	function insertionSortLittelDifferent(array){
+		for(let i=1;i < array.length;i++){
+			let j = i - 1;
+			let key = array[i];
+			while(array[j] > key && j >= 0){
+				array[j+1] = array[j];
+				j--;
+			}
+			array[j + 1] = key;
+		}
+		return array;
+	}//O(n^2),  if the array is sorted already then its O(n)
 	function insertionSort(array){
 		var length = array.length;
 		for(let i=1; i < length;i++){
@@ -114,7 +125,7 @@ function Sorting(){
 			}
 		}
 		
-	}//O(n*log n), Stable
+	}//O(n*log n) in time, Stable, theta(n) in space
 	
 	
 	function merge(l, m , r, array){
@@ -137,7 +148,7 @@ function Sorting(){
 		var rightIndex = 0;
 		var k = l;
 		while(leftIndex < len1 && rightIndex < len2){
-			if(leftArray[leftIndex] <= rightArray[rightIndex]){
+			if(leftArray[leftIndex] <= rightArray[rightIndex]){ //equal to is important for stability
 				array[k] = leftArray[leftIndex];
 				leftIndex++;
 			}else {
@@ -158,7 +169,94 @@ function Sorting(){
 			k++;
 		}
 		
+	}//O(n + m) in time and space
+
+	/*
+	* given two SORTED arrays print the common elements
+	* make sure the common elements are printed only once
+	* [1, 20, 20, 40, 60],[2, 20, 20, 20] - print 20
+	**/
+	function intersectionOfSortedArraysNaive(array1, array2){
+		for(let i=0;i < array1.length;i++){
+			if(i > 0 && array1[i-1] == array1[i]){
+                continue;
+			}
+			for(let j=0;j < array2.length;j++){
+				if(array1[i]== array2[j]){
+					console.log(array1[i]);
+					break;
+				}
+			}
+		}
 	}
+
+
+	function findIntersectionOfSortedArraysEfficient(array1, array2){
+		 let i = 0; 
+		 let j = 0;
+		 while(i < array1.length && j < array2.length){
+			 if(i > 0 && array1[i] == array1[i-1]){
+				 i++;
+                 continue;
+			 } 
+			 if(array1[i] < array2[j]){
+				 i++;
+			 }else if(array1[i] > array2[j]){
+				 j++;
+			 }else{
+				 console.log(array1[i]);
+				 i++;
+				 j++;
+			 }
+		 }
+	}// theta(n + m)
+
+
+	/*
+	*  Union of two sorted arrays
+	* Effieient, dont print duplicate
+	*/
+	function unionOfTwoSortedArrays(array1, array2){
+		 let i=0;
+		 let j =0;
+		 while(i < array1.length && j < array2.length){
+			 if(i >0 && array1[i] == array1[i-1]){
+				 i++;
+				 continue;
+			 }
+			 if(j >0 && array2[j] == array2[j-1]){
+				j++;
+				continue;
+			}
+			if(array1[i] < array2[j]){
+				console.log(array1[i]);
+				i++;
+			}else if(array2[j] < array1[i]){
+				console.log(array2[j]);
+				j++;
+			}else{
+				console.log(array1[i]);
+				i++;
+				j++;
+			}
+		 }
+		 while(i < array1.length){
+			 if( i > 0 && array1[i] == array1[i-1]){
+				 i++;
+				 continue;
+			 }
+			 console.log(array1[i]);
+             i++
+		 }
+		 while(j < array2.length){
+			if( j > 0 && array2[j] == array2[j-1]){
+				j++;
+				continue;
+			}
+			console.log(array2[j]);
+			j++
+		}
+	}//O(M + N)
 	
 	
 	/*
@@ -197,6 +295,86 @@ function Sorting(){
 		array[j] = array[h];
 		array[h] = temp2;
 		return j;
+	}
+
+
+	function partitionHoare(array, low, high){
+		 let i = low  - 1;
+		 let j = high + 1;
+		 let pi = array[low];
+		 while(true){
+			do{
+				i++;
+		  }	while(array[i] < pi);
+		  do{
+				j--;
+		  }	 while(array[j] > pi)
+		  if(i >= j){
+			  return j;
+		  }
+		  let temp = array[j];
+		  array[j] = array[i];
+		  array[i] = temp;
+		 }
+		 
+	}
+
+
+
+	function countInversions(array){
+		let low = 0;
+		let high = array.length - 1;
+		return countInversionInner(0, array.length-1);
+		function countInversionInner(low, high){
+			let result = 0;
+			let mid = Math.floor((low+high)/2);
+			if(low < high){
+				result = result + countInversionInner(low, mid)
+				result = result + countInversionInner(mid+1, high);
+				result = result + inversoinMergeHelper(array, low, high, mid);
+			}
+			return result;
+		}
+	}
+
+	function inversoinMergeHelper(array, low, high, mid){
+		let leftLength = mid - low + 1;
+		let rightLength = high - mid;
+		let inversions = 0;
+		let left = [];
+		let right = [];
+		for(let i=0;i < leftLength;i++){
+			left.push(array[low + i]);
+		}
+		for(let i=0;i <rightLength;i++){
+			right.push(array[mid + i + 1]);
+		}
+		let index = low;
+		let i = 0;
+		let j=0;
+		while(i < leftLength && j < rightLength){
+			if(left[i] <= right[j]){
+			   array[index] = left[i];
+			   i++;
+			   index++;
+			} else{
+			   array[index] = right[j];
+			   j++;
+			   index++;
+			   inversions = inversions + (leftLength - i);
+			}
+		}
+		while(i < leftLength){
+			array[index] = left[i];
+			index++;
+			i++;
+		}
+		while(j < rightLength){
+			array[index] = right[j];
+			index++;
+			j++;
+		}
+		return inversions;
 	}
 	
 	
