@@ -394,6 +394,174 @@ function Sorting(){
 		}
 		return result;
 	}
+
+
+	/*
+	* 1. positive and negative [15, -3, -2, 18] ----> [-3,-2,15, 18] 
+	* 2. odd vs even [15, 14, 13, 12] --> [14, 12, 15, 13]
+	* 3. binary [0,1,1,1,0]---> [0,0,1,1,1]
+	*/
+	function sortArrayBasedOnThreeTypes(array){
+		let i = -1;
+		let j = array.length;
+		let pi = 0;
+
+		while(true){
+			do{
+				i++;
+		   }while(array[i] < 0);
+	
+			do{
+			j--;
+		   }while(array[j] >= 0);
+		   
+		   if(i >= j){
+			   return array;
+		   }
+		   let temp = array[i];
+		   array[i] = array[j];
+		   array[j] = temp;
+		}
+		
+	}//Theta(n)
+
+	/*
+	* given an arrray of three categories - 0, 1, 2
+	* make an array that has 0s then 1s then 2s
+	* low is the last+1 index of the 0s, mid is the last+1 index of the 1s and
+	* high is the i-1 of the 2s 
+	*/
+	function segregateRGB(array){
+		let low = 0;
+		let mid = 0;
+		let high = array.length - 1;
+		for(let i=0; i < array.length;i++){
+			if(array[mid]==1){
+				mid ++;
+			} else if(array[mid]==0){
+				let temp = array[mid];
+				array[mid] = array[low];
+				array[low] = temp;
+				mid++;
+			    low++;
+			} else{
+				let temp  = array[high];
+				array[high] = array[mid];
+				array[mid] = temp;
+				high--;
+			}
+		}
+		return array;
+	}
+
+
+	/*
+	* Find the Merge overlapping intervals
+	* [{start:5, end:10},{start:3,end:15}, {start:18, end:30}, {start:2, end:7}]
+	* => [{start:2, end:15}, {start:18, emd:30}]
+	* Solution - 1. when the smaller of the start lies in the other interval then its an overlap
+	* 1. Sort the given array based on the start intervals
+	* traverse the array and only check the last item if the current shall be merged or not
+	* */
+	function mergeIntervals(array){
+		let res = 0;
+		array.sort((a, b)=>  a.start - b.start);
+		for(let i=1;i < array.length;i++){
+			if(array[i].start <= array[res].end){
+			   array[res].end =  Math.max(array[i].end, array[res].end);
+			   //not needed really since the array is sorted   
+			   //array[res].start = Math.min(array[i].start, array[res].start);
+			} else{
+				res++;
+				array[res] = array[i];
+			}
+		}
+		//Print the merged array
+		for(let j=0;j <= res;j++){
+			console.log(array[j]);
+		}
+	}
+
+	/*
+	* You are given arrival and departure times of the guests, 
+	* you need to find the minimum time interval to attend the party so that there are maximum people at 
+	* the party.
+	* Sort the arrival and departure arrays
+	* keep track of the current people staying
+	*/
+	function meetMaxGuests(arrival, departure){
+		arrival.sort((a, b)=> a - b);
+		departure.sort((a, b)=> a - b);
+		let result  = 0;
+		let current  = 0;
+		let i=0;
+		let j=0;
+		while(i < arrival.length && j < departure.length){
+			if(arrival[i] <= departure[j]){
+				i++;
+				current++;
+			}else{
+				j++;
+				current--;
+			}
+			result = Math.max(current, result);
+		}
+		return result;
+	}//O(nlogn) for sorting
+	
+	/*
+	* Cycle sort
+	* Number of writes in the memory is small
+	*/
+
+	function cycleSort(array){
+		let writes = 0;
+		for(let start_index=0;start_index < (array.length -1) ;start_index++){
+			let position = start_index;
+			let item = array[start_index];
+			for(let j=start_index+1;j < array.length;j++){
+			    if(item > array[j]){
+					position++;
+				}	
+			}
+			if(position == start_index){
+				continue;
+			}
+			while(item == array[position]){
+				position++;
+			}
+			//swap the item with the position item
+			let temp = item;
+			item = array[position];
+			array[position] = temp;
+			writes++;
+
+			//now go for cycle
+			while(position != start_index){
+				position = start_index;
+                for(let j=start_index+1;j < array.length;j++){
+                    if(array[j] < item){
+						position++;
+					}
+				}
+				while(item == array[position]){
+					position++;
+				}
+				if(array[position]!= item) //unnecessary
+				{
+					let temp = item;
+					item = array[position];
+					array[position] = temp;
+					writes++;
+				}
+				
+			}
+			
+		}
+		return array;
+	}
+
+
 	
 	
 	/*
@@ -456,7 +624,7 @@ function Sorting(){
     	  count[i] = 0;
       }
       //fill the count array with the counts of the array elements
-      for(let i = 0;i < array.length;i++){
+      for(let i = 0;i < array.length;i++){ 
         count[array[i]] = count[array[i]] +1;
       }
       
@@ -468,7 +636,7 @@ function Sorting(){
       }
       
       var op = [];
-      for(let j=0;j< array.length;j++){
+      for(let j=0;j< array.length;j++){//we can traverse from n-1 to 0 for stability!!
         op[count[array[j]]-1] = array[j];
         count[array[j]] = count[array[j]] - 1;
       }
@@ -557,7 +725,7 @@ function Sorting(){
 			}
 			var op = [];
 			
-			//this order is important here in Radix sort
+			//this order is important here in Radix sort to make it stable and the result
 			for(let i=array.length - 1; 0 <= i ;i--){
 				op[ count [(Math.floor(array[i]/exp) % 10)] -1 ] = array[i];
 				count[(Math.floor(array[i]/exp) % 10)] = count[(Math.floor(array[i]/exp) % 10)] - 1;
@@ -695,7 +863,7 @@ function Sorting(){
 	return {bubbleSort, selectionSort, insertionSort, shellSort, mergeSort, quickSort,
 		    iterativeMergeSort, iterativeQuickSort , countSort, bucketSort, radixSort,
 		    stableSelectionSort, nearlySorted, sortLinkedListViaQuickSort, sortLinkedListViaMergeSort,
-		    mergeTwoSortedArrays 
+		    mergeTwoSortedArrays, cycleSort
 	       };
 }
 
