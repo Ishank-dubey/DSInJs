@@ -740,7 +740,7 @@ function Sorting(){
 			countSortWithRadixFacility(exp, 10);
 		}
 		console.log("Radix Sort:: ", array);
-	}//O(d( n+ base))
+	}//O(d* ( n+ base)) in time, theta(n+b) extra space
 	
 	function nearlySorted(array, K){
 		var minHeap = require("./HeapADT").HeapADT();
