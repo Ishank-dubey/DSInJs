@@ -621,6 +621,46 @@ function All(){
 	return matrix;
    }
 
+   /*
+   * Maintain the four variables top, right, bottom, left
+   * top++
+   * right--
+   * bottom--
+   * left ++
+   * check if bottom => top
+   * check if the left <= right
+   * **/
+   function printMatrixSpirally(matrix, R, C){
+	   let top = 0;
+	   let right = C-1;
+	   let bottom = R-1;
+	   let left = 0;
+	   while(top <= bottom && right >= left){
+		   for(let i=left; i <= right;i++){
+			   console.log(matrix[top][i]);
+		   }
+		   top++;
+		   for(let i=top;i <=bottom ;i++){
+			   console.log(matrix[i][right]);
+		   }
+		   right--;
+		   if(top <= bottom){
+			   for(let j=right;j>=left;j--){
+				   console.log(matrix[bottom][j]);
+			   }
+			   bottom--;
+		   }
+
+		   if(left <= right){
+			   for(let j=bottom;j>=top;j--){
+				   console.log(matrix[j][left]);
+			   }
+			   left++;
+		   }
+	   }
+   }//printMatrixSpirally([[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,16]], 4, 4)//Theta(R*C)
+
+
 	return {
 		increment,
 		findNumberOfBase,
