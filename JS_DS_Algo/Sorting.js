@@ -606,6 +606,29 @@ function Sorting(){
 		}
 		console.log("Iteration - Quick Sort:   ", array);
 	}
+
+
+	/*
+	* Find the kth smallest element in an array
+	* 1. sort it and return the (k-1)th array
+	* 2. Use partition to get a better average
+	* I will discuss the partitioning approach
+	*/
+	function findKthSmallest(array, K){
+		let low = 0 ;
+		let high = array.length - 1;
+        while(low <= high){
+			let p = partition(low, high, array);
+			if(p == K-1){
+				return array[p];
+			}else if(p > K-1){
+				high = p - 1;
+			}else{
+				low = p + 1;
+			}
+		}
+		return -1;
+	}
 	
 	
 	/*

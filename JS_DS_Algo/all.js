@@ -552,6 +552,75 @@ function All(){
 	   }
    }
 
+
+   function printMatrixBoundary(matrix, R, C){
+	   if(R==1){
+		   for(let i=0;i < C;i++){
+			   console.log(matrix[0][i]);
+		   }
+		   return;
+	   }
+	   if(C == 1){
+		   for(let i=0;i < R;i++){
+                 console.log(matrix[i][0]);
+		   }
+		   return;
+	   }
+	   for(let i=0;i < C;i++){
+		   console.log(matrix[0][i]);
+	   }
+	   for(let i=1;i < R;i++){
+		console.log(matrix[i][C-1]);
+	   }
+	   for(let i=C-2;i >=0;i--){
+		   console.log(matrix[R-1][i]);
+	   }
+	   for(let i=R-2;i >=1;i--){
+		   console.log(matrix[i][0]);
+	   }
+   }//Theta(R+C)
+
+
+   function transposeMatrixInPlace(matrix, N){//n x n matrix
+	for(let i=0;i < N;i++){
+		for(let j=i+1;j < N;j++){
+			let item = matrix[i][j];
+			matrix[i][j] = matrix[j][i];
+			matrix[j][i] = item;
+		}
+	}
+        return matrix;
+   }//O(n^2);
+
+   function rotateMatrix90Nive(matrix, N){
+	let temp = [];
+	for(let i=0;i < N;i++){
+		temp.push([]);
+	}
+	for(let i=0;i < N;i++){
+		for(let j=0;j < N;j++){
+			temp[N - 1- j][i] = matrix[i][j];
+		}
+	}
+	return temp;
+   }
+
+   function rotate90Effieient(matrix, N){// find transpose first and then exchange the rows
+	matrix = transposeMatrixInPlace(matrix, N);
+	for(let i=0;i < N;i++){
+		let low = 0;
+		let high = N - 1;
+		while(low < high){
+			let item = matrix[low][i];
+			matrix[low][i] = matrix[high][i];
+			matrix[high][i] = item;
+			low++;
+			high--;
+		}
+	}
+	return matrix;
+   }
+
 	return {
 		increment,
 		findNumberOfBase,
