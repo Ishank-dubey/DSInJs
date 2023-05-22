@@ -367,6 +367,29 @@ function All(){
         return result;
     }//Theta(n) in time, O(1) in auxiliary space
 
+
+    function printFirstNegativeNumberInWindow(array, W){
+        let firstNegativeIndex = -1;
+        for(let i=0;i < W;i++){
+            if(array[i] < 0){
+                firstNegativeIndex = i;
+                break;
+            }
+        }
+        console.log(firstNegativeIndex);
+
+        for(let i=W;i < array.length;i++){
+            firstNegativeIndex = -1; 
+            for(let j= i- W + 1;j <= i;j++){
+                 if(array[j] < 0 ){
+                    firstNegativeIndex = j;
+                    break;
+                 }
+             }
+             console.log(firstNegativeIndex);
+        }
+    }
+
     function slidingWindoWWithBruteForce(array, W){
         let length = array.length;
         let result = 0;
