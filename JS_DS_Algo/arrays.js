@@ -390,6 +390,80 @@ function All(){
         }
     }
 
+    function findFirstNegativeNumberInWindowEfficient(array, W){
+        var {
+            enQueue,
+            deQueue,
+            front,
+            size,
+            isEmpty
+        } = require('./QueueADT').QueueADT();
+        let j=0;
+        let i=0;
+        debugger;
+        while(j < array.length){
+            if(array[j] < 0){
+                enQueue(array[j]);
+            }
+            if(j - i + 1 == W){
+                if(size()!=0){
+                    console.log(front());
+                }else{
+                    console.log(-1);
+                }
+                if(array[i]==front()){
+                    deQueue();
+                }
+                i++; //Window size is reached so please upudate the i to the next item
+                j++;
+            }else{
+                j++; //Window size is not reached to only increment the j
+            }
+            
+        }
+
+    }//Theta(n) in time and O(n) in memory based how many are negative that are saved in the Queue actually
+
+
+    function findNumberOfAnagrams(stringMain, targetString){
+        let aMap = {};
+        for(let i=0;i < targetString.length;i++){
+            if(aMap[targetString[i]] != undefined){
+                aMap[targetString[i]] = aMap[targetString[i]] + 1;
+            }else{
+                aMap[targetString[i]] = 1;
+            }
+        }
+        let j=0;
+        let i = 0;
+        let count = Object.keys(aMap).length;
+        let answer = 0;
+        while(j < stringMain.length){
+            if(aMap[stringMain[j]] != undefined){
+                aMap[stringMain[j]] = aMap[stringMain[j]] - 1;
+                if(aMap[stringMain[j]] == 0){
+                    count--;
+                }
+            }
+            if(j - i + 1 == targetString.length){
+              if(count == 0){
+                answer++;
+              }
+              if(aMap[stringMain[i]] != undefined){
+                aMap[stringMain[i]] = aMap[stringMain[i]] + 1;
+                if(aMap[stringMain[i]] == 1){
+                    count++;
+                }
+              }
+              i++;
+              j++;
+            }else{
+                j++;
+            }
+        }
+        console.log(answer);
+    }//Theta(n1 + n2) in time,  O(n2)
+
     function slidingWindoWWithBruteForce(array, W){
         let length = array.length;
         let result = 0;
@@ -702,7 +776,8 @@ function All(){
         getSumPrefixEfficient,
         equilibriumEfficient,
         findArrayPartitionInThreeEqualSumParts,
-        getMaxAppearingElementBruteForce
+        getMaxAppearingElementBruteForce,
+        findFirstNegativeNumberInWindowEfficient
     };
 }
-module.export =  All;
+module.exports =  All;
