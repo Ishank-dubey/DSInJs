@@ -681,7 +681,81 @@ function All(){
 	   }
 	   console.log('not found');
    }//findElementInaRowandColumnSortedMatrix([[10,20,30,40],[15,25,35,45],[27,29,37,48],[32,33,39,50]], 4, 4, 39);
+   
 
+   function sampleOpenAddressingHashing(capacity){
+	   let array = [];
+	   let size = 0;
+	   for(let i=0;i <capacity;i++){
+		   array[i] = -1;
+	   }
+	   function hash(key){
+		   return key % capacity;
+	   }
+	   function search(key){
+		   let initial = hash(key);
+		   let i = initial;
+		   while(array[i]!= -1){
+			   if(array[i] == key){
+				   return true;
+			   }
+			   i = (i + 1) % capacity; //as per the circular
+			   if(i == initial){
+				   return false;
+			   }
+		   }
+		   return false;
+	   }
+	   function insert(key){
+		   if(size == capacity){
+			   return false;
+		   }
+		   let i = hash(key);
+		   while(array[i] != -1 && array[i] != -2 && array[i] != key){
+			   i = hash(i + 1);
+		   }
+		   if(array[i] == key){
+			   return false;
+		   }else{
+			   size++;
+			   array[i] = key;
+			   return true;
+		   }
+	   }
+	   function erase(key){
+		   let initial = hash(key);
+		   let i = initial;
+		   while(array[i] != -1){
+			   if(array[i]==key){
+				   array[i] = -2;
+				   size--;
+				   return true;
+			   }
+			   i = hash(i+1);
+			   if(i==initial){
+                   return false;
+			   }
+		   }
+		   return false;
+	   }
+	   return { search, insert, erase }
+   }
+
+   function findIfSubArraySumIsZero(array){
+	   let prefixSum = 0;
+	   let map = new Set();
+	   for(let i=0;i < array.length;i++){
+		prefixSum = array[i] + prefixSum;
+		if(prefixSum == 0){
+			return true;
+		}
+		if(map.has(prefixSum)){
+			return true;
+		}
+		map.add(prefixSum);
+	   }
+	   return false;
+   }
 
 	return {
 		increment,

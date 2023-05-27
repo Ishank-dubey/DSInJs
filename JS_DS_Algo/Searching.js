@@ -349,15 +349,19 @@ function Search(){
 	function findNumbersWithSumUsingMap(array, SUM){
 		let map = {};
 		for(let i=0;i< array.length;i++){
-			map[array[i]] = i;
+			if(map[SUM - array[i]] != undefined){
+				return true;
+			}else{
+				map[array[i]] = i;
+			}
 		}
-		for(let k=0;k < array.length;k++){
+		/*for(let k=0;k < array.length;k++){
 			if(map[SUM - array[k]]){
 				console.log(array[k] + " " +(SUM - array[k])+" "+" sum to "+ SUM);
 				let j = findIndexWithVal(array, SUM - array[k]);
 				return [k, j];
 			}
-		}
+		}*/
 		console.log("none so");
 		return null;
 	}//O(n) in time and space
