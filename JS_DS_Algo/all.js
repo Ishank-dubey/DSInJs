@@ -755,7 +755,24 @@ function All(){
 		map.add(prefixSum);
 	   }
 	   return false;
-   }
+   }//O(n) in time and space
+
+
+   function arrayWithAGivenSum(array, SUM){
+	   let map = new Set();
+	   let prefix = 0;
+	   for(let i=0;i < array.length;i++){
+		   prefix = prefix + array[i];
+		   if(prefix == SUM){
+			   return true;
+		   }
+		   if(map.has(prefix - SUM)){
+			   return true;
+		   }
+		   map.add(prefix);
+	   }
+	   return false;
+   }//O(n) in time and space its the generic case that covers the sub array with zero sum
 
 	return {
 		increment,
