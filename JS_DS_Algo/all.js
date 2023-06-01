@@ -774,6 +774,29 @@ function All(){
 	   return false;
    }//O(n) in time and space its the generic case that covers the sub array with zero sum
 
+   /*
+	* Have prefix map, the key is the prefix sum and the value is the 
+	* Index and the index shall be kept the smallest one
+   */
+   function longestArrayWithSum(array, SUM){
+	 let prefixMap = new Map();
+	 let prefixRunningSum = 0;
+	 let result = 0;
+	 for(let i=0;i < array.length;i++){
+		prefixRunningSum = prefixRunningSum + array[i];
+		if(prefixRunningSum == SUM){
+			result = i + 1;
+		}
+		if(!prefixMap.has(prefixRunningSum)){
+			prefixMap.set(prefixRunningSum, i);
+		}
+		if(prefixMap.has(prefixRunningSum - SUM)){
+			result = Math.max(result, i - prefixMap.get(prefixRunningSum));
+		}
+	 }
+	 return result;
+   }//theta(n) in time, [5, 2, 3], space is O(n)
+
 	return {
 		increment,
 		findNumberOfBase,
