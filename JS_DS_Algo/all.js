@@ -530,7 +530,7 @@ function All(){
 	   if( N==0 ) {
 		   return Sum == 0 ? 1 : 0;
 	   }
-	   return findIfArrayHasaSetWithGivenSet(Sum, array, N-1) + findIfArrayHasaSetWithGivenSet(Sum-array[N-1], array, N-1);
+	   return findIfArrayHasaSumWithGivenSet(Sum, array, N-1) + findIfArrayHasaSumWithGivenSet(Sum-array[N-1], array, N-1);
    }//O(2^n) , findIfArrayHasaSetWithGivenSet(25, [10,20,15],3)
 
 
@@ -791,11 +791,137 @@ function All(){
 			prefixMap.set(prefixRunningSum, i);
 		}
 		if(prefixMap.has(prefixRunningSum - SUM)){
-			result = Math.max(result, i - prefixMap.get(prefixRunningSum));
+			result = Math.max(result, i - prefixMap.get(prefixRunningSum - SUM));
 		}
 	 }
 	 return result;
    }//theta(n) in time, [5, 2, 3], space is O(n)
+
+   /*
+   * Given a binary array - find the subarray that is longest
+   * and equal 0s and 1s
+   * *
+   * **/
+  function findSubArrayWIthMaxonesandZerosNaive(array){
+	  let result = 0;
+	  for(let i=0;i < array.length;i++){
+		  let c0 = 0;
+		  let c1 = 0;
+		  for(let j=i;j < array.length;j++){
+			  if(array[j]==0){
+				  c0++;
+			  }
+			  if(array[j]==1){
+				  c1++;
+			  }
+			  if(c0==c1){
+				  result = Math.max(result, c0+c1);
+			  }
+		  }
+	  }
+	  return result;
+  }//O(n^2)
+
+  /*
+   ** Better solutuion is replace the 0s with -1 and treat this problem as 
+   ** Above finding the longest array with sum zero
+  */
+  function longestArrayWithEqualOnesAndZerosEfficient(array){
+      for(let i=0;i < array.length;i++){
+		  if(array[i]==0){
+			array[i] = -1;
+		  }
+	  }
+	  longestArrayWithSum(array, 0);
+  }//Theta(n)
+
+  /*
+  * Longest common span with common sum in two arrays
+  * Naive
+  * **/
+  function naiveFindCommonSumCommonSpan(array1, array2){
+	  let result = 0;
+      for(let i=0;i < array1.length;i++){
+		  let sum1 = 0;
+		  let sum2 = 0;
+		  for(let j=i;j < array1.length;j++){
+			sum1 = sum1 + array1[j];
+			sum2 = sum2 + array2[j];
+			if(sum1 == sum2){
+				result = Math.max(result, j - i +1);
+			}
+		  }
+	  }
+	  return result;
+  }
+
+  /*
+  * Common span with same sum efficient
+  * Create a difference array that stores difference of every element in the two arrays
+  * * If the sum of those differences is Zero then its the same sum on that point
+  * */
+  function efficientFindCommonSumCommonSpan(array1, array2){
+	  let temp = [];
+	  for(let i=0;i < array1.length;i++){
+		temp.push(array1[i] - array2[i]);
+	  }
+	  return longestArrayWithSum(temp, 0);
+  }
+
+
+  /*
+	Find the longest consecutive sub sequence, the elements need not be in the same order
+	Naive method -  
+  */
+   function longestConsecutiveSubSequenceNaive(array){
+	function compareNumbers(a, b) {
+		return a - b;
+	  }   
+	array = array.sort(compareNumbers);
+	let current = 1;
+	let result = 0;
+	for(let j=1;j < array.length;j++){
+		if(array[j] == array[j-1] + 1){ //check if the current nunber is greater than the previous number by one to check if they are consecutive
+			current++;
+		}else if(array[j] != array[j-1]){
+			result = Math.max(result, current);
+			current = 1;
+		}
+	}
+	return Math.max(result, current);
+   }//O(nlog n), longestConsecutiveSubSequenceNaive([1,3,9,2,8,2])
+
+
+   /*
+   * For an efficient soution - we can form a Set out of the given array
+   * Again iterate the array and check if the current number -1 is present or not
+   * If not present then start the sequence and go on incrmenting by one till the sequence is availabel in the Set
+   * Dont consider if a given number - 1 is present as it indicates that its NOT the first number of the sequence and it shall be ignored 
+   * *
+   * **/
+  function efficeintFindTheConsecutiveSubArray(array){
+	  let theSet = new Set();
+	  let result = 1;
+	  let current = 1;
+	  for(let i=0;i < array.length;i++){
+		theSet.add(array[i]);
+	  }
+	  for(let j=0;j < array.length;j++){
+		  if(!theSet.has(array[j]-1)){
+			current = 1;
+		   while(theSet.has(array[j]+current)) {
+			current = current + 1;
+		   }
+		  }
+		  result = Math.max(result, current);
+	  }
+	  return result;
+  }//O(n) as the look up will not happen again and again once a single item in a sequence is found
+  // look ups for the first element found = 2 + length - 1
+  // for non first ones - 1
+  // so its going to be of the order of n
+  
+  
 
 	return {
 		increment,
@@ -828,7 +954,8 @@ function All(){
 		findSubSets,
 		towerOfHanoi,
 		josepheusProblem,
-		findIfArrayHasaSetWithGivenSet
+		findIfArrayHasaSumWithGivenSet,
+		longestConsecutiveSubSequenceNaive
 	}
 }
 module.exports = All;
