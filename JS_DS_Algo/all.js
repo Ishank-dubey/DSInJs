@@ -920,6 +920,102 @@ function All(){
   // look ups for the first element found = 2 + length - 1
   // for non first ones - 1
   // so its going to be of the order of n
+
+
+  function findUniqueElementsInEachWindow(array){
+      for(let i=0;i < array.length - K +1 ;i++){
+		  let count = 0;
+		  for(let j=0;j < K;j++){
+			  let flag = false;
+			  for(let p=0;p < j;p++){
+				  if(array[i + j] == array[i + p]){
+					flag = true;
+					break;
+				  }
+			  }
+			  if(!flag){
+				  count ++;
+			  }
+		  }
+		  console.log(count);
+	  }
+  }
+
+  function findUniqueElementCountInEachWindow(array, W){
+	  let themap = new Map();
+	  for(let i=0;i < W;i++){
+		  if(themap.has(array[i])){
+			themap.set(array[i], themap.get(array[i]) + 1);
+		  }else {
+			themap.set(array[i], 1);  
+		  }
+	  }
+	  console.log(themap.size);
+	  for(let i=W;i < array.length;i++){
+		  //reduce the count of the i-W th item
+		  //remove the element if the count becomes zero
+		  themap.set(array[i-W], themap.get(array[i-W])-1);
+		  if(themap.get(array[i-W])==0){
+			themap.delete(array[i-W]);
+		  }
+		  //add the new element i or increment its count if its present already
+		  if(themap.has(array[i])){
+			themap.set(array[i], themap.get(array[i]) + 1);
+		  }else{
+			themap.set(array[i], 1);
+		  }
+		  console.log(themap.size);
+	  }
+	  //return themap;
+  }
+
+  /**
+   * To find the elements that occur more than n/K
+   * Simple approach in linear time and space is to create a Map with the frequency as the values
+   * this makes the map being a bulky one when the k is small
+   * We can use the majority technique of the moores observation
+   * It will be based on the following observations - 
+   *    1. there can not be more that k-1 elements that are having a frequency of more than n/k
+   *       as (K+1)(N/K) becomes greater than N itself
+   *    2. Have a Map pf size k-1
+   *       a. when the entry exists then in map increment the value that is the frequency is incremented
+   *       b. if the Map size is <= than k-1 then add the new entry if not already present
+   *       c. if the Map size is exhanusted and the entry is not found decrement all the key values by 1
+   *          and if a value become zero then delete that kek itself
+   *       d. Finally when done iterating check the remaining items in the Map for the frequency and print the ones with frequency > n/k
+   *       the d step is of the order of n*k
+   * Here is the implementation - 
+   */
+  function findNByKFrequencyOrGreaterItems(array, K){
+	  let N = array.length;
+	  let themap = new Map();
+	  for(let i=0;i < N;i++){
+		  if(themap.has(array[i])){
+			themap.set(array[i], themap.get(array[i]) + 1);
+		  }else if(themap.size <= K-1){
+			themap.set(array[i], 1);
+		  }else{
+			for (const [key, value] of themap) {
+				themap.set(key, value - 1);
+				if(themap.get(key)==0){
+					themap.delete(key);
+				}
+			  }
+		  }
+	  }
+	  for(let key of themap.keys()){
+		  let count = 0;
+		  for(let i=0;i < N;i++){
+			  if(array[i]==key){
+				  count ++;
+			  }
+		  }
+		  if(count > N/K){
+			  console.log(key);
+		  }
+	  }
+  }
+  
   
   
 

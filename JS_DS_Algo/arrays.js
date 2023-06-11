@@ -288,7 +288,7 @@ function All(){
         return -1;
     }
 
-    //Majotity element efificient
+    //Majority element efficient
     //assume that 0th element is the majority element
     //match it and increment the count else decrement,when the count becomes zero
     //make the majority element as the ith i.e. the last element that caused the count to become 0
@@ -414,7 +414,7 @@ function All(){
                 if(array[i]==front()){
                     deQueue();
                 }
-                i++; //Window size is reached so please upudate the i to the next item
+                i++; //Window size is reached so please update the i to the next item
                 j++;
             }else{
                 j++; //Window size is not reached to only increment the j
