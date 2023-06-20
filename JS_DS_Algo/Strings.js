@@ -46,6 +46,102 @@ function Strings(){
 		}
 		return F;
 	}
+	/*
+	* Given that str is having only small cased chars
+	*
+	*/
+	function findFrequencyAndPrintInAscendingOrder(str){
+		let result = [];
+		for(i=0;i< 26;i++){
+			result[i] = 0;
+		}
+		for(let i=0;i < str.length;i++){
+			result[str[i].charCodeAt(0) - 'a'.charCodeAt(0)]++;
+		}
+		
+		for(i=0;i< 26;i++){
+			if(result[i]){
+				console.log(String.fromCharCode(i + 'a'.charCodeAt(0)), result[i]);
+			}
+		}
+	}
+
+	function palindromeCheck(str){
+		let low = 0;
+		let high = str.length - 1;
+		while(low < high){
+			if(str[low] != str[high]){
+				return false;
+			}
+			low ++;
+			high --;
+		}
+		return true;
+	}//O(n) in time and const in space, str = ABBA
+
+
+	/*
+	 S2 is a Subsequence of S1
+	for S1 = ABC- AB, BC , AC are a sequence, '' i.e empty is also a sub sequence - 2^n possibilities
+	* i is to point the begining of the S1
+	  j is to point the begining of the S2
+	  S1[i] and S2[j] are same then increment both i and j else only i++
+	  if j = len(S2) then true
+	  O(n + m) in time and const in space
+	*/
+	function subsequencePresentIterative(S1, S2){
+		let j = 0;
+		if(S1.length < S2.length){
+			return false;
+		}
+		
+		if(S2.length ==0){
+			return true;
+		}
+		
+		for(let i=0;i < S1.length && j < S2.length;i++){
+			if(S2[j]==S1[i]){
+				j ++;
+			}
+		}
+		return (j == S2.length);
+	}
+
+	function subsequencePresentRecursive(S1, S2, N, M){
+         if(M ==0){
+			 return true;
+		 }
+		 if(N==0){
+			 return false;
+		 }
+		 if(S1[N - 1] == S2[M-1]){
+			return subsequencePresentRecursive(S1, S2, N-1, M-1)
+		 }else{
+			return subsequencePresentRecursive(S1, S2, N-1, M)
+		 }
+	}//O(m+n) in time and space, subsequencePresentRecursive("ABC", "BC", 3, 2)
+
+	/*
+	* 1. We coukd sort the two strings and check for equality but that is O(n*log n)
+	* 2. We could have a count array of 256 length, use the count[str1[i].charCodeAt(0)]++
+	*    count[str2[i].charCodeAt(0)]-- check if any element in the count array is not zero.
+	*/
+	function anagram(str1, str2){
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = 0;
+		}
+		for(let i=0;i < str1.length;i++){
+			count[str1[i].charCodeAt(0)]++;
+			count[str2[i].charCodeAt(0)]--;
+		}
+		for(let i=0;i < 256;i++){
+			if(count[i]!=0){
+				return false;
+			}
+		}
+		return true;
+	}//O(n) in time and const space
 
 	function searchSubstring(T, P){
 		for(let i=0;i < T.length;i++){
