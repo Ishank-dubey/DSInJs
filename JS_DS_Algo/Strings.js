@@ -143,6 +143,73 @@ function Strings(){
 		return true;
 	}//O(n) in time and const space
 
+	/*
+	count array with the character value index 
+	populate in the first loop incrementing the value at the charater index
+	find the first item in the count array in the 2nd loop
+	*/
+	function firstRepeatingLeftMostCharacterOne(str){
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = 0;
+		}
+		for(let i=0;i < str.length;i++){
+			count[str[i].charCodeAt(0)]++;
+		}
+		for(let i=0;i < str.length;i++){
+			if(count[str[i].charCodeAt(0)] > 1){
+				return i;
+			}
+		}
+		return -1;
+	}//firstRepeatingLeftMostCharacterOne('abcc') O(n)
+	
+	/*
+	Same problem but here we will maintain the count to track if some character is been seen
+	The value is updated only once and the later matches will only find that value to update the result
+	*/
+	function firstRepeatingLeftMostCharacterTwo(str){
+		let result = Infinity;
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = -1;
+		}
+		for(let i=0;i < str.length;i++){
+			
+			if(count[str[i].charCodeAt(0)] == -1){
+				count[str[i].charCodeAt(0)] = i;//this is the left most position
+			}else{
+				result = Math.min(result, count[str[i].charCodeAt(0)]);
+			}
+		}
+		if(result != Infinity){
+			return result;
+		}else{
+			return -1;
+		}
+	}//O(n)//firstRepeatingLeftMostCharacterTwo('abcc')
+
+	/*
+	*  here we start from the right hand side
+	*  the count array is only going to indicate if the character was seen
+	*  if its seen then lets update the result to the new left element simply
+	*/
+	function firstRepeatingLeftMostCharacterThree(str){
+		let result = -1;
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = false;
+		}
+		for(let i=str.length -1;i >=0 ;i--){
+			if(!count[str[i].charCodeAt(0)]){
+				count[str[i].charCodeAt(0)] = true;
+			}else{
+				result = i;
+			}
+		}
+		return result;
+	}//Liner//firstRepeatingLeftMostCharacterThree('abccbd')
+
 	function searchSubstring(T, P){
 		for(let i=0;i < T.length;i++){
 			let j = 0;
