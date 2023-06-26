@@ -209,6 +209,82 @@ function Strings(){
 		}
 		return result;
 	}//Liner//firstRepeatingLeftMostCharacterThree('abccbd')
+	
+	/* Use characters as index
+	*  Increment the count at the character index
+	*  Another for loop the given string
+	*/
+	function leftMostNonRepeatingCharacterOne(str){
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = 0;
+		}
+		for(let i=0;i < str.length;i++){
+			count[str[i].charCodeAt(0)]++;
+		}
+		for(let i=0;i < str.length;i++){
+			if(count[str[i].charCodeAt(0)] == 1){
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	/* Initialize the count array as -1
+	*  If a value is -1 and count at index of the character is the index but if it repeats then the value is -2
+	*  Another for loop where we traverse the 256 characters check for the min non negative value
+	*/
+	function leftMostNonRepeatingCharacterTwo(str){
+		let count = [];
+		for(let i=0;i < 256;i++){
+			count[i] = -1;
+		}
+		for(let i=0;i < str.length;i++){
+			if(count[str[i].charCodeAt(0)] == -1){
+				count[str[i].charCodeAt(0)] = i;
+			}else {
+				count[str[i].charCodeAt(0)] = -2;
+			}
+		}
+		let result = Infinity;
+		for(let i=0;i < 256;i++){
+			if(count[i] >=0){
+				result = Math.min(result, count[i]);
+			}
+		}
+		return result != Infinity ? result:-1;
+	}//theta(n + 256) in time , theta(256) in space
+
+
+	/*
+	*    Reverse the words of a String
+	*    A string can have words seperated by space
+	*    "i love code" => "code love i"
+	*    Try not to have auxialliary space like array stack
+	*    Reverse the words then make sure we also reverse the last word that would not have gotten reversed so do that after teh loop
+	*    Finally just reverse the the string again
+	*    
+	*/
+	function reverseWordsInAString(str){
+		    let start = 0;
+			for(let i=0;i < str.length;i++){
+                 if(str[i]== " "){
+					 reverse(str, start, i - 1);
+					 start = i + 1;
+				 }
+			}
+			reverse(str, start, str.length - 1);
+			reverse(str, 0, str.length - 1);
+	}
+	function reverse(str, low, high){
+		while(low < high){
+			let temp = str[low];
+			str[low] = str[high];
+			str[high] = temp;
+			low ++;
+			high --;
+		}
+	}
 
 	function searchSubstring(T, P){
 		for(let i=0;i < T.length;i++){
