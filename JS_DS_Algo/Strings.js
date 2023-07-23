@@ -404,6 +404,58 @@ function Strings(){
 			}
 		}
 	}
+
+	/*
+	* Pattern searching
+	* Naive
+	*/
+	function naivePatternSearch(S, p){
+		for(let i=0;i < S.length;i++){
+			let matchcount = 0;
+			for(let j=0;j < p.length;j++){
+				if(S[i + j] == p[j]){
+					matchcount++;
+				}
+			}
+			if(matchcount == p.length){
+				console.log('match at index ', i);
+			}
+		}
+	}
+
+	function naivePatternSearchWithBreakAtMisMatch(S, p){
+		for(let i=0;i <= S.length - p.length ;i++){
+			let j = 0;
+			for( j=0;j < p.length;j++){
+				if(S[i + j] != p[j]){
+					break;
+				}
+			}
+			if(j == p.length){
+				console.log('match at index ', i);
+			}
+		}
+	}//O((n-m+1) * m)
+
+	function naivePatternMatchingWhenPatternCharAreDistinct(S, p){
+		let n = S.length;
+		let m = p.length;
+		for(let i=0;i <= n-m;){
+			let j=0;
+			for(;j < m;j++){
+				if(S[i + j] != p[j])
+				  break;
+			}
+			if(j == m){
+				console.log('match at ', i);
+			}
+			if(j==0){
+				i++;
+			} else{
+				i = i +j;
+			}
+		}
+	}//O(n), as i is increased by j when j is iterating
 	
     function findPatternIn2DMatrix(mat, P, xRows, yRows){
     	let used = [];
