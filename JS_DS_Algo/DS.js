@@ -54,6 +54,25 @@ function insertToLinkedList(arg){
 	arg.next = head;
 	head = arg;
 }
+function insertAtPosition(arg, K){
+	let current = head;
+	let previous = head;
+	let pos = 1;
+	let newNode = {data: arg, next:head};
+	if(K==1 || !head){
+		head = newNode;
+		return;
+	}
+	while(current && pos < K){
+		previous = current;
+		current = current.next;
+		pos++;
+	}
+	if(pos == K){
+		previous.next = newNode;
+		newNode.next = current;
+	}
+}
 
 function insertToLinkedListAtLast(arg){
 	if(!head){
@@ -70,9 +89,10 @@ function insertToLinkedListAtLast(arg){
 }
 
 function printLinkedList(){
-	while(head){
-		console.log(head.data);
-		head = head.next;
+	current = head;
+	while(current){
+		console.log(current.data);
+		current = current.next;
 	}
 }
 
@@ -547,7 +567,7 @@ module.exports = {findBiggest : findBiggest, insertToLinkedList : insertToLinked
 		countLinkedListItems, fiboWithoutRecurssion, fibo, formCircularLinkedList,reverseLLinGroups, josepheusProblemViaCircularLL,  printKNodesOfLinkedList, stack, findSmallest,
 		findSpansWithStack, findSpansWithStart, reverseStack,arrangeTwoOfTwo, arrangeThreeOfThree
 		,highestRectangularAreaInHistogram, removeDuplicacyCharacters,fractionToDecimal, 
-		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, ratInMaze, sequentialRemoval, findEquilibrium
+		removeRepeatingChars, nextGreatestNumberWithForLoop, nextGreatestWithStack, stackFunction, ratInMaze, sequentialRemoval, findEquilibrium, insertAtPosition
 		
 };
 

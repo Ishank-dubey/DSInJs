@@ -456,6 +456,15 @@ function Strings(){
 			}
 		}
 	}//O(n), as i is increased by j when j is iterating
+
+
+	/*
+    * KMP algoritm - efficient O(n) for pattern matching
+	* LPS = Longest Prefix that is also Suffix
+	* 'ABCD' - prefix - '', 'A', 'AB', 'ABC' NOT 'ABCD'
+	* 'ABCD' - Suffix - '', 'D', 'CD', 'BCD', 'ABCD'
+	* 	
+	*/
 	
     function findPatternIn2DMatrix(mat, P, xRows, yRows){
     	let used = [];
