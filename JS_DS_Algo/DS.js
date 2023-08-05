@@ -88,8 +88,30 @@ function insertToLinkedListAtLast(arg){
 	arg.next = null;
 }
 
+function insertSorted(data){
+	let newNode = {data, next:null};
+
+	if(!head){
+	   head = newNode;
+	   return;
+	}
+	if(data <= head.data){
+		newNode.next = head;
+		head = newNode;
+		return;
+	}
+	let current = head;
+	let previous = head;
+	while(current && current.data < data){
+		  previous = current;
+		  current = current.next;
+	}
+	previous.next = newNode;
+	newNode.next = current;
+}
+
 function printLinkedList(){
-	current = head;
+	let current = head;
 	while(current){
 		console.log(current.data);
 		current = current.next;
@@ -105,6 +127,7 @@ function countLinkedListItems(){
 	return count;
 }
 
+function findMiddleOfLL(){}
 
 function formCircularLinkedList(N){
   var head = {data:1, next:null};

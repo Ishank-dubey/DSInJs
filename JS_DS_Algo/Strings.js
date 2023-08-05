@@ -8,6 +8,8 @@ function Strings(){
 		let i = 0, j = 0, F = failFunction(P);
 		while(i < T.length){
 			if(T[i]==P[j]){
+				i++;
+				j++;
 				if(j == P.length-1){
 					/*
 					 * Uncomment the following 1 line in order to stop at first matched index
@@ -16,9 +18,6 @@ function Strings(){
 					console.log("Match Index: ", i - j);
 					i++;
 					j = F[j-1];
-				}else{
-					i++;
-					j++;
 				}
 			}else if(j > 0){
 				j = F[j-1];
