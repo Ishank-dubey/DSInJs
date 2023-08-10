@@ -226,6 +226,170 @@ function stackFunction(){
   }
 }
 
+
+function infixToPrefix(expression){
+   let operatorObj = {
+	   "+":1,
+	   "-":1,
+	   "*":2,
+	   "/":2,
+	   "^":3
+   };
+   function isOperator(character){
+        return '+-/*^'.includes(character);
+   }
+   let stack = stackFunction();
+   let output = "";  
+   for(let i=0; i < expression.length; i++){
+	   console.log('ss');
+      if(!isOperator(expression.charAt(i))){
+		  output = output + expression.charAt(i);
+	  } else if(isOperator(expression.charAt(i))){
+          while(!stack.isEmpty() && operatorObj[stack.top()] >= operatorObj[expression.charAt(i)]){
+			output = output + stack.pop();
+		  }
+		  stack.push(expression.charAt(i));
+	  }else if(expression.charAt(i) == '('){
+		stack.push(expression.charAt(i));
+	  }else if(expression.charAt(i) == ')'){
+		while(!stack.isEmpty() && stack.top() != '('){
+			output = output + stack.pop();
+		  }
+		  if(!stack.isEmpty() && stack.top() != '('){
+            throw new Error();
+		  }
+		  stack.pop();
+	  }
+   }
+   while(!stack.isEmpty()){
+	output = output + stack.pop();
+   }
+   return output;
+}
+
+function postFixEvaluation(postFixExp){
+	let stack = stackFunction();
+	let operatorObj = {
+		"+":1,
+		"-":1,
+		"*":2,
+		"/":2,
+		"^":3
+	};
+	function isOperator(character){
+		 return '+-/*^'.includes(character);
+	}
+	for(let i=0;i < postFixExp.length;i++){
+        if(!operatorObj[postFixExp.charAt(i)]){
+             stack.push(postFixExp.charAt(i));
+		}else{
+			let operand1 = parseInt(stack.pop());
+			let operand2 = parseInt(stack.pop());
+			let result;
+			if(postFixExp.charAt(i) == "+"){
+				result = operand2 + operand1;
+			}else if(postFixExp.charAt(i) == "-"){
+				result = operand2 - operand1;
+			}else if(postFixExp.charAt(i) == "*"){
+				result = operand2 * operand1;
+			}else if(postFixExp.charAt(i) == "/"){
+				result = operand2 / operand1;
+			}else if(postFixExp.charAt(i) == "^"){
+				result = operand2 ^ operand1;
+			}
+			stack.push(result);
+		}
+	}
+	return stack.top();
+}
+
+/*
+*  1. Start from the right 
+*  2. keep result string, stack
+*  3. keep adding to the string for the character
+*  4. for an operator do - if incoming character is more precendece then push it, if it has lesser
+	  keep on poping till the smaller precedence operator is found and then push it, while popping
+	  keep on adding the operator to the string
+   5. If the closing bracket is found ')' please push it
+   6. If the opening bracket is found i.e. '(' please start poping and adding to the string
+   7. Pop remaining things from the stack and append to the results
+   8. Reverse the result string
+*/
+function infixToPrefix(expression){
+   let stack = stackFunction();
+   let result = '';
+   let operatorObj = {
+	   "+":1,
+	   "-":1,
+	   "*":2,
+	   "/":2,
+	   "^":3
+   };
+   function isOperator(character){
+	   return "+-*/^".includes(character);
+   }
+   for(let i=expression.length-1;i >=0 ;i--){
+       if(!isOperator(expression.charAt(i))){
+            result = result + expression.charAt(i); 
+	   } else if(isOperator(expression.charAt(i))){
+         while(!stack.isEmpty() && operatorObj[stack.top()] >= operatorObj[expression.charAt(i)]){
+           result = result + stack.pop();
+		 }
+		 stack.push(expression.charAt(i));
+	   } else if(expression.charAt(i) == ')'){
+		   stack.push(expression.charAt(i));
+	   } else if(expression.charAt(i) == '('){
+		while(!stack.isEmpty() && stack.top() != ')'){
+			result = result + stack.pop();
+		  }
+		  stack.pop();
+	   }
+   }
+   while(!stack.isEmpty()){
+	result = result + stack.pop();
+   }
+   let stringArray = result.split('');
+   stringArray = stringArray.reverse();
+   return stringArray.join('');//please reverse
+}
+
+
+function preFixEvaluation(postFixExp){
+	let stack = stackFunction();
+	let operatorObj = {
+		"+":1,
+		"-":1,
+		"*":2,
+		"/":2,
+		"^":3
+	};
+	function isOperator(character){
+		 return '+-/*^'.includes(character);
+	}
+	for(let i=postFixExp.length-1;i >=0 ;i--){
+        if(!operatorObj[postFixExp.charAt(i)]){
+             stack.push(postFixExp.charAt(i));
+		}else{
+			let operand1 = parseInt(stack.pop());
+			let operand2 = parseInt(stack.pop());
+			let result;
+			if(postFixExp.charAt(i) == "+"){
+				result = operand2 + operand1;
+			}else if(postFixExp.charAt(i) == "-"){
+				result = operand1 - operand2;
+			}else if(postFixExp.charAt(i) == "*"){
+				result = operand2 * operand1;
+			}else if(postFixExp.charAt(i) == "/"){
+				result = operand1 / operand2;
+			}else if(postFixExp.charAt(i) == "^"){
+				result = operand1 ^ operand2;
+			}
+			stack.push(result);
+		}
+	}
+	return stack.top();
+}
+
 function ratInMaze(matrix, dx, dy){
 	var x = y = 0;
 	var stack = stackFunction();
