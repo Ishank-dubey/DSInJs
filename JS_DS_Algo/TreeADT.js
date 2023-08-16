@@ -36,6 +36,27 @@ function TreeADT(){
 		}
 	}//O(log n) average case and O(n) worst case i.e. elements are only inserted in left or right i.e. skew
 	
+    function printLevelsUsingLoop(){
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			let size = queue.size();
+			console.log(size + 'size');
+			for(let i=0;i < size;i++){
+				let node = queue.deQueue();
+				console.log(node.data);
+				if(node.left){
+					queue.enQueue(node.left);
+				}
+				if(node.right){
+					queue.enQueue(node.right);
+				}
+			}
+			console.log('------------');
+		}
+	}
+
+
 	function deleteNode(){
 		return root.length;
 	}
@@ -202,7 +223,7 @@ function TreeADT(){
 	    console.log(count);
 	    return count;
 	
-	}
+	}//Time O(n), space - O(n)
 	function height(){}
 	function findMaxInTree(){
 		if(!root){
@@ -223,6 +244,17 @@ function TreeADT(){
 		}
 		console.log(max);
 	}
+
+	function findMaxOfTreeUsingRecurssion(){
+		function findMaxInner(node){
+			if(!node){
+				return -Infinity;
+			}
+			return Math.max(node.data, Math.max(findMaxInner(node.left), findMaxInner(node.right)));
+		}
+		return findMaxInner(root);
+	}//Space O(h)
+
 	function levelWhichHasMax(){
 		
 	}
@@ -293,6 +325,17 @@ function TreeADT(){
 		console.log(level, " <<-- Levels in the Tree");
 		return level;
 	}
+
+    function findHeightRecurssion(){
+		function findHeightInner(node){
+			if(!node){
+				return 0;
+			}
+			return Math.max(findHeightInner(node.left) , findHeightInner(node.right)) + 1;
+		}
+		return findHeightInner(root);
+	}//Space is O(h) that is be
+
 	function heightFromGivenNode(node){
 		if(!node){
 			return 0;
@@ -319,6 +362,54 @@ function TreeADT(){
 		}
 		return level;
 	}
+
+	function leftViewRecursive(){
+		let maxLevel = 0;
+		function leftViewRecursiveInner(node, level){
+			if(!node){
+				return;
+			}
+			if(maxLevel < level){
+				console.log(node.data);
+				maxLevel = level;
+			}
+			leftViewRecursiveInner(node.left, level + 1);
+			leftViewRecursiveInner(node.right, level + 1);
+		}
+		leftViewRecursiveInner(root, 1);
+	}
+
+   function leftiewIterative(){
+	let queue = require('./QueueADT').QueueADT();
+	queue.enQueue(root);
+	while(!queue.isEmpty()){
+		let size = queue.size();
+		for(let i=0;i < size;i++){
+			let item = queue.deQueue();
+			if(i ==0){
+				console.log(item.data);
+			}
+			if(item.left){
+				queue.enQueue(item.left);
+			}
+			if(item.right){
+				queue.enQueue(item.right);
+			}
+		}
+	}
+   }
+
+
+
+	function getSizeRecurssion(){
+		function getSizeInner(node){
+			if(!node){
+				return 0;
+			}
+			return getSizeInner(node.left) + getSizeInner(node.right) + 1;
+		}
+		return getSizeInner(root);
+	}//space O(h)
 	
 	    function findDiameter1(){
 	    	return findDiameter1Inner(root, {height:0});
@@ -1744,7 +1835,13 @@ function TreeADT(){
 	    deleteTheHalfNodes,
 	    pruneTheOnesNotInRange,
 	    linkNodesAtaLevelUsingRecurssion,
-	    linkingNodesAtALevelUsingQueue
+	    linkingNodesAtALevelUsingQueue,
+		printLevelsUsingLoop,
+		getSizeRecurssion,
+		findMaxOfTreeUsingRecurssion,
+		findHeightRecurssion,
+		leftViewRecursive,
+		leftiewIterative
 	   };
 }
 module.exports = {TreeADT}
