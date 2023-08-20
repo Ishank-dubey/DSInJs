@@ -1,3 +1,5 @@
+const { reverseQueue } = require('./QueueADT');
+
 function TreeADT(){
 	var root = null;
 	
@@ -36,6 +38,27 @@ function TreeADT(){
 		}
 	}//O(log n) average case and O(n) worst case i.e. elements are only inserted in left or right i.e. skew
 	
+    function printLevelsUsingLoop(){
+		var queue = require('./QueueADT').QueueADT();
+		queue.enQueue(root);
+		while(!queue.isEmpty()){
+			let size = queue.size();
+			console.log(size + 'size');
+			for(let i=0;i < size;i++){
+				let node = queue.deQueue();
+				console.log(node.data);
+				if(node.left){
+					queue.enQueue(node.left);
+				}
+				if(node.right){
+					queue.enQueue(node.right);
+				}
+			}
+			console.log('------------');
+		}
+	}
+
+
 	function deleteNode(){
 		return root.length;
 	}
@@ -73,6 +96,26 @@ function TreeADT(){
 		  node = node.right;
 	  }
 	}
+   /*
+   While gpoing left lets only push the right child then pop the right child and do the same.
+   */
+   function preOrderGeeksWay(){
+	let stack = require('./DS').stackFunction();
+	var node = root;
+	while(1){
+		while(node){
+			console.log(node.data);
+			if(node.right){
+				stack.push(node.right);
+			}
+			node = node.left;
+		}
+		if(stack.isEmpty()) break;
+		node = stack.pop();
+	}
+   }
+
+
 	function inOrderTraverseWithRecursion(){
 		node = root;
 		innerFunction(node);
@@ -96,7 +139,8 @@ function TreeADT(){
 		  console.log(node.data);
 		  node = node.right;
 		}
-	}
+	}//O(n) in time, O(h) in space
+
 	function postOrderWithRecursion(){
 		var node = root;
 		innerFunction(node);
@@ -148,6 +192,46 @@ function TreeADT(){
 		
 		}
 	}
+    //Make a preorder traversal and put the EMPTY value like -1 when we encounter a NULL
+    function serializeTree(){
+		let result = [];
+		function serializeTreeInner(node){
+			if(!node){
+				result.push(-1);
+				return;
+			}
+			result.push(node.data);
+			serializeTreeInner(node.left);
+			serializeTreeInner(node.right);
+		}
+		serializeTreeInner(root);
+		return result;
+	}//O(n) in space and time
+    //Similar to the constructTreeFromInorderAndPreorderTraversal
+    function deSerialization(serializedArray){
+       let indexInSerializedArray = 0;
+	   function deSerializationInner(){
+
+		if(indexInSerializedArray == serializedArray.length){
+			return null;
+		}
+		
+		let data = serializedArray[indexInSerializedArray++];
+		if(data == -1){
+			return null;
+		}
+		
+		let node = {data: data, right:null, left:null};
+		node.left = deSerializationInner();
+		node.right = deSerializationInner();
+		return node;
+	   }
+	   return deSerializationInner();
+	}//O(n) in space and time
+
+
+
+
 	function printNodesAtLevel(desiredLevel){
 		
 		var node = root;
@@ -202,7 +286,7 @@ function TreeADT(){
 	    console.log(count);
 	    return count;
 	
-	}
+	}//Time O(n), space - O(n)
 	function height(){}
 	function findMaxInTree(){
 		if(!root){
@@ -223,6 +307,17 @@ function TreeADT(){
 		}
 		console.log(max);
 	}
+
+	function findMaxOfTreeUsingRecurssion(){
+		function findMaxInner(node){
+			if(!node){
+				return -Infinity;
+			}
+			return Math.max(node.data, Math.max(findMaxInner(node.left), findMaxInner(node.right)));
+		}
+		return findMaxInner(root);
+	}//Space O(h)
+
 	function levelWhichHasMax(){
 		
 	}
@@ -281,6 +376,7 @@ function TreeADT(){
 			if(!node && !queue.isEmpty()){
 				level++;
 				queue.enQueue(null);
+				//continue
 			}
 			
 			if(node && node.left){
@@ -293,6 +389,17 @@ function TreeADT(){
 		console.log(level, " <<-- Levels in the Tree");
 		return level;
 	}
+
+    function findHeightRecurssion(){
+		function findHeightInner(node){
+			if(!node){
+				return 0;
+			}
+			return Math.max(findHeightInner(node.left) , findHeightInner(node.right)) + 1;
+		}
+		return findHeightInner(root);
+	}//Space is O(h) that is be
+
 	function heightFromGivenNode(node){
 		if(!node){
 			return 0;
@@ -319,6 +426,112 @@ function TreeADT(){
 		}
 		return level;
 	}
+
+	function leftViewRecursive(){
+		let maxLevel = 0;
+		function leftViewRecursiveInner(node, level){
+			if(!node){
+				return;
+			}
+			if(maxLevel < level){
+				console.log(node.data);
+				maxLevel = level;
+			}
+			leftViewRecursiveInner(node.left, level + 1);
+			leftViewRecursiveInner(node.right, level + 1);
+		}
+		leftViewRecursiveInner(root, 1);
+	}
+
+   function leftiewIterative(){
+	let queue = require('./QueueADT').QueueADT();
+	queue.enQueue(root);
+	while(!queue.isEmpty()){
+		let size = queue.size();
+		for(let i=0;i < size;i++){
+			let item = queue.deQueue();
+			if(i ==0){
+				console.log(item.data);
+			}
+			if(item.left){
+				queue.enQueue(item.left);
+			}
+			if(item.right){
+				queue.enQueue(item.right);
+			}
+		}
+	}
+   }
+
+   //value of the left child and right child is same as parent for every node
+   //single/leaf node is considered
+   function childrenSumProperty(){
+	function childrenSumPropertyInner(node){
+		if(!node){
+			return true;
+		}
+		if(!node.left && !node.right){
+			return true;
+		}
+		let sum = node.data;
+		if(node.left){
+			sum = sum - node.left.data;
+		}
+		if(node.right){
+			sum = sum - node.right.data;
+		}
+		
+		return (sum == 0) && childrenSumPropertyInner(node.left) && childrenSumPropertyInner(node.right);
+	}
+	return childrenSumPropertyInner(root);
+   }//time - O(n), space O(h)
+
+   //A tree is balanced when the right and left subtree heights differ max by 1
+   //This is option one that is O(n^2)
+   function isBalancedTree(){
+	function isBalancedTreeInner(node){
+        if(!node){
+			return true;
+		}
+		let rightHeight = findHeightRecurssion(node.right);
+		let leftHeight = findHeightRecurssion(node.left);
+
+		return Math.abs(leftHeight - rightHeight) <=1 && isBalancedTreeInner(node.right) && isBalancedTreeInner(node.left);
+	}
+   }//time complexity is O(n^2)
+
+   function isBalancedEfficient(){
+	   function isBalancedEfficientInner(node){
+             if(!node){
+				return 0;
+			 }
+			 let leftHeight = isBalancedEfficientInner(node.left);
+			 if(leftHeight == -1){
+				return -1;
+			 }
+			 let rightHeight = isBalancedEfficientInner(node.right);
+			 if(rightHeight == -1){
+				return -1;
+			 }
+			 if(Math.abs(leftHeight - rightHeight) > 1){
+				return -1;
+			 }
+			 return Math.max(rightHeight, leftHeight) + 1;
+	   }
+	   return isBalancedEfficientInner(root);
+   }
+
+
+
+	function getSizeRecurssion(){
+		function getSizeInner(node){
+			if(!node){
+				return 0;
+			}
+			return getSizeInner(node.left) + getSizeInner(node.right) + 1;
+		}
+		return getSizeInner(root);
+	}//space O(h)
 	
 	    function findDiameter1(){
 	    	return findDiameter1Inner(root, {height:0});
@@ -340,6 +553,22 @@ function TreeADT(){
 	            return Math.max((nodeLeftHeight.height + nodeRightHeight.height +1), Math.max(leftDiameter, rightDiameter));
 	    	}
 	    }//O(n) since any node is accessed at max one time
+
+
+		function heightFunctionModifiedForDiamater(){
+			let result = 0;
+			heightFunctionModifiedInner(root);
+			function heightFunctionModifiedInner(node){
+				if(!node){
+					return 0;
+				}
+				let lh = heightFunctionModifiedInner(node.left);
+				let rh = heightFunctionModifiedInner(node.right);
+				result = Math.max(result, 1+lh+rh);
+				return 1 + Math.max(lh, rh);
+			}
+			return result;
+		}//O(n) in time, O(h) in soace
     
     function diameterUsingHeight(){
     	return diameterUsingHeightInner(root);
@@ -358,7 +587,7 @@ function TreeADT(){
            * Left Tree height + Right Tree height +1 or Diameter of the Left or the Diameter of the Right Tree O(n^2)
            * */
     	}
-    }
+    }//O(n^2)
     
     function findLevelWithMaxSum(){
     	if(!root){
@@ -446,6 +675,70 @@ function TreeADT(){
 		}
 	}
 	
+    function maxTimeToBurn(node, leaf){
+		let result = 0;
+		function maxTimeToBurnInner(node, distance, leaf){
+			if(!node){
+				return 0;
+			}
+			if(node.data == leaf){
+				distance.value = 0;
+				return 1;
+			}
+			let leftDistance = {value:-1};
+			let rightDistance = {value:-1};
+            let leftHeight = maxTimeToBurnInner(node.left, leftDistance);
+            let rightHeight = maxTimeToBurnInner(node.right, rightDistance);
+
+            if(rightDistance.value != -1){
+                distance.value = rightDistance.value + 1;
+				result = Math.max(result, leftHeight + distance.value);
+			}
+			if(leftDistance.value != -1){
+				distance.value = leftDistance.value + 1;
+				result = Math.max(result, rightDistance + distance.value);
+			}
+
+			return 1 + Math.max(leftHeight, rightHeight);
+
+		}
+		maxTimeToBurnInner(root, {value:-1}, leaf);
+		console.log(result);
+	}//This is having the same complexity to find the height of the tree that is O(n) for skew tree else O(h)
+	 /*
+	We need to have the height of each node and also if the given leaf is actually its child
+	When the leaf is a child we need to check if that node is having the max burn time
+	https://ide.geeksforgeeks.org/V27JCdDLgY
+	 * */
+
+	/*
+	Complete binary tree i.e. only the last level is partially filled if at all and that too shall be filled from left to right
+
+                   10
+				 /   \ 
+			    20	 30    - Complete
+			   / \     
+			 40  50  
+
+			       10
+				 /   \ 
+			    20	 30    - Complete
+			   /      
+			 40   
+			 
+			 
+	    		  10
+				 /   \ 
+			    20	 30    - NOT Complete as the last level is not filled left to right
+			   /     /  
+			 40    50
+	 
+	 
+	*/
+	//Naive solution is to use the getSizeRecurssion with a complexity of O(n)
+	function nodesInCompleteBinaryTree(){}
+
+
 	function sumOfAllNodesInTree(){
 		return sumOfAllNodesInTreeInner(root);
 		function sumOfAllNodesInTreeInner(root){
@@ -1744,7 +2037,19 @@ function TreeADT(){
 	    deleteTheHalfNodes,
 	    pruneTheOnesNotInRange,
 	    linkNodesAtaLevelUsingRecurssion,
-	    linkingNodesAtALevelUsingQueue
+	    linkingNodesAtALevelUsingQueue,
+		printLevelsUsingLoop,
+		getSizeRecurssion,
+		findMaxOfTreeUsingRecurssion,
+		findHeightRecurssion,
+		leftViewRecursive,
+		leftiewIterative,
+		childrenSumProperty,
+		isBalancedTree,
+		isBalancedEfficient,
+		heightFunctionModifiedForDiamater,
+		serializeTree,
+		deSerialization
 	   };
 }
 module.exports = {TreeADT}
