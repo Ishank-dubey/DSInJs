@@ -126,7 +126,17 @@ function reverseQueueRecurssion(){
 		console.log(queue.deQueue());
 	}
 }
-
+function generateNumbersWItrhGIvenDigits(N){
+	let queue = QueueADT();
+	queue.enQueue('5');
+	queue.enQueue('6');
+	for(let i=0;i < N;i++){
+		let item = queue.deQueue();
+		console.log(item);
+		queue.enQueue(item+"5");
+		queue.enQueue(item+"6");
+	}
+}
 
 function reverseQueue(queueLocal){
 	var stack = require('./DS').stackFunction();
