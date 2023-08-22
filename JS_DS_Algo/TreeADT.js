@@ -37,6 +37,60 @@ function TreeADT(){
 			}
 		}
 	}//O(log n) average case and O(n) worst case i.e. elements are only inserted in left or right i.e. skew
+
+	function insertInBSTRecurssive(x){
+		function insertInner(node){
+            if(!node){
+				return {data:x, left:null, right:null};
+			}
+			if(node.data > x){
+				node.left = insertInner(node.left);
+			}else if(node.data < x){
+				node.right = insertInner(node.right);
+			} else {
+				return node;
+			}
+		}
+	}
+
+    /*
+	  if the number itself is present then that is the result else
+	  return the max number that is smaller than the givn number.
+	*/
+	function findFloorOfTheGivenNumber(x){
+		
+			let result = null;
+			while(node){
+				if(node.data == x){
+					return node;
+				}
+				if(node.data > x){
+					node = node.left;
+				}else if(node.data < x){
+					result = node;//possible result
+					node = node.right;
+				}
+			}
+			return result;
+		
+	}
+  
+    //Smallest greatest
+	function findCeilOfTheGivenNumber(x){
+		    let result = null;  
+		    while(node){
+				if(node.data == x){
+					return node;
+				}
+				if(node.data > x){
+					result = node;
+					node = node.left;
+				}else if(node.data < x){
+					node = node.right;
+				}
+			}
+			return result;
+	}
 	
     function printLevelsUsingLoop(){
 		var queue = require('./QueueADT').QueueADT();
