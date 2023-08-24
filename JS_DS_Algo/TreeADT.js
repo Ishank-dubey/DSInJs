@@ -10,14 +10,14 @@ function TreeADT(){
 	 * */
 	function insert(data){
 		if(!root){
-			root = {data:data, left:null, right:null};
+			root = {data:data, left:null, right:null, lheight:0};
 			return;
 		}
 		var parent = root;
 		var node = root;
 		while(1){
 			if(!node){
-				node = {left:null, right:null};
+				node = {left:null, right:null, lheight:0};
 				node.data = data;
 				if(parent){
 				if(data >= parent.data){
@@ -32,6 +32,7 @@ function TreeADT(){
 				if(node.data <= data){
 					node = node.right;
 				}else if(node.data > data){
+					node.lheight++;
 					node = node.left;
 				}
 			}
@@ -51,6 +52,28 @@ function TreeADT(){
 				return node;
 			}
 		}
+	}
+
+
+	/*
+	Find Kth smallest in a BST
+	*/
+	function kthSmallestInBSTEfficient(K){
+		function kthSmallestInBSTEfficientInner(node, count){
+			  if(!node){
+				return null;
+			  }
+              if(node.lheight + 1 == count){
+				return node;
+			  }
+			  if(count < (node.lheight + 1)){
+				return kthSmallestInBSTEfficientInner(node.left, count);
+			  }
+			  if(count > (node.lheight + 1)){
+				return kthSmallestInBSTEfficientInner(node.right, count - node.lheight -1);
+			  }
+		}
+		return kthSmallestInBSTEfficientInner(root, K);
 	}
 
     /*
@@ -90,6 +113,11 @@ function TreeADT(){
 				}
 			}
 			return result;
+	}
+
+
+	function ceilOfLeftElementsInArray(array){
+		
 	}
 	
     function printLevelsUsingLoop(){
