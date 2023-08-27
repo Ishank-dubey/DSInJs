@@ -1,4 +1,4 @@
-const { reverseQueue } = require('./QueueADT');
+const { reverseQueue, QueueADT } = require('./QueueADT');
 
 function TreeADT(){
 	var root = null;
@@ -74,7 +74,7 @@ function TreeADT(){
 			  }
 		}
 		return kthSmallestInBSTEfficientInner(root, K);
-	}
+	}//O(h) in time 
 
     /*
 	  if the number itself is present then that is the result else
@@ -523,6 +523,31 @@ function TreeADT(){
 			leftViewRecursiveInner(node.right, level + 1);
 		}
 		leftViewRecursiveInner(root, 1);
+	}
+
+	function topViewOfTree(){
+		let queue = require('./QueueADT').QueueADT();
+		let aMap = {};
+		queue.enQueue({node:root, hd:0});
+		while(!queue.isEmpty()){
+			let node = queue.deQueue();
+			let data = node.node.data;
+			let hd = node.hd;
+			//console.log(aMap[hd]);
+			if(aMap[hd] == undefined){
+				console.log(data);
+				aMap[hd] = data;
+			}
+			if(node.node.left){
+				//console.log(node.data, 'left');
+				queue.enQueue({node:node.node.left, hd: hd - 1});
+			}
+			if(node.node.right){
+				//console.log(node.data, 'right');
+				queue.enQueue({node:node.node.right, hd: hd + 1});
+			}
+		}
+		return aMap;
 	}
 
    function leftiewIterative(){
@@ -1072,7 +1097,69 @@ function TreeADT(){
 			return checkIfBinaryTreeInner(root.left, min, root.data) && 
 			checkIfBinaryTreeInner(root.right, root.data, max);
 		}
+	}//O(n) kind of pre-order
+	
+	
+	//In order traversal of a binary tree is sorted so that can lead to another solution
+	function isBSTUsingInOrderTraversal(){
+		let prev = -Infinity;
+		function isBstInner(node){
+			if(!node){
+				return true;
+			}
+			if(!isBstInner(node.left)){
+				return false;
+			}
+			if(node.data <= prev){
+				return false;
+			}
+			prev = node.data;
+			return isBstInner(node.right);
+		}
+		return isBstInner(root);
 	}
+
+   /*
+     When two nodes are swapped in a tree  
+     We can go for inorder traversal while checking for first and second 
+   */
+	function fixBST(){
+		let prev = null;
+		let first = null;
+		let second = null;
+		function fixBSTInner(node){
+              if(!node){
+				return null;
+			  }
+			  fixBSTInner(node.left);
+			  if(prev && node.key <= prev.data){
+                    if(!first){
+						first = prev;
+					}
+					second = node;
+			  }
+			  prev = node;
+			  fixBSTInner(node.right);
+		}
+	}//Inorder traversal so O(n)
+
+
+	function findIfSumPairExists(SUM){
+		let aSet = new Set();
+		function findPairInner(node){
+			if(!node){
+				return false;
+			}
+			if(findPairInner(node.left)){
+				return true;
+			}
+			if(aSet.has(SUM - node.data)){
+				return true;
+			}
+			aSet.add(node.data);
+			return findPairInner(node.right);
+		}
+	}//O(n) in time and space
 	
 
 	/*
@@ -1488,15 +1575,15 @@ function TreeADT(){
 	/*
 	 * Find the max value in tree using loop
 	 * */
-	function maxValueInBSTIteration(){
-		var node = root;
-		if(!node){
-			return null;
+	function maxValueInBSTIteration(node){
+		//var node = root;
+		//if(!node){
+		//	return null;
+		//}
+		while(node && node.left){
+			node = node.left;
 		}
-		while(node.right){
-			node = node.right;
-		}
-		return node;
+		return node.data;
 	}//O(n) on time and O(1) in space
 	
     
@@ -1510,27 +1597,30 @@ function TreeADT(){
 	
 	function deleteNodeFromSubTree(value){
 		deleteInner(root, value);
+		console.log(root);
+		console.log(JSON.stringify(root))
 		function deleteInner(node, val){
 			
 			if(!node)return null;
 			
 			if(node.data > val){
+				node.lheight--;
 				node.left = deleteInner(node.left, val);
 			}else if(node.data < val){
 				node.right = deleteInner(node.right, val);
 			}else{
 				if(node.left && node.right){
-					var localData = maxValueInBSTIteration(node.left);
+					var localData = maxValueInBSTIteration(node.right);
 					node.data = localData;
-					node.left = deleteInner(node.left, localData);
+					node.right = deleteInner(node.right, localData);
 				}else{
 					if(node.left){
 						node = node.left;
 					}
-					if(node.right){
+					else if(node.right){
 						node = node.right;
 					}
-					if(!node.right && !node.left)
+					else if(!node.right && !node.left)
 						node = null;
 				}
 			}
@@ -2131,7 +2221,10 @@ function TreeADT(){
 		isBalancedEfficient,
 		heightFunctionModifiedForDiamater,
 		serializeTree,
-		deSerialization
+		deSerialization,
+		isBSTUsingInOrderTraversal,
+		findIfSumPairExists,
+		topViewOfTree
 	   };
 }
 module.exports = {TreeADT}

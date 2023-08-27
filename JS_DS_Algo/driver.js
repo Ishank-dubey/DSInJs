@@ -18,18 +18,19 @@ tree.insert(1);
 tree.insert(.1);
 tree.insert(2);
 tree.insert(3);
-tree.insert(7);*/
+tree.insert(7);
 tree.insert(10);
 tree.insert(11);
 tree.insert(-1);
 tree.insert(-2);
-tree.insert(-3);
+tree.insert(-3);*/
 
 //tree.inOrderTraverseWithRecursion();
 
 //tree.printLevelsUsingLoop();
 
 //console.log(tree.getSizeRecurssion());
+/*
 console.log(tree.findHeightRecurssion());
 console.log(tree.findNumberofLevels());
 console.log(tree.getSizeRecurssion());
@@ -40,4 +41,15 @@ tree.leftiewIterative();
 
 console.log('----------yyyyyyy');
 //console.log(tree.childrenSumProperty());
-console.log(tree.isBalancedEfficient());
+console.log(tree.isBalancedEfficient());*/
+
+tree.insert(20);
+tree.insert(8);
+tree.insert(22);
+tree.insert(4);
+tree.insert(12);
+tree.insert(10);
+tree.insert(14);
+console.log(tree.topViewOfTree());
+
+//console.log();
