@@ -12,6 +12,9 @@
  *                                15  6
  *                               / \  / \
  *                              1  4  2  3
+ * 
+ * A tree that is complete and also the min or max per node
+ * 
  * */
 function HeapADT(){
 	var array = [];
@@ -50,7 +53,7 @@ function HeapADT(){
       if(leftChildIndex < count && leftChildIndex!=-1 && array[index] < array[leftChildIndex]){
     	  maxIndex = leftChildIndex;
       }
-      if(rightChildIndex < count && rightChildIndex!= 1 && array[maxIndex] < array[rightChildIndex]){
+      if(rightChildIndex < count && rightChildIndex!= -1 && array[maxIndex] < array[rightChildIndex]){
     	  maxIndex = rightChildIndex;
       }
       if(index != maxIndex){
@@ -288,10 +291,36 @@ function HeapADT(){
 			count --;
 		}else {
 			array[index] = array[count-1];
+			count --;
 			topBottom(index);
 		}
 		return data;
 	}//O(log n)
+
+    /*
+	* given k = 2
+	* When the elements lie in i - k to i + k in the sorted array
+	* [9,8,7,18,19,17] - 0th ondex 9 can lie in upto 0 + 2 = 2 index
+	* 1st index element 8 can lie in 1+2=3 or 0th index 
+	* 3rd index item i.e. 18 can be in the 3-2 = 1 or 3 + 2=5th index
+	* simple approach is to sort the array using a sorting algo
+	* using min heap we can improve - index variable
+	*/
+	function ksortedArray(K, array){
+		for(let i=0;i <= K;i++){
+			insertMinHeap(array[i]);
+		}//O(klog k)
+		let index = 0;
+		for(let j= K +1;j < array.length;j++){
+            array[index++] = deleteRootMinHeap();
+			insertMinHeap(array[j]);
+		}//(n-k-1)log k
+		while(count !=0){
+			array[index++] = deleteRootMinHeap();
+		}//klog k
+		return array;
+
+	}//n log k upper
 	
 	/*
 	 * Similar to the insert method defined earlier but for a Min Heap

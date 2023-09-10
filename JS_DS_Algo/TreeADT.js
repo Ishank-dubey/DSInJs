@@ -48,9 +48,9 @@ function TreeADT(){
 				node.left = insertInner(node.left);
 			}else if(node.data < x){
 				node.right = insertInner(node.right);
-			} else {
+			} 
 				return node;
-			}
+			
 		}
 	}
 
@@ -548,7 +548,13 @@ function TreeADT(){
 			}
 		}
 		return aMap;
-	}
+	}//O(n * log(hd))
+	//Level order traversal as the top element depends on the level
+    
+
+	//Bottom view
+	// Use topViewOfTree and if the aMap has a key then replace it with the new item
+	function bottomView(){}
 
    function leftiewIterative(){
 	let queue = require('./QueueADT').QueueADT();
