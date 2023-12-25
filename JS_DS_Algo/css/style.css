@@ -1,0 +1,17 @@
+h1 {
+ text-align: center;
+ color: darkblue;
+ font-weight:normal;
+ text-decoration:underline;
+}
+
+p.test {
+    background-color: darkblue;
+    color: white;
+    min-height: 100px;
+    font-size:1.25rem;
+    width:30%;
+}
+a[href^="https://algoexpert.io"]{
+    color: green;
+}

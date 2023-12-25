@@ -485,6 +485,14 @@ function HeapADT(){
 		}
 		return outputArray;
 	}//O(n log k)
+
+
+	/*
+	*
+	*
+	*
+	*/
+	function mergeKSortedArrays(arrayOfArrays){}
 	
 	
 	
@@ -524,7 +532,7 @@ function runningMedian(){
 	var maxHeap = HeapADT();
 	var minHeap = HeapADT();
 	
-	return function runningMedianInner(key){
+	return function runningMedianInner(key){ 
 		var minCount = maxHeap.getCount();
 		var maxCount = minHeap.getCount();
 		if(minCount==0 && maxCount==0){
