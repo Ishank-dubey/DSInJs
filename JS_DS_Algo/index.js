@@ -1,7 +1,7 @@
 var DS = require('./DS');
-
-DS.findBiggest([81, 1,2,43,4, 80]);
-DS.findSmallest([1,2,3,0, -1,10]);
+console.log('TEST');
+DS.findBiggest([81, 1, 2, 43, 4, 80]);
+DS.findSmallest([1, 2, 3, 0, -1, 10]);
 
 
 /*DS.insertToLinkedList({data:1});

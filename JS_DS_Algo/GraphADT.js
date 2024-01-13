@@ -141,13 +141,14 @@ function GraphADTUsingAdjacencyList(){
 			//note that this queue will have one connected component
 			var queue = require('./QueueADT').QueueADT();
 			queue.enQueue(index);
+			visited[index]= 1;
 			
 			while(!queue.isEmpty()){
 				var newIndex = queue.deQueue();
-				if(!visited[newIndex]){
-					visited[newIndex] = 1;
+				//if(!visited[newIndex]){
+					//visited[newIndex] = 1;
 					console.log(newIndex, "NODE BFS");	
-				}
+				//}
 				// For O(V+E) efficiency use the while loop as in the next function -topolgicalSort 
 				for(let j=0;j< V;j++){
 					if(findEdgeBetween(newIndex, j)){
@@ -159,6 +160,7 @@ function GraphADTUsingAdjacencyList(){
 					}
 						if(findEdgeBetween(newIndex, j) && !visited[j]){
 							queue.enQueue(j);
+							visited[j] = 1;
 						}
 				}
 			}

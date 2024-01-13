@@ -4,7 +4,9 @@ h1 {
  font-weight:normal;
  text-decoration:underline;
 }
-
+p:last-child{
+    background-color: red;
+}
 p.test {
     background-color: darkblue;
     color: white;
@@ -15,3 +17,13 @@ p.test {
 a[href^="https://algoexpert.io"]{
     color: green;
 }
+a:link {
+    color: red;
+}
+input:focus {
+        outline: 2px solid blue;
+}
+input:invalid:not(:focus) {
+    outline: 2px solid red;
+}
+  
