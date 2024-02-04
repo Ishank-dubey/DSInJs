@@ -194,6 +194,41 @@ function printKNodesOfLinkedList(head, K){
 	return temp;
 }
 
+/*
+* Flatten the array that can have
+ [1,2, [3,4, [5, 6]]] ---> [1,2,3,4,5]
+ {a: [1,2, [3, 4]]} ----> {a:[1,2,3,4]}
+*/
+function flatten(value) {
+	if(typeof value !== 'object' || value === null){
+	  return value;
+	}
+	if(Array.isArray(value)){
+	  return flattenArray(value);
+	}
+	return flattenObject(value);
+  }
+  function flattenArray(value){
+	return value.reduce((item, current) => { return item.concat(flatten(current)) }, []);
+  }
+  function flattenObject(obj){
+	const flatResult = {};
+	for(const [key, value] of Object.entries(obj)){
+	  const isValueObject = typeof value === 'object' && value !== null && !Array.isArray(value);
+	  const flatObj = flatten(value);
+  
+	  if(isValueObject){
+		Object.assign(flatResult, flatObj);
+	  } else{
+		flatResult[key] = flatObj;
+	  }
+	}
+	return flatResult;
+  }
+  
+  
+  
+
 
 function stackFunction(){
   var stack = [];
