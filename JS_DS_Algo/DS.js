@@ -227,9 +227,85 @@ function flatten(value) {
   }
   
   
+  /*
+  * map, filter and reduce functions impls
+  */
+  Array.prototype.myMap = function (callback) {
+	const result = [];
+	for(let i=0;i < this.length;i++){
+	  result.push(callback(this[i], i, this));
+	}
+	return result;
+  };
   
+  Array.prototype.myFilter = function (callback) {
+	const result = [];
+	for(let i=0;i < this.length;i++){
+	  if(callback(this[i], i, this) === true){
+		result.push(this[i]);
+	  }
+	}
+	return result;
+  };
+  
+  Array.prototype.myReduce = function (callback, initialValue) {
+	let accumulator = initialValue;
+	for(let i=0;i < this.length;i++){
+		 if(initialValue === undefined && i===0){
+			accumulator = this[i];
+	  }else {
+			 accumulator = callback(accumulator, this[i], i, this);
+	   }
+	}
+	return accumulator;
+  };
 
+  
+  /* 
+   * 
+   * custom this binding instead of call, bind, apply
+   * 
+   */
+  Function.prototype.myCall = function (thisContext, ...args) {
 
+	const symbol = Symbol();
+	thisContext[symbol] = this;
+	const result = thisContext[symbol](...args);
+	delete thisContext[symbol];
+	return result;
+  };
+  
+  Function.prototype.myApply = function (thisContext, args = []) {
+	return this.myCall(thisContext, ...args);
+  };
+  
+  Function.prototype.myBind = function (thisContext, ...args) {
+	return (...newArgs) => {
+	  return this.myApply(thisContext, [...args, ...newArgs]);
+	}
+  };
+  /*
+   Custom Promisify 
+  */
+  function promisify(callback) {
+	return function (...args){
+	  return new Promise((res, rej) => {
+		function handleResponse(error, value) {
+		  if(error == null){
+			res(value);
+		  }else{
+			rej(error);
+		  }
+		}
+		callback.call(this, ...args, handleResponse);
+	  });
+	}
+  }
+  
+  // Do not edit the line below.
+  exports.promisify = promisify;
+  
+  
 function stackFunction(){
   var stack = [];
   
