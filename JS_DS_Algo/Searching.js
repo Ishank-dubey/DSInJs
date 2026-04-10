@@ -1037,7 +1037,29 @@ function getJustSmallest(start, end, target, array) {
         return getJustSmallest(mid + 1, end, target, array);
     }
 }
-VM1271:4 
+/*var array = [1,2,3,4,5];
+var result = array[0];
+closest(0, array.length -1, 4.5, array);
+console.log(result);*/
+	
+function closest(start, end, value, array) {
+    if(start > end) {
+        return;
+    }
+    let mid = Math.floor((start + end)/2);
+    if(array[mid] == value) {
+        result = array[mid];
+        return;
+    }
+    if(Math.abs(array[mid] - value) < Math.abs(result - value)) {
+        result = array[mid];
+    } else if(Math.abs(array[mid] - value) == Math.abs(value - result)){
+        result = Math.max(array[mid], result);
+    }
+    if(array[mid] > value) {return closest(start, mid - 1, value, array);}
+    if(array[mid] < value) {return closest(mid + 1, end, value, array);}
+    
+}
 
 
 	
@@ -1075,7 +1097,8 @@ VM1271:4
 			searchInSortedBinaryArray,
 			searchInInfiniteArrayEfficient,
 			searchInInfiniteArrayNaive,
-			getJustSmallest
+			getJustSmallest,
+			closest
 		   };
 }
 module.exports = {Search};
