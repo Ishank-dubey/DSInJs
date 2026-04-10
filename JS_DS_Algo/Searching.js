@@ -1017,6 +1017,28 @@ function Search(){
 	   return result;
    }//O(n * log(sum - max))
 
+	//var array = [1,2,4,5, 6,7,8];
+//getJustSmallest(0, array.length - 1, 7.5, array);
+//console.log(array[result]);
+function getJustSmallest(start, end, target, array) {
+    if(start > end) {
+        return;
+    } 
+    var mid = Math.floor((start + end)/2);
+    if(array[mid] === target) {
+        result = mid;
+        return mid;
+    }
+    if(array[mid] > target) {
+        return getJustSmallest(start, mid - 1, target, array);
+    } else {
+        if(result != -1 && array[result] < array[mid])result = mid;
+        else result = mid;
+        return getJustSmallest(mid + 1, end, target, array);
+    }
+}
+VM1271:4 
+
 
 	
 
@@ -1052,7 +1074,8 @@ function Search(){
 			getFrequencyOptimal,
 			searchInSortedBinaryArray,
 			searchInInfiniteArrayEfficient,
-			searchInInfiniteArrayNaive
+			searchInInfiniteArrayNaive,
+			getJustSmallest
 		   };
 }
 module.exports = {Search};
