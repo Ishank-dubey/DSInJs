@@ -1033,7 +1033,7 @@ function getJustSmallest(start, end, target, array) {
         return getJustSmallest(start, mid - 1, target, array);
     } else {
         if(result != -1 && array[result] < array[mid])result = mid;
-        else result = mid;
+        else if(result == -1) result = mid;
         return getJustSmallest(mid + 1, end, target, array);
     }
 }
