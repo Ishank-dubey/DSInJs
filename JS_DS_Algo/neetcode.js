@@ -30,6 +30,36 @@ function targetSum (x, sum) {
   
 }
 
+function tergetSumUsingTheMap(x, target) {
+  let x = [1,1,1,1,1,];
+let dp = new Map();
+dp.set(0, 1);
+for (let i=0;i < x.length;i++) {
+    let next_dp = new Map();
+    for (let [sum, ways] of dp) {
+        let summation =  sum + x[i];
+        let ways1 = next_dp.get(summation);
+        if(ways1) {
+            next_dp.set(summation, ways1 + ways);
+        } else {
+            next_dp.set(summation, ways);
+        }
+
+        let substraction =  sum - x[i];
+        let ways2 = next_dp.get(substraction);
+        if(ways2) {
+            next_dp.set(substraction, ways2 + ways);
+        } else {
+            next_dp.set(substraction, ways);
+        }
+        
+}
+    dp = next_dp;
+}
+  reutrn dp.get(target);
+console.log(dp);
+}
+  
 function findIndex(array, sum) {
     return array.findIndex((s)=> {
         return sum == s[0];
