@@ -1,4 +1,33 @@
 function neetCode() {
+  function longestRepeatingCharacterReplacement(array, k) {
+    let map = {};
+    let start = 0, end = 0;
+    let result = 0;
+    for ( ;end < array.length;end++) {
+        if(map[array[end]]){
+            map[array[end]] += 1
+        } else{
+            map[array[end]] = 1
+        };
+        while((end - start + 1) - getCharacterWithMaxCount(map) > k) {
+            map[array[start]] --;
+            start ++;
+        }
+        result = Math.max(result, (end - start + 1));
+    }
+    return result;
+}
+function getCharacterWithMaxCount(map) {
+        let result = 0;
+        for (let key of Object.keys(map)) {
+            if(map[key]) {
+                if(result < map[key]) {
+                    result = map[key];
+                } 
+            }
+        }
+        return result;
+    }
   // x is the input array
   // sum is the target sum
   // use array here
@@ -80,11 +109,9 @@ function findIndex(array, sum) {
     }
     return result;
 }
-
-
-
-
-
-
-  return {targetSum, overlappingIntervals}
+  return {
+    targetSum, 
+    overlappingIntervals, 
+    longestRepeatingCharacterReplacement
+  };
 } 
