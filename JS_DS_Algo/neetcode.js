@@ -66,10 +66,25 @@ function findIndex(array, sum) {
     });
   }
 
+  function overlappingIntervals(array) {
+    array.sort((a, b)=> a[0] - b[0]);
+    let nextEnd = array[0][1];
+    let result = 0;    
+    for (let i=1;i < array.length;i++) {
+        if(array[i][0] >= nextEnd) {
+            nextEnd = array[i][1];
+        }else {
+            result++;
+            nextEnd = Math.min(nextEnd, array[i][1]);
+        }
+    }
+    return result;
+}
 
 
 
 
 
-  return {targetSum}
+
+  return {targetSum, overlappingIntervals}
 } 
