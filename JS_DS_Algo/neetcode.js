@@ -129,6 +129,33 @@ function findIndex(array, sum) {
 }
 //partitionArray([1,5,11,5])
 
+
+  function kokoBanana(array, h) {
+    let start =1, end;
+    let maxBannas = 0;
+    for(let j of array) {
+        if(j > maxBannas) {
+            maxBannas = j
+        }
+    }
+    end = maxBannas;
+    result = maxBannas;//rate is the max bananas in the pile at once
+    while ( start <= end) {
+        let mid = Math.floor((end + start)/2);
+        let currentSpeed = 0;
+        for(let j of array) {
+            currentSpeed += Math.ceil(j / mid);
+        }
+        if(currentSpeed <= h) {
+            end = mid - 1;
+            result = Math.min(result, mid);// make sure its the mid not the currentSpeed as mid is the speed,, currentSpeed is bacially the hours! the name current speed is miss leading
+        } else {
+            start = mid + 1;
+        }
+    }
+    return result;
+}
+
   return {
     targetSum, 
     overlappingIntervals, 
