@@ -109,9 +109,30 @@ function findIndex(array, sum) {
     }
     return result;
 }
+
+  function partitionArray(array) {
+     let sum = array.reduce((a, b)=> a  + b, 0);
+    if(sum % 2 == 1){
+        return false;
+    }
+    let dp = new Set();
+    dp.add(0);
+    for(let i of array) {
+        let nextdp = new Set();
+        for(let j of dp) {
+            nextdp.add(i + j);
+            nextdp.add(j);
+        }
+        dp = nextdp;
+    }      
+    return dp.has(sum / 2);
+}
+//partitionArray([1,5,11,5])
+
   return {
     targetSum, 
     overlappingIntervals, 
-    longestRepeatingCharacterReplacement
+    longestRepeatingCharacterReplacement,
+    partitionArray
   };
 } 
