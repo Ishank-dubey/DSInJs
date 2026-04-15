@@ -175,6 +175,37 @@ function findIndex(array, sum) {
     return stack.length;
 }
 
+  function isConsecutiveSequenceGroup(array, groupSize) {
+    if(array.length % groupSize !=0 ) return false;
+    let hash = {};
+    for(j of array) {
+        if(hash[j]) {
+            hash[j] = hash[j] + 1;
+        } else {
+            hash[j] = 1;
+        }
+    }
+    
+    array.sort((a, b)=> a - b);
+    const unique = [...new Set(array)]; /// using this in place of the min heap
+    while (unique.length) {
+        let number = unique[0];
+        let end = number + groupSize;
+        for (;number < end ;number++) {
+            if(hash[number] == undefined) { return false;}
+            hash[number]--;
+            if(hash[number] ==0) {
+                if(number != unique[0]) {
+                    return false;
+                }
+                unique.shift();
+            }
+        }
+    }
+    return true;
+    console.log(hash, array);
+}
+
   return {
     targetSum, 
     overlappingIntervals, 
