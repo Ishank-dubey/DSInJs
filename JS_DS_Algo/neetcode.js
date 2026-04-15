@@ -156,6 +156,25 @@ function findIndex(array, sum) {
     return result;
 }
 
+
+  //target is the destination position
+  //position_speed = [position of the car, speed of the car]
+  function carFleet(target) {
+     console.log('dd');
+     let stack = [];
+     let position_speed = [[10,2],[8,4],[0,1],[5,1], [3,3]]; 
+     position_speed.sort((a, b) => a[0] - b[0]);
+     for(let j = position_speed.length - 1; j >= 0 ;j--) {
+         stack.push((target - position_speed[j][0])/ position_speed[j][1]);
+         if(stack.length >= 2) {
+             if(stack[stack.length - 1] <= stack[stack.length - 2]) {
+                 stack.pop();
+             }
+         }
+     }
+    return stack.length;
+}
+
   return {
     targetSum, 
     overlappingIntervals, 
