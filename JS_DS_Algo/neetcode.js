@@ -244,6 +244,43 @@ function findIndex(array, sum) {
   //mergeTripletToFormTargetTripilet([[2,5,3], [1,8,4], [1,7,5]], [2,7,5]) -> true
   //merging means the - while merging two 
 
+  function numberOfConnectdComponentsInGraph(edges, n) {
+    let rank = [];
+    let parent = [];
+    for(let i=0;i < n;i++) {
+        rank.push(1);
+        parent.push(i);
+    }
+    function find(i) {
+      if(i == parent[i]) {
+        return i;
+     }
+    parent[i] = find(parent[i]);
+    return parent[i];
+    }
+function union(p1, p2){
+    if(parent[p1] == parent[p2]) {
+        return 0;
+    }
+    if(rank[p1] < rank[p2]) {
+        parent[p1] = p2;
+        rank[p2] += rank[p1];
+    } else {
+        parent[p2] = p1;
+        rank[p1] += rank[p2];
+    }
+    return 1;
+}
+let result = n;
+for (let edge of edges) {
+    result = result - union(edge[0], edge[1])
+}
+    return result;
+}
+
+//numberOfConnectdComponentsInGraph([[0,1],[1,2],[3,4]], 5)
+//2
+
   return {
     targetSum, 
     overlappingIntervals, 
