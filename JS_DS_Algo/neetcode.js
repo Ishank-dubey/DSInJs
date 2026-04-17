@@ -221,6 +221,26 @@ function findIndex(array, sum) {
     }
     return result.length >= 3;
 }
+  function kMostFrequentItemsInArray(array, k) {
+    let map = {};
+    for(let item of array) {
+        map[item] = map[item] ? map[item] + 1 : 1;
+    }
+    let frequencies = [];
+    for(let j of Object.keys(map)) {
+        frequencies[map[j]] = frequencies[map[j]] ? frequencies[map[j]].push(j) : [j];
+    }
+    let result = [];
+    for (let count = array.length + 1;count >= 0 ;count--) {
+        if(frequencies[count]) {
+            result.push(...frequencies[count]);
+        }
+        if(result.length == k) {
+            return result;
+        }
+    }
+    return result;
+}
   //mergeTripletToFormTargetTripilet([[2,5,3], [1,8,4], [1,7,5]], [2,7,5]) -> true
   //merging means the - while merging two 
 
