@@ -205,6 +205,24 @@ function findIndex(array, sum) {
     return true;
     console.log(hash, array);
 }
+  function mergeTripletToFormTargetTripilet(triplets, targetTriplet) {
+    let result = [];
+    for (let triplet of triplets) {
+        if(triplet[0] > targetTriplet[0] || triplet[1] > targetTriplet[1]|| triplet[2] > targetTriplet[2]) {
+            continue;
+        }
+        //if we are here that means that there are triplets whose items are lesser or equal to the target triplet items
+       // so lets find [max(ai, bi), max(ai+1, bi+1), max(ai+2, bi+2)]
+        for (let tripletItem in triplet) {
+            if(triplet[tripletItem] == targetTriplet[tripletItem]) {
+                result.push(triplet[tripletItem]);
+            }
+        }
+    }
+    return result.length >= 3;
+}
+  //mergeTripletToFormTargetTripilet([[2,5,3], [1,8,4], [1,7,5]], [2,7,5]) -> true
+  //merging means the - while merging two 
 
   return {
     targetSum, 
