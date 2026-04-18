@@ -284,6 +284,38 @@ for (let edge of edges) {
 //numberOfConnectdComponentsInGraph([[0,1],[1,2],[3,4]], 5)
 //2
 
+
+  // 1 - 2- 6 - 9, the path starts at 1 so that indicates the the longest path from 2 is lesser than the path from 1
+function findLongestIncresingPathInMatrix(matrix) {
+    let ROW = matrix.length;
+    let COL = matrix.length;
+    let cache = new Map();
+    function dfs(row, column, previousValue) {
+        if(row < 0 || row == ROW || column <0 || column == COL || matrix[row][column] <= previousValue) {
+            return 0;
+        }
+         if(cache[row+''+column]) {
+             return cache[row+''+column];
+         }
+        let res = 1;
+        res = Math.max(res, 1 + dfs(row + 1, column, matrix[row][column]));
+        res = Math.max(res, 1 + dfs(row - 1, column, matrix[row][column]));
+        res = Math.max(res, 1 + dfs(row , column + 1, matrix[row][column]));
+        res = Math.max(res, 1 + dfs(row, column - 1, matrix[row][column]));
+        cache[row+''+column] = res;
+        return cache[row+''+column]
+    }
+    let result = 0;
+    for(let i=0;i < ROW;i++) {
+        for (let j=0;j < COL;j++) {
+            result = Math.max(result, dfs(i, j, -1)); //see this the default is -1
+        }
+    }
+    return result;
+}
+
+//findLongestIncresingPathInMatrix([[9,9,4], [6,6,8], [2,1,1]]);
+
   return {
     targetSum, 
     overlappingIntervals, 
