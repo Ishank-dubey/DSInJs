@@ -259,15 +259,18 @@ function findIndex(array, sum) {
     return parent[i];
     }
 function union(p1, p2){
-    if(parent[p1] == parent[p2]) {
+    let parent1 = find(p1);
+    let parent2 = find(p2);
+    
+    if(parent1 == parent2) {
         return 0;
     }
-    if(rank[p1] < rank[p2]) {
-        parent[p1] = p2;
-        rank[p2] += rank[p1];
+    if(rank[parent1] < rank[parent2]) {
+        parent[parent1] = parent2;
+        rank[parent2] += rank[parent1];
     } else {
-        parent[p2] = p1;
-        rank[p1] += rank[p2];
+        parent[parent2] = parent1;
+        rank[parent1] += rank[parent2];
     }
     return 1;
 }
