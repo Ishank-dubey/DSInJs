@@ -322,6 +322,20 @@ function findLongestIncresingPathInMatrix(matrix) {
    }
 console.log(result);
 }
+
+  // O(n)
+ function getOnesArray(n) {
+    let dp = [0];
+    let offSet = 1;
+    for (let i=1;i <= n;i++) {
+        if(2 * offSet == i) {
+            offSet = 2 * offSet;
+        }
+        dp[i] = 1 + dp[i - offSet];
+    }
+    return dp;
+}
+  //getOnesArray(4) -  [0, 1, 1, 2, 1]
   
 
 //findLongestIncresingPathInMatrix([[9,9,4], [6,6,8], [2,1,1]]);
