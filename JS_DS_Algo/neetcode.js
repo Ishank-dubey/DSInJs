@@ -313,6 +313,16 @@ function findLongestIncresingPathInMatrix(matrix) {
     }
     return result;
 }
+  //simple way to ger the number of 1s in a binary representatio of a number in  log(n) time
+  function numberof1(n){
+    let result = 0;
+   while(n) {
+    result = n % 2 + result;
+    n = Math.floor(n/2);
+   }
+console.log(result);
+}
+  
 
 //findLongestIncresingPathInMatrix([[9,9,4], [6,6,8], [2,1,1]]);
 
