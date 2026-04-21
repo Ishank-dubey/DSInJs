@@ -340,6 +340,85 @@ console.log(result);
 
 //findLongestIncresingPathInMatrix([[9,9,4], [6,6,8], [2,1,1]]);
 
+  function mergeSortedArrays(arrays) {
+  const initialArray = [];
+  const sortedList = [];
+  for(let i=0;i < arrays.length;i++) {
+    initialArray.push({
+      num: arrays[i][0],
+      arrayIdx: i,
+      elementIdx: 0
+    });
+  }
+  const minHeap = new MinHeap(initialArray);
+  while(minHeap.heap.length) {
+    const smallestItem = minHeap.remove();
+    const {num, elementIdx, arrayIdx} = smallestItem;
+    sortedList.push(num);
+    if(elementIdx == arrays[arrayIdx].length - 1){
+      continue;
+    } 
+    minHeap.insert({
+      arrayIdx,
+      elementIdx: elementIdx + 1,
+      num: arrays[arrayIdx][elementIdx + 1]
+    });
+  }
+  return sortedList;
+}
+
+class MinHeap {
+  constructor(array) {
+    this.heap = array;
+    const parent = Math.floor((this.heap.length - 2) / 2);
+    for(let i=parent;i >= 0;i--) {
+      this.shiftDown(i, array.length - 1, array);
+    }
+  }
+  shiftUp(currentIndex, array) {
+    let parent = Math.floor((currentIndex - 1) / 2);
+    while(currentIndex > 0 && array[parent].num > array[currentIndex].num){
+      this.swap(currentIndex, parent, array);
+      currentIndex = parent;
+      parent = Math.floor((currentIndex - 1) / 2);
+    }
+  }
+  shiftDown(currentIndex, endIndex, array) {
+    let childLeft = 2 * currentIndex + 1;
+    while(childLeft <= endIndex) {
+      let indexToBeSwapped = -1;
+      let childRight = (2 * currentIndex + 2) <= endIndex ? (2 * currentIndex + 2) : -1;
+      if(childRight != -1 && array[childRight].num < array[childLeft].num) {
+        indexToBeSwapped = childRight;
+      } else {
+        indexToBeSwapped = childLeft;
+      }
+      if(array[currentIndex].num > array[indexToBeSwapped].num) {
+        this.swap(indexToBeSwapped, currentIndex, this.heap);
+        currentIndex = indexToBeSwapped;
+        childLeft = currentIndex * 2 + 1;  
+      }else {
+        break;
+      }
+    }
+  }
+  swap(source, dest, array) {
+    const temp = array[source];
+    array[source] = array[dest];
+    array[dest] = temp;
+  }
+  insert(value) {
+    this.heap.push(value);
+    this.shiftUp(this.heap.length -1 , this.heap);
+  }
+  remove() {
+    this.swap(0, this.heap.length - 1, this.heap);
+    const returnValue = this.heap.pop();
+    this.shiftDown(0, this.heap.length - 1, this.heap);
+    return returnValue;
+  }
+}
+
   return {
     targetSum, 
     overlappingIntervals, 
