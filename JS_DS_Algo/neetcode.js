@@ -418,6 +418,21 @@ class MinHeap {
     return returnValue;
   }
 }
+  function coinChange(array, sumNeeded) {
+    
+    const dp = new Array(sumNeeded + 1).fill(sumNeeded + 1);//initialize with the greatest value
+    dp[0] = 0;
+    for(let item=1;item <= sumNeeded;item++) { // this is to be the index of the dp array not the value
+        for(let coin of array) {
+            if(item - coin >=0 ) {
+                dp[item] = Math.min(1+ dp[item - coin], dp[item]);
+            }
+        }
+    }
+    let result = dp[sumNeeded] != sumNeeded + 1 ? dp[sumNeeded] :-1;
+    return result;
+} // coinChange([1,2,5], 11);--- 3
+  // coinChange([2], 3); --- -1
 
   return {
     targetSum, 
