@@ -458,6 +458,29 @@ class MinHeap {
 }
   //popBallons([3,1,5,8]); ---> 167
 
+  
+function maxProfit(array) {
+    let cache = {};
+    function DFS(i, buying) {
+        if(i >= array.length) {
+            return 0;
+        }
+        if(cache[i+''+buying]) {
+            return cache[i+''+buying];
+        }
+        let coolDown = DFS(i + 1, buying);
+        if(buying) {
+            let buy = DFS(i + 1, false) - array[i];
+            cache[i+''+buying] =  Math.max(buy, coolDown);
+        } else {
+            let sell = DFS(i + 2, true) + array[i];
+            cache[i+''+buying] =  Math.max(sell, coolDown);
+        }
+    return cache[i+''+buying];
+}
+return DFS(0, true);
+}
+  //maxProfit([1,2,3,0,2]); ----> 3 //O(n), O(2n)
   return {
     targetSum, 
     overlappingIntervals, 
