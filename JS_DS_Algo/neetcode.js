@@ -434,6 +434,30 @@ class MinHeap {
 } // coinChange([1,2,5], 11);--- 3
   // coinChange([2], 3); --- -1
 
+
+  function popBallons(array) {
+    console.log('test');
+    let newArray = [1, ...array, 1];
+    let cache = {};
+    function DFS(L, R) {
+        if(L > R) {
+            return 0;
+        }
+        if(cache[L+''+R]) {
+            return cache[L+''+R];
+        }
+        let coins = 0;
+        for(let i=L;i <=R;i++) {
+            coins = newArray[L - 1] * newArray[i] * newArray[R+1];
+            coins += DFS(L, i-1) + DFS(i+1, R);
+            cache[L+''+R] = Math.max(cache[L+''+R] ? cache[L+''+R]: 0, coins);
+        }
+        return cache[L+''+R];
+    }
+    return DFS(1, newArray.length - 2);
+}
+  //popBallons([3,1,5,8]); ---> 167
+
   return {
     targetSum, 
     overlappingIntervals, 
