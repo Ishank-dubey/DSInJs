@@ -533,6 +533,112 @@ function flattenObject(obj){
   // O(n^2)
 
 
+  function serialize(node) { //Using the DFS
+    let result = [];
+    function DFS(node) {
+        if(!node) {
+            result.push('N');
+            return;
+        }
+        result.push(node.value);
+        DFS(node.left);
+        DFS(node.right);
+    }
+    DFS(node);
+    return result;
+}
+
+function deserilaize(array) {
+    let i = 0;
+    function DFS() {
+        if(array[i] == 'N') {
+            i++;
+            return null;
+        }
+        let node = new Node(array[i]);
+        i++;
+        node.left = DFS();
+        node.right = DFS();
+        return node;
+    }
+    return DFS();
+}
+
+  class Node {
+    constructor(x) {
+        this.value = x;
+        this.left = null;
+        this.right = null;
+    }
+}
+
+const root = new Node(10);
+root.left = new Node(20);
+root.right = new Node(30);
+root.left.left = new Node(40);
+root.left.right = new Node(60);
+
+
+  //Serialize Deserialize using the BFS and queues
+  function serialize(root) {
+    const arr = [];
+    const q = new Queue();
+
+    q.enqueue(root);
+
+    while (!q.isEmpty()) {
+        const curr = q.dequeue();
+
+        // If curr node is null,
+        // append -1 to result.
+        if (curr === null) {
+            arr.push(-1);
+            continue;
+        }
+
+        // else push its value into result
+        arr.push(curr.data);
+
+        // enqueue children
+        q.enqueue(curr.left);
+        q.enqueue(curr.right);
+    }
+
+    return arr;
+}
+
+// function to deserialize a tree.
+function deserialize(arr) {
+    if (arr[0] === -1) return null;
+
+    const root = new Node(arr[0]);
+    const q = new Queue();
+    q.enqueue(root);
+
+    let i = 1;
+    while (!q.isEmpty()) {
+        const curr = q.dequeue();
+
+        // Left child
+        if (arr[i] !== -1) {
+            const left = new Node(arr[i]);
+            curr.left = left;
+            q.enqueue(left);
+        }
+        i++;
+
+        // Right child
+        if (arr[i] !== -1) {
+            const right = new Node(arr[i]);
+            curr.right = right;
+            q.enqueue(right);
+        }
+        i++;
+    }
+
+    return root;
+}
+
   return {
     targetSum, 
     overlappingIntervals, 
