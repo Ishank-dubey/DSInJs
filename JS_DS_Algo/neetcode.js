@@ -509,6 +509,29 @@ function flattenObject(obj){
   return flatResult;
 }
 
+  function LIS(array) {
+    let DP = new Array(array.length).fill(1);
+    
+        for(let j=1;j < array.length;j++) {
+            for(let i=0;i < j;i++){
+               if(array[j] > array[i] && DP[i] + 1 > DP[j]){
+                   DP[j] = DP[i] + 1;
+            }    
+            }
+        }
+    let result = 1;
+    for(let item of DP){
+        if(result < item) {
+            result = item;
+        }
+    }
+    return result;
+}
+  //LIS([0,1,0,3,2,3]) - 4
+  //LIS([10,9,2,5,3,7,101,18]) - 4
+  //LIS([7,7,7,7,7,7,7]) - 1
+  // O(n^2)
+
 
   return {
     targetSum, 
