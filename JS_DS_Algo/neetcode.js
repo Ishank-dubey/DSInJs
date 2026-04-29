@@ -639,6 +639,29 @@ function deserialize(arr) {
     return root;
 }
 
+  function findCheapestFlightInKStops(n, K, flights, src, dst) {
+    let costs = new Array(n).fill(Infinity);
+    costs[src] = 0;
+    let tempCost = new Array(n).fill(Infinity);
+    tempCost[src] = 0;
+    for(let i=0;i <= K;i++) { // K + 1 iterations
+        tempCost = [...costs]; //new copy
+    for(let edge of flights) {
+        let [src, dst, cost] = edge;
+        if(costs[src] == Infinity) {
+            continue;
+        }
+        if(costs[src] + cost < tempCost[dst]) {
+            tempCost[dst] = costs[src] + cost;
+        }
+    }
+    costs = tempCost;
+    }
+    return costs[dst];
+}
+// think about BFS for one inner iteration
+//findCheapestFlightInKStops(4, 1, [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], 0, 3) -- 700
+
   return {
     targetSum, 
     overlappingIntervals, 
