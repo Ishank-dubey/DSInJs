@@ -662,6 +662,51 @@ function deserialize(arr) {
 // think about BFS for one inner iteration
 //findCheapestFlightInKStops(4, 1, [[0,1,100],[1,2,100],[2,0,100],[1,3,600],[2,3,200]], 0, 3) -- 700
 
+function wallAndGate(rooms) {
+    //  - 1 is a wall cell, 0 is a Gate, intiall cell value is Infinity
+    // we can go BFS one neightbour each iteraton startin with the Gates whose distance is 0
+    let queue = [];
+    let visited = {}; //keep the Row, Col that are visited in the BFS 
+    let ROW = rooms.length;
+    let COL = rooms[0].length;
+    
+    //Find the Gates and start thr BFS with them
+    for(let r=0;r , r < ROW;r++){
+        for(c=0;c < COL;c++) {
+            if(rooms[r][c] == 0) {
+                queue.push([r,c]);
+                visited[r+''+c] = 1;
+            }
+        }
+    }
+    let dist = 0;
+    while(queue.length) {
+      let currentLength = queue.length;
+      for(let i=0;i < currentLength;i++){
+         let [r,c] = queue.shift();
+          rooms[r][c] = dist;   
+          addRoom(r+1, c);
+          addRoom(r-1, c);
+          addRoom(r, c+1);
+          addRoom(r, c-1);
+      }
+        dist++;
+         
+    }
+    function addRoom(r, c) {
+        if(r<0 || r>= ROW || c<0 || c>= COL || rooms[r][c] == -1 || visited[r+''+c] ==1) {
+            return;
+        }
+        visited[r+''+c] = 1;
+        queue.push([r,c]);
+    }
+}
+
+  //let rooms = [[Infinity, -1, 0, Infinity],[Infinity, Infinity, Infinity, -1], [Infinity, -1, Infinity, -1], [0 , -1, Infinity, Infinity]];
+  // wallAndGate(rooms);
+  // console.log(rooms) -->  [[3,-1,0,1], [2,2,1,-1],[1,-1, 2,-1],[0,-1,3,4]]
+
+  
   return {
     targetSum, 
     overlappingIntervals, 
