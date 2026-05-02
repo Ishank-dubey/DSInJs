@@ -739,7 +739,47 @@ function swimInRisingWater(grid) {
   //swimInRisingWater([[0,2],[1,3]]) - 3
   //swimInRisingWater([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]) - 16
 
+function dijkstrasAlgorithm(start, edges) {
+  const minDistances = new Array(edges.length).fill(Infinity);
+  const visited = new Set();
+  minDistances[start] = 0;
 
+  while(visited.size != edges.length) {
+    const [minDistance, minDistanceNode] = getMinDistanceVertix(visited, minDistances);
+
+    if(minDistance == Infinity) {
+      break;
+    }
+    visited.add(minDistanceNode);
+    for(edge of edges[minDistanceNode]) {
+      const [destination, distance] = edge;
+      if(visited.has(destination)) {
+        continue;
+      }
+      const newDistance = minDistance + distance;
+      const currentMinDistance = minDistances[destination];
+      if(newDistance < currentMinDistance) {
+        minDistances[destination] = newDistance;
+      }
+    }
+  }
+  return minDistances.map( x=> x == Infinity ? -1 : x);
+}
+
+function getMinDistanceVertix(visited, minDistances) {
+  let minDistance = Infinity;
+  let minDistanceVertex = -1;
+  for(const [node, distance] of minDistances.entries()) {
+    if(visited.has(node)) {
+      continue;
+    }
+    if(minDistance >= distance) {
+         minDistance = distance;
+         minDistanceVertex = node;
+    }
+    }
+  return [minDistance, minDistanceVertex];
+}
   
   return {
     targetSum, 
