@@ -702,9 +702,43 @@ function wallAndGate(rooms) {
     }
 }
 
+  
+
   //let rooms = [[Infinity, -1, 0, Infinity],[Infinity, Infinity, Infinity, -1], [Infinity, -1, Infinity, -1], [0 , -1, Infinity, Infinity]];
   // wallAndGate(rooms);
   // console.log(rooms) -->  [[3,-1,0,1], [2,2,1,-1],[1,-1, 2,-1],[0,-1,3,4]]
+
+
+function swimInRisingWater(grid) {
+    let visited = {};
+    let array = [[grid[0][0], 0, 0]];
+    let ROW = grid.length;
+    let COL = grid[0].length;
+    while (array.length) {
+        let [value, x, y] = array.shift();
+        //visited[x+''+y] = 1;
+        if(x == ROW - 1 && y == COL - 1) {
+            return value;
+        }
+        for(let [rd, rc] of [[1,0],[-1,0],[0,1],[0, -1]]) {
+            let xnew =  rd + x;
+            let ynew = rc + y;
+            if(xnew >= ROW || ynew >= COL || xnew < 0 || ynew < 0 || visited[xnew+''+ynew]) {
+                continue;
+            }
+            visited[xnew+''+ynew] = 1;
+            addAsMinHeap(Math.max(grid[xnew][ynew], value), xnew, ynew, array);
+        }    
+    } 
+
+    function addAsMinHeap(value, x, y, array) {
+        array.push([value, x, y]);
+        array = array.sort((a, b)=> a[0] - b[0]);
+    }
+}
+  //swimInRisingWater([[0,2],[1,3]]) - 3
+  //swimInRisingWater([[0,1,2,3,4],[24,23,22,21,5],[12,13,14,15,16],[11,17,18,19,20],[10,9,8,7,6]]) - 16
+
 
   
   return {
