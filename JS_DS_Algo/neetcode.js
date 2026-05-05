@@ -780,6 +780,25 @@ function getMinDistanceVertix(visited, minDistances) {
     }
   return [minDistance, minDistanceVertex];
 }
+
+  function binarySearch(array, target) {
+    let start = 0;
+    let end = array.length - 1;
+    while(start <= end){
+        let mid = Math.floor((start + end) / 2);
+        if(array[mid] == target) {
+            return mid;
+        }
+        if(array[mid] < target) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    return -1;
+}
+  //binarySearch([-1,0,3,5,9,12],9) - 4
+  // binarySearch([-1,0,3,5,9,12],2) -1
   
   return {
     targetSum, 
