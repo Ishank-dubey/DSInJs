@@ -994,6 +994,23 @@ function dfs(char) {
     return overlaps == 0 && intervals.length ? 1 : overlaps;// as even when there is not overlap one meeting room is needed when intervals is finite
 }
   //nlog(n)
+
+
+  function validAnagram(str1, str2) {
+     let mapStr1 = {};
+     let mapStr2 = {};
+     for(let i=0;i < str1.length;i++) {
+         mapStr1[str1[i]] = !mapStr1[str1[i]] ? 1 : mapStr1[str1[i]] + 1;
+         mapStr2[str2[i]] = !mapStr2[str2[i]] ? 1 : mapStr2[str2[i]] + 1;
+     }
+     for(let key of Object.keys(mapStr1)) {
+         if(mapStr1[key] != mapStr2[key]) {
+             return false;
+         }
+     }
+     return true;
+ }
+//validAnagram('cat', 'cat'); true, O(n) memory
   
   return {
     targetSum, 
