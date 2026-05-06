@@ -888,6 +888,20 @@ function dfs(char) {
   //missingNumber([3,0,1]) - 2, missingNumber([0,1]) - 2, missingNumber([9,6,4,2,3,5,7,0,1]) - 8, missingNumber([1])
 
   function missingSumUsingXOR(numbers) {}
+
+
+  function missingNumber(numbers) {
+    let sum = numbers.length;;
+    
+    for(const item in numbers) {
+        sum += (item - numbers[item]);
+    }
+    
+    return sum;
+
+    //here fundamentally are find the sum of 0....len(num) and substracting at the numbers in the array at the same time
+    // so  the code is smaller
+}
   
   
   return {
