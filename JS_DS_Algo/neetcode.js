@@ -873,6 +873,21 @@ function dfs(char) {
 }
   // alienDictionary(['wrt', 'wrf','er','ett','rftt']).reverse(); ---- ['w', 'e', 'r', 't', 'f']
   
+  function missingNumber(numbers) {
+    let sum = (numbers.length + 1)* (numbers.length) /2;
+    let arraySum = 0;
+    for(const item of numbers) {
+        arraySum += item;
+    }
+    if(arraySum == sum) {
+        return 0;
+    }
+    return sum - arraySum;
+}
+
+  //missingNumber([3,0,1]) - 2, missingNumber([0,1]) - 2, missingNumber([9,6,4,2,3,5,7,0,1]) - 8, missingNumber([1])
+
+  function missingSumUsingXOR(numbers) {}
   
   
   return {
