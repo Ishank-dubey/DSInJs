@@ -1011,6 +1011,30 @@ function dfs(char) {
      return true;
  }
 //validAnagram('cat', 'cat'); true, O(n) memory
+
+
+  function slidingWindowMax(nums, K) {
+    let end = 0;
+    let start = 0;
+    let queue = [];//assume that this is the monotonic array
+    let result = [];
+    for(;end < nums.length;end++){
+        while(queue.length && nums[queue[queue.length - 1]] < nums[end]){
+            queue.pop()
+        }
+        queue.push(end);
+        if(start > queue[0]) {
+            queue.shift();
+        }
+        if(end + 1 >= K) {
+            start ++;
+            result.push(nums[queue[0]]);
+        }
+       // end ++
+    }
+    return result;
+}
+  //slidingWindowMax([1,3,-1,-3,5,3,6,7], 3); -- [3, 3, 5, 5, 6, 7]
   
   return {
     targetSum, 
