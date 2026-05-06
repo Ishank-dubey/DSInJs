@@ -799,6 +799,28 @@ function getMinDistanceVertix(visited, minDistances) {
 }
   //binarySearch([-1,0,3,5,9,12],9) - 4
   // binarySearch([-1,0,3,5,9,12],2) -1
+
+
+  function encodeDecodeStrings(list) {
+    let encoded = '';
+    for(let item of list) {
+        encoded += item.length+"#"+item;
+    }
+
+    //begin decode
+    let i = 0; let decoded = [];
+    while(i < encoded.length) {
+        let j = i;
+        while(encoded[j]!='#') {
+            j++;
+        }
+        let length = +encoded.substring(i, j);
+        decoded.push(encoded.substring(j + 1, j + 1 + length));
+        i = j + 1 + length;
+    }
+    return decoded;
+}
+  //encodeDecodeStrings(['love','you']) --  ['love', 'you']
   
   return {
     targetSum, 
