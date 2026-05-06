@@ -821,6 +821,59 @@ function getMinDistanceVertix(visited, minDistances) {
     return decoded;
 }
   //encodeDecodeStrings(['love','you']) --  ['love', 'you']
+
+function alienDictionary(words) {
+    let graph = {};
+    for(let word of words){
+        for(let char of word){
+            if(!graph[char]) {
+                graph[char] = new Set();
+            }
+        }
+    }
+    
+    for(let j=0;j < words.length -1 ;j++) {
+        let word1 = words[j];
+        let word2 = words[j+1];
+        let minLength = Math.min(word1.length, word1.length);
+        if(word1.length > word2.length && word1.substring(0, minLength) == word2.substring(0, minLength)) {
+            return '';
+        }
+        for(let k=0;k < minLength;k++) {
+            if(word1[k]!= word2[k]) {
+                graph[word1[k]].add(word2[k]);
+                break;
+            }
+        }
+    }
+
+let visits = {};
+let result = [];
+function dfs(char) {
+    if(visits[char] != undefined){
+        return visits[char];
+    }
+    visits[char] = true;
+    for(const node of graph[char]) {
+        if(dfs(node)) {
+            return true;
+        }
+    }
+    visits[char] = false;
+    result.push(char);
+}
+    for(let x in graph) {
+        if(dfs(x)){
+            return '';
+        }
+    }
+    console.log(graph);
+    return result;
+    //return graph;*/
+}
+  // alienDictionary(['wrt', 'wrf','er','ett','rftt']).reverse(); ---- ['w', 'e', 'r', 't', 'f']
+  
+  
   
   return {
     targetSum, 
