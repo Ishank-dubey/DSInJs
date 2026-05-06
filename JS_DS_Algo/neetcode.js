@@ -943,6 +943,27 @@ function dfs(char) {
      return false;
  }
   //validGraphTree(5, [[0,1],[0,2],[0,3],[1,4]]) - true
+
+  function labelPartition(string){
+    let lastIndex = {};    
+    for(let i in string) {
+       lastIndex[string[i]] = i;
+    }
+    let size = 0;
+    let endIndex = 0;
+    let result = [];
+    for(let char in string){
+        endIndex = Math.max(endIndex, lastIndex[string[char]]);
+        size ++;
+        if(char == endIndex){
+            result.push(size);
+            size = 0;
+        }
+    }
+    return result;
+}
+  //labelPartition('ababacacadefegdehijhklik'); -- [9, 7, 8], labelPartition('eccbbbbdec'); - [10]
+
   
   
   return {
