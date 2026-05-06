@@ -964,7 +964,36 @@ function dfs(char) {
 }
   //labelPartition('ababacacadefegdehijhklik'); -- [9, 7, 8], labelPartition('eccbbbbdec'); - [10]
 
-  
+  function meetingRooms(intervals) {
+    intervals.sort((a, b)=> a[0] - b[0]);
+    let endTime = intervals[0][1];
+    let overlaps = 0;
+    for(let i=1;i < intervals.length;i++) {
+        if(intervals[i][0] >= endTime) {
+            endTime = intervals[i][1];
+        } else {
+            overlaps++;
+            endTime = Math.max(intervals[i][1], endTime);
+        }
+    }
+    return overlaps;
+}
+
+  function meetingRooms(intervals) {
+    intervals.sort((a, b)=> a[0] - b[0]);
+    let endTime = intervals[0][1];
+    let overlaps = 0;
+    for(let i=1;i < intervals.length;i++) {
+        if(intervals[i][0] >= endTime) {
+            endTime = intervals[i][1];
+        } else {
+            overlaps++;// overlap to indicate how many meeting rooms are needed
+            endTime = Math.max(intervals[i][1], endTime);
+        }
+    }
+    return overlaps == 0 && intervals.length ? 1 : overlaps;// as even when there is not overlap one meeting room is needed when intervals is finite
+}
+  //nlog(n)
   
   return {
     targetSum, 
