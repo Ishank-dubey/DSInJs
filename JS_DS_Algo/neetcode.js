@@ -902,6 +902,47 @@ function dfs(char) {
     //here fundamentally are find the sum of 0....len(num) and substracting at the numbers in the array at the same time
     // so  the code is smaller
 }
+
+  function validGraphTree(N, edges) {
+     if(!N){
+         return true;
+     }
+     let visited = {};
+     let graph = {};
+     for(let [src, des] of edges){
+         if(!graph[src]) {
+             graph[src] = [des];
+         } else {
+             graph[src].push(des);
+         }
+         if(!graph[des]) {
+             graph[des] = [src];
+         } else {
+             graph[des].push(src);
+         }
+     }
+
+     function DFS(item, prev) {
+         if(visited[item]) {
+             return true;
+         }
+         visited[item] = true;
+         for(let neigh of graph[item]) {
+             if(neigh != prev) {
+                if(DFS(neigh, item)){
+                 return true;
+               }    
+             }
+         }
+         return false;//indicate that the loop is not found
+     }
+     let loopResult = DFS(0 , -1);
+     if(loopResult == false) {
+         return Object.keys(visited).length == N;
+     }
+     return false;
+ }
+  //validGraphTree(5, [[0,1],[0,2],[0,3],[1,4]]) - true
   
   
   return {
