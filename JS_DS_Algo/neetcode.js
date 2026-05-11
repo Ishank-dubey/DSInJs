@@ -1065,6 +1065,20 @@ function dfs(char) {
     return Math.min(dp[0], dp[1]);
 }
 // minCostClimbingStairCase([10, 15, 20]) = 15
+
+
+  function lowestCommonAncestorLCA(root, p, q) {
+    let current = root;
+    while (current) {
+        if(p > current.data && q > current.data) {
+            current = current.right;
+        } else if(p < current.data && q < current.data) {
+            current = current.left;
+        } else {
+            return current;
+        }
+    }
+} //O(log N)
   
   return {
     targetSum, 
