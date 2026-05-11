@@ -1054,6 +1054,17 @@ function dfs(char) {
     return output;
 }
 //productOfArrayExceptIteself([1,2,3,4])
+
+
+  function minCostClimbingStairCase(stairs){
+    let dp = [];
+    stairs.push(0);
+    for (let i=stairs.length - 3;i >=0 ;i--) {
+        dp[i] = Math.min(stairs[i] + stairs[i + 1], stairs[i] + stairs[i + 2]);
+    }
+    return Math.min(dp[0], dp[1]);
+}
+// minCostClimbingStairCase([10, 15, 20]) = 15
   
   return {
     targetSum, 
