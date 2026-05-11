@@ -1035,6 +1035,25 @@ function dfs(char) {
     return result;
 }
   //slidingWindowMax([1,3,-1,-3,5,3,6,7], 3); -- [3, 3, 5, 5, 6, 7]
+
+
+  unction productOfArrayExceptIteself(nums) {
+    let prefix = 1;
+    let output = [];
+    for(let num of nums){
+        //if(output.length < nums.length) {//this condition is not needed really
+           output.push(prefix);
+           prefix = prefix * num;
+        //}
+    }
+    let postfix = 1;
+    for(let i = nums.length - 1;i >=0;i--) {
+        output[i] = output[i] * postfix;
+        postfix = postfix * nums[i];
+    }
+    return output;
+}
+//productOfArrayExceptIteself([1,2,3,4])
   
   return {
     targetSum, 
