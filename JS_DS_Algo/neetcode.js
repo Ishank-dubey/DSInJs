@@ -1079,6 +1079,71 @@ function dfs(char) {
         }
     }
 } //O(log N)
+
+
+  function kthSmallestValueInABST(root, N){
+		var node = root;
+		var stack = require('./DS').stackFunction();
+    var k = 0;
+		while(1){
+		  while(node){
+			stack.push(node);
+			node = node.left;
+		  }
+		  if(stack.isEmpty())break;
+      
+		  node = stack.pop();
+
+      k++;
+      if(k == N) {
+        return node.value
+      }
+      
+		  console.log(node.data);
+		  node = node.right;
+		}
+	}//O(n) in time, O(h) in space
+
+  function kthSmallestValueInABST(root, N){
+		var node = root;
+		var stack = require('./DS').stackFunction();
+    var k = 0;
+		while(1){
+		  while(node){
+			stack.push(node);
+			node = node.left;
+		  }
+		  if(stack.isEmpty())break;
+      
+		  node = stack.pop();
+
+      k++;
+      if(k == N) {
+        return node.value
+      }
+      
+		  console.log(node.data);
+		  node = node.right;
+		}
+	}//O(n) in time, O(h) in space
+
+  function findKthLargestValueInBst(tree, k) {
+  // Write your code here.
+  let obj = {k:0, value:null};
+  reverseInPorderTraversal(tree);
+  return obj.value;
+  
+  function reverseInPorderTraversal(node) {
+   if(!node || obj.k >= k)
+     return;
+   reverseInPorderTraversal(node.right);
+    if(obj.k < k){
+      obj.k++;
+      obj.value = node.value;
+      reverseInPorderTraversal(node.left);
+    }
+   }
+  }
   
   return {
     targetSum, 
