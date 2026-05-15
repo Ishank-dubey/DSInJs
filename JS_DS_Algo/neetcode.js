@@ -1144,6 +1144,30 @@ function dfs(char) {
     }
    }
   }
+
+	function longestCommonSubSequenct(str1, str2) {
+    // abcde, ace
+    // a matches so now see bcde, ce
+
+    let str1_len = str1.length;
+    let str2_len = str2.length;
+    let DP = new Array(str1_len + 1).fill(new Array(str2_len + 1).fill(0));
+
+    for(let row= str1_len - 1;row >=0;row--) {
+        for(let col= str2_len - 1;col >=0;col--){
+            if(str1[row] = str2[col]) {
+                DP[row][col] = 1 + DP[row+1][col+1];
+            } else {
+                DP[row][col] = Math.max(DP[row+1][col], DP[row][col + 1]);
+            }
+        }
+     
+    }
+    return DP[0][0];
+}
+
+	//longestCommonSubSequenct('abcde','ace') - 3
+
   
   return {
     targetSum, 
