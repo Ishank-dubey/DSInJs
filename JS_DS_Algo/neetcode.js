@@ -1168,6 +1168,22 @@ function dfs(char) {
 
 	//longestCommonSubSequenct('abcde','ace') - 3
 
+
+	function dailyTempratures(temperatures){
+    let monotonicDecreasingStack = [];
+    let output = new Array(temperatures.length).fill(0);
+    for (let [index, temp] of temperatures.entries()) {
+        while(monotonicDecreasingStack.length && temp > monotonicDecreasingStack[monotonicDecreasingStack.length - 1][1]) {
+            let [ind, value] = monotonicDecreasingStack.pop();
+            output[ind] = (index - ind);
+        }
+        monotonicDecreasingStack.push([index, temp]);
+    }
+    return output;
+}
+	//dailyTempratures([73, 74, 75, 71, 69, 72, 76,73]); - [1, 1, 4, 2, 1, 1, 0, 0]
+	//dailyTempratures([30, 60 , 90]); - [1, 1, 0]
+
   
   return {
     targetSum, 
