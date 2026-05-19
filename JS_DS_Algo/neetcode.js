@@ -1184,7 +1184,42 @@ function dfs(char) {
 	//dailyTempratures([73, 74, 75, 71, 69, 72, 76,73]); - [1, 1, 4, 2, 1, 1, 0, 0]
 	//dailyTempratures([30, 60 , 90]); - [1, 1, 0]
 
-  
+
+function networkDelayTime(times, start, n) {
+    let edges = new Array(n + 1);// as the nodes are from 1 to n so the 0th index is not going to be populated but the nth will
+    let visited = {};
+    for(let index=0; index < edges.length; index++){
+        edges[index] = [];
+    }
+    for([src, dest, weight] of times) {
+        edges[src].push([weight, dest])
+    }
+    let heap = [];
+    heap.push([0, start]);
+    let result = 0;
+    while(heap.length){
+        let [wt, current] = heap.shift();
+        if(visited[current]) {
+            continue;
+        }
+        result = Math.max(result, wt);
+        visited[current] = 1;
+        console.log('dddd');
+        for(let [neighWt, neighNode] of edges[current]){
+            pushAsHeap([neighWt + wt, neighNode]);
+        }
+    }
+    return Object.keys(visited).length == n ? result : -1;
+    
+    function pushAsHeap(item) {
+        heap.push(item);
+        heap.sort((a, b)=> a[0]-b[0] );
+    }
+}
+	//O(E * log(V^2)) as the heap is there
+	// networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],2,4) - 2
+
+	
   return {
     targetSum, 
     overlappingIntervals, 
