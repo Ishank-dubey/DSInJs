@@ -1217,7 +1217,38 @@ function networkDelayTime(times, start, n) {
     }
 }
 	//O(E * log(V^2)) as the heap is there
-	// networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],2,4) - 2
+	// networkDelayTime([[2,1,1],[2,3,1],[3,4,1]],2,4) - 
+	
+function invertBinaryTree(tree) {
+  if(!tree){
+    return;
+  }
+  invertBinaryTree(tree.left);
+  invertBinaryTree(tree.right);
+  let temp = tree.left;
+  tree.left = tree.right;
+  tree.right = temp;
+
+	//pre order will also work
+
+  /*
+  let temp = tree.left;
+  tree.left = tree.right;
+  tree.right = temp;
+  invertBinaryTree(tree.left);
+  invertBinaryTree(tree.right);
+  */
+  
+}
+
+// This is the class of the input binary tree.
+class BinaryTree {
+  constructor(value) {
+    this.value = value;
+    this.left = null;
+    this.right = null;
+  }
+}
 
 	
   return {
