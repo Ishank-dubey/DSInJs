@@ -1250,6 +1250,19 @@ class BinaryTree {
   }
 }
 
+	function containsDuplicate(array) {
+    let visited = {};
+    for(let item of array){
+        if(visited[item]){
+            return true;
+        }
+        visited[item] = true;
+    }
+    return false;
+}
+	//containsDuplicate([1,2,3,4]) - false
+	//containsDuplicate([1,2,3,1]) - true
+
 	
   return {
     targetSum, 
