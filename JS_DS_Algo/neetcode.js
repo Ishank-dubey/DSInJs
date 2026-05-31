@@ -1262,6 +1262,36 @@ class BinaryTree {
 }
 	//containsDuplicate([1,2,3,4]) - false
 	//containsDuplicate([1,2,3,1]) - true
+function kthLargestNumberInArrayUsingQuickSort(array, k) {
+    k = array.length - k;
+    return quickSort(0, array.length - 1);
+    
+    function quickSort(l, r) {
+        let pivot = array[r];
+        let p = l;
+        for(let i=l;i < r;i++) {
+            if(array[i] < pivot) {
+                let temp = array[p];
+                array[p] = array[i];
+                array[i] = temp;
+                p++;
+            }
+        }
+        console.log(l, r);
+        let temp = array[r];
+        array[r] = array[p];
+        array[p] = pivot;
+        if(p == k) {
+            return array[p];
+        }else if(p < k) {
+            return quickSort(p+1, r);
+        } else if(p > k) {
+            return quickSort(l, p-1);
+        }
+    }
+}
+	//kthLargestNumberInArrayUsingQuickSort([3,2,1,5,6,4], 2); -- 5, 
+	//kthLargestNumberInArrayUsingQuickSort([3,2,3,1,2,4,5,5,6], 4);  -- 4
 
 	
   return {
