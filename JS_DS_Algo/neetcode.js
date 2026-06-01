@@ -1292,7 +1292,59 @@ function kthLargestNumberInArrayUsingQuickSort(array, k) {
 }
 	//kthLargestNumberInArrayUsingQuickSort([3,2,1,5,6,4], 2); -- 5, 
 	//kthLargestNumberInArrayUsingQuickSort([3,2,3,1,2,4,5,5,6], 4);  -- 4
+class TireNode {
+    children = {};
+    isWord = false;
+    addWord(word) {
+        let current = this;
+        for(let char in word) {
+            if(!current.children[word[char]]) {
+                current.children[word[char]] = new TireNode();
+            }
+            current = current.children[word[char]];
+        }
+        current.isWord = true;
+    }
+}
 
+	function wordSearchii(grid, words) {
+    let visited = {};
+    let root = new TireNode();
+    for(let word of words) {
+        root.addWord(word);
+    }
+    let ROWS = grid.length - 1;
+    let COLS = grid[0].length - 1;
+    let result = [];
+    function DFS(row, col, node, word) {
+        if(row < 0 || row > ROWS || col < 0 || col > COLS || visited[row+''+col] || !node.children[grid[row][col]]) {
+            return;
+        }
+        word = word + grid[row][col];
+        
+        visited[row+''+col] = true;
+        node = node.children[grid[row][col]];
+        
+        if(node.isWord) {
+            result.push(word);
+        }
+        
+        DFS(row + 1 , col, node, word);
+        DFS(row - 1 , col, node, word);
+        DFS(row , col + 1, node, word);
+        DFS(row , col - 1, node, word);
+        
+        visited[row+''+col] = false;
+    }
+    for(let row =0;row <= ROWS;row++) {
+        for(let col=0;col <= COLS;col++){
+             DFS(row, col, root, '');       
+        }
+    }
+    console.log(result);
+}
+	// wordSearchii([["o", "a", "a", "n"], ["e","t","a","e"], ["i", "h", "k", "r"], ["i","f","l","v"]], ['oath', 'pea', 'eat', 'rain']);
+	// ['oath', 'eat']
 	
   return {
     targetSum, 
