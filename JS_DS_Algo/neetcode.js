@@ -1345,7 +1345,44 @@ class TireNode {
 }
 	// wordSearchii([["o", "a", "a", "n"], ["e","t","a","e"], ["i", "h", "k", "r"], ["i","f","l","v"]], ['oath', 'pea', 'eat', 'rain']);
 	// ['oath', 'eat']
-	
+
+let root = new TireNode();
+root.addWord('bad');
+root.addWord('dad');
+root.addWord('mad');
+console.log(root);
+	//search('.ad') - true
+	//search('pad') - false
+	//search('dad') - true
+
+	//search and add, searchusing tire, search using tire
+	function search(word) {
+
+    function DFS(startIdx, node) {
+        
+        for(let j=startIdx;j < word.length;j++) {
+            let current = word[j];
+
+
+            if(current !='.') {
+                if(!node.children[current]) {
+                    return false;
+                }
+                node  = node.children[current];
+            } else if(current == '.') {
+                console.log(current);
+                for(let obj of Object.values(node.children)) {
+                    if(DFS(j + 1, obj)){
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+        return node.isWord;
+    }
+    return DFS(0, root);
+}
   return {
     targetSum, 
     overlappingIntervals, 
