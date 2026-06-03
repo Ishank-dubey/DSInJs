@@ -1370,7 +1370,7 @@ console.log(root);
                 }
                 node  = node.children[current];
             } else if(current == '.') {
-                console.log(current);
+                //console.log(current);
                 for(let obj of Object.values(node.children)) {
                     if(DFS(j + 1, obj)){
                         return true;
