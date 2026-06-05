@@ -1458,7 +1458,7 @@ console.log(root);
                 queue.push(node.right);
             }
         }
-        result.push(node.value);
+        result.push(rightMost.value);
     }
     return result;
 }
