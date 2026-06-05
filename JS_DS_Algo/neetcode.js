@@ -1462,6 +1462,30 @@ console.log(root);
     }
     return result;
 }
+
+
+	function happyNumber(num){
+
+   let visited = {};
+    while(!visited[num]) {
+        visited[num] = true;
+        num = getSumOfSquares(num);
+        if(num == 1) {
+            return true;
+        }
+    }
+    return false;
+
+    function getSumOfSquares(num){
+        let sum = 0;
+        while(num) {
+            let digit = num % 10;
+            sum = sum + Math.pow(digit, 2);
+            num = Math.floor(num / 10);
+        }
+        return sum;
+    }
+}
   return {
     targetSum, 
     overlappingIntervals, 
