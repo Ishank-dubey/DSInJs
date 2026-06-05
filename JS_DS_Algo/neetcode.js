@@ -1383,6 +1383,19 @@ console.log(root);
     }
     return DFS(0, root);
 }
+
+	function reverseLinkedListIterative(head) {
+        let current = head;
+        let prev = null;
+        let next;
+        while(current) {
+         next = current.next;
+         current.next = prev;
+         prev = current;
+         current = next;
+     }
+     return prev;
+}//O(n) in time, memory - O(constant)
   return {
     targetSum, 
     overlappingIntervals, 
