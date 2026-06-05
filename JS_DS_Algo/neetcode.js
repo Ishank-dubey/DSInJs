@@ -1440,6 +1440,28 @@ console.log(root);
     }
     return newHead;
 }
+
+
+	function printRightSideViewOfTree(root){
+    let queue = [];
+    queue.push(root);
+    let result = [];
+    while(queue.length) {
+        let levelLength = queue.length;
+        let rightMost;
+        
+        for(let i=0;i < levelLength;i++) {
+            let node = queue.shift();
+            if(node) {
+                rightMost = node;
+                queue.push(node.left);
+                queue.push(node.right);
+            }
+        }
+        result.push(node.value);
+    }
+    return result;
+}
   return {
     targetSum, 
     overlappingIntervals, 
