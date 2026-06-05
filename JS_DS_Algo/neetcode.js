@@ -1402,7 +1402,7 @@ console.log(root);
     if(!node) {
         return null;
     }
-    let newHead = head;
+    let newHead = node;
 
     if(head.next) {
         newHead = reverseLinkedListRec(node.next);
