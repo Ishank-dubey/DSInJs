@@ -1396,6 +1396,50 @@ console.log(root);
      }
      return prev;
 }//O(n) in time, memory - O(constant)
+
+
+	function reverseLinkedListRec(node) {
+    if(!node) {
+        return null;
+    }
+    let newHead = head;
+
+    if(head.next) {
+        newHead = reverseLinkedListRec(node.next);
+        head.next.next = head;
+    }
+    head.next = null;
+
+    return newHead;
+}
+
+	function reverseKItemsInLL(root, k) {
+      let current = root;
+      let newHead = null;
+      let tail;
+    while(current){
+        let count = 0;
+		let next = null;
+        let groupHead = current;
+		let prev = null;
+        while(current && count < k){
+          next = current.next;
+          current.next = prev;
+          prev = current;
+          current = next;
+          count ++;
+       }
+       count = 0;
+        if(tail) {
+            tail.next = prev;
+        }
+        if(!newHead) {
+            newHead = prev;
+        }
+        tail = groupHead;
+    }
+    return newHead;
+}
   return {
     targetSum, 
     overlappingIntervals, 
