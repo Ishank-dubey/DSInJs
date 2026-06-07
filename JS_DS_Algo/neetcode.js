@@ -1486,6 +1486,54 @@ console.log(root);
         return sum;
     }
 }
+
+
+	function findMinimumConnetedPoints(points) {
+    let adjList = [];
+    for(let i in points){
+        adjList.push([]);
+    }
+    for(let i=0;i < points.length;i++) {
+        for(let j=i+1;j < points.length;j++) {
+            let dist = Math.abs(points[j][0] - points[i][0]) + Math.abs(points[j][1] - points[i][1]);
+            adjList[i].push([dist, j]);
+            adjList[j].push([dist, i]);
+        }
+    }
+    let heap = [];
+
+    heap.push([0, 0]);
+    let visited = new Map();
+    let cost = 0;
+    //console.log(visited.size);
+    while(visited.size < points.length) {
+        let [wt, node] = heap.shift();
+        //console.log(wt);
+        if(visited.get(node)) {
+            continue;
+        }
+        visited.set(node, true);
+        cost = cost + wt;
+
+        for(let info of adjList[node]) {
+            let neigh = info[1];
+            let cost = info[0];
+            if(!visited.get(neigh)) {
+                addAsHeap(cost, neigh);
+            }
+        }
+    }
+    return cost;
+
+    function addAsHeap(wt, node){
+        heap.push([wt, node]);
+        heap.sort((a, b) => a[0]-b[0])
+    }
+}
+
+	//findMinimumConnetedPoints([[0,0],[2,2],[3,10],[5,2],[7,0]]) - 20
+	//O(n^2 log n)
+ 
   return {
     targetSum, 
     overlappingIntervals, 
