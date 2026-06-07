@@ -1533,6 +1533,26 @@ console.log(root);
 
 	//findMinimumConnetedPoints([[0,0],[2,2],[3,10],[5,2],[7,0]]) - 20
 	//O(n^2 log n)
+
+
+
+	function twoNumberSumToTargetInSortedrray(array, target) {
+    let left = 0;
+    let right = array.length - 1;
+    while(left < right) {
+        let currentSum = array[left] + array[right];
+        if(currentSum < target){
+            left = left + 1;
+        } else if(currentSum > target) {
+            right = right - 1;
+        } else {
+            return [left + 1, right +1];
+        }
+    }
+}
+
+	//twoNumberSumToTargetInSortedrray([2,5,7,11,15], 9) - [1, 3]
+	// the question is looking for the index + 1 so 
  
   return {
     targetSum, 
