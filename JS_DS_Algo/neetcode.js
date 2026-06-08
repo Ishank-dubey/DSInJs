@@ -1582,6 +1582,28 @@ console.log(root);
 	//O(n^2) in time and space
 	//validParanthesisRecurssion("(*))") = true
 
+
+	function findTheMinInRotatedArray(array) {
+    let left = 0;
+    let right = array.length - 1;
+    result = Infinity;
+    while(left <= right) {
+        if(array[left] < array[right]) {
+            result = Math.min(result, array[left]);
+        }
+        let mid = Math.floor((left + right)/2);
+        result = Math.min(result, array[mid]);
+            if(array[mid] >= array[left]) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+    }
+    return result;
+}
+
+//findTheMinInRotatedArray([3,4,5,1,2,]) = 1
+
  
   return {
     targetSum, 
