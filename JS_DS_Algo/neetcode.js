@@ -1604,6 +1604,44 @@ console.log(root);
 
 //findTheMinInRotatedArray([3,4,5,1,2,]) = 1
 
+
+	function robHouse(array) {
+    let rob1 = 0;
+    let rob2 = 0;
+    let result = 0;
+    for(let house of array) {
+        result = Math.max(house + rob1, rob2);
+        rob1 = rob2;
+        rob2 = result;
+    }
+    return result;
+}
+
+	//robHouse([1,2,3,1]) - 4
+	//robHouse([2,7,9,3,1]) - 12
+
+	function maxProductSubArray(array) {
+    let currentMin = 1;
+    let currentMax = 1;
+    let result = Math.max(...array);
+    for(let element of array) {
+        if(element == 0){
+            currentMax = 1;
+            currentMin = 1;
+            continue;
+        }
+        let temp = element * currentMax;
+        currentMax = Math.max(element, element * currentMax, element * currentMin);
+        currentMin = Math.min(element, temp, element * currentMin);
+        result = Math.max(result, currentMax);
+    }
+    return result;
+}
+
+	//maxProductSubArray([2,3,-2,4]); - 6
+ 
+ 
+
  
   return {
     targetSum, 
