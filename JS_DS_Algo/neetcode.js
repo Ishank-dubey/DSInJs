@@ -1553,6 +1553,35 @@ console.log(root);
 
 	//twoNumberSumToTargetInSortedrray([2,5,7,11,15], 9) - [1, 3]
 	// the question is looking for the index + 1 so 
+
+
+	function validParanthesisRecurssion(string){
+    let caching = {};
+    function innerFunction(index, openCount) {
+        if(openCount < 0) {
+            return false;
+        }
+        if( index == string.length) {
+            return openCount == 0;
+        }
+        if(caching[index+''+openCount] != undefined) {
+            return caching[index+''+openCount]
+        }
+        if(string[index] == '(') {
+           caching[index+''+openCount] = innerFunction(index + 1, openCount + 1); 
+        }else if(string[index] == ')'){
+            caching[index+''+openCount] = innerFunction(index + 1, openCount - 1); 
+        } else {
+            caching[index+''+openCount] = innerFunction(index + 1, openCount - 1) || innerFunction(index + 1, openCount + 1) || innerFunction(index + 1, openCount);
+        }
+        return caching[index+''+openCount];
+    }
+        return innerFunction(0, 0);
+}
+
+	//O(n^2) in time and space
+	//validParanthesisRecurssion("(*))") = true
+
  
   return {
     targetSum, 
