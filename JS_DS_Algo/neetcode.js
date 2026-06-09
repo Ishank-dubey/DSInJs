@@ -1639,6 +1639,34 @@ console.log(root);
 }
 
 	//maxProductSubArray([2,3,-2,4]); - 6
+
+
+	function regularExpressionMatching(str, pattern) {
+    function regularExpressionMatchingDFS(i, j) {
+        if(i >= str.length && j >= pattern.length) {
+            return true;
+        }
+        if(j >= pattern.length) {
+            return false;
+        }
+        let match = false;
+        if(i < str.length) {
+            match = (str[i] == pattern[j]) || pattern[j] == '.';
+        }
+        if(j + 1 < pattern.length && pattern[j + 1] == "*") {
+            return (match && regularExpressionMatchingDFS(i + 1, j)) || regularExpressionMatchingDFS(i, j + 2);
+        } else if(match) {
+            return regularExpressionMatchingDFS(i + 1, j + 1);
+        }else {
+            return false;
+        }
+    }
+    return regularExpressionMatchingDFS(0,0);
+}
+	//regularExpressionMatching('aa', 'a'); - false
+	// regularExpressionMatching('aa', 'a*'); - true
+
+ 
  
  
 
