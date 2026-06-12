@@ -1,5 +1,32 @@
 function neetCode() {
-  
+  function reversePolishNotation(tokens) {
+    let stack = [];
+    for(item of tokens) {
+        if(item == "*") {
+            let a = stack.pop();
+            let b = stack.pop();
+            stack.push(b * a);
+        }else if(item == "+") {
+            let a = stack.pop();
+            let b = stack.pop();
+            stack.push(b + a);
+        } else if(item == "-"){
+            let a = stack.pop();
+            let b = stack.pop();
+            stack.push(b - a);
+        } else if(item == "/") {
+            let a = stack.pop();
+            let b = stack.pop();
+            stack.push(Math.floor(b / a));
+        } else {
+            stack.push(item);
+        }
+    }
+    return stack[0];
+}//O(n)
+	//reversePolishNotation([2, 1, "+", 3, "*"])
+
+	
 	function combinationsFunction(str) {
 
 			let result = [];
