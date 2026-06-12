@@ -1,4 +1,51 @@
 function neetCode() {
+
+  class LRUCache {
+    constructor(capacity) {
+        this.cache = {};
+        this.left = {data:'l'};
+        this.capacity = capacity;
+        this.right = {data:'r'};
+        this.left.next = this.right;
+        this.right.previous = this.left;
+    }
+    insert(node) {
+        let prev = this.right.previous;
+        node.next = this.right;
+        node.previous = this.right.previous;
+        prev.next = node;
+        this.right.previous = node;
+    }
+    remove(node) {
+        let prev = node.previous;
+        let next = node.next;
+        prev.next = next;
+        next.previous = prev;
+    }
+    put(key, data){
+        if(this.cache[key]) {
+            this.remove(this.cache[key]);
+        }
+        let node = {data, key};
+        this.insert(node);
+        this.cache[key] = node;
+        if(Object.keys(this.cache).length > this.capacity) {
+            let node = this.left.next;
+            this.remove(node);
+            delete this.cache[node.key];
+        }
+    }
+    get(key){
+        console.log('ddd');
+        if(this.cache[key]) {
+            this.remove(this.cache[key]);
+            this.insert(this.cache[key]);
+            return this.cache[key].data;
+        }
+        return -1;
+    }   
+}
+	
   function reversePolishNotation(tokens) {
     let stack = [];
     for(item of tokens) {
