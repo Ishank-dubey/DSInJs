@@ -1,5 +1,22 @@
 function neetCode() {
-  function longestRepeatingCharacterReplacement(array, k) {
+  
+	function combinationsFunction(str) {
+
+			let result = [];
+
+		combinations(0, 0);
+	function combinations(index, charIndex) {
+    	for(let i=charIndex;i < str.length;i++){
+        	result[index] = str[i];
+       	 	console.log(result.slice(0, index + 1));
+        	if(i + 1 < str.length) {
+            	combinations(index +1 , i + 1);
+        }
+    }
+}
+	}
+
+	function longestRepeatingCharacterReplacement(array, k) {
     let map = {};
     let start = 0, end = 0;
     let result = 0;
