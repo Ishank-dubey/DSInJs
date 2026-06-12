@@ -1666,9 +1666,63 @@ console.log(root);
 	//regularExpressionMatching('aa', 'a'); - false
 	// regularExpressionMatching('aa', 'a*'); - true
 
+ function curry(callback) {
+  return function curriedCallack(...args){
+    if(!args.length){
+      return callback();
+    }
+    return function(...newArgs) {
+      if(!newArgs.length){
+        return callback(...args);
+      }
+      return curriedCallack(...args, ...newArgs);
+    };
+  };
+}
+
  
- 
- 
+ // This is an input class. Do not edit.
+class AncestralTree {
+  constructor(name) {
+    this.name = name;
+    this.ancestor = null;
+  }
+}
+
+function getYoungestCommonAncestor(topAncestor, descendantOne, descendantTwo) {
+  let nodeOneDepth = getDepth(topAncestor, descendantOne);
+  let nodeTwoDepth = getDepth(topAncestor, descendantTwo);
+  if(nodeOneDepth > nodeTwoDepth) {
+     return getYoungAncestor(descendantOne, descendantTwo, nodeOneDepth - nodeTwoDepth);
+  } else {
+    return getYoungAncestor(descendantTwo, descendantOne, nodeTwoDepth - nodeOneDepth);
+  }
+}
+
+function getDepth(top, node) {
+  let depth =  0;
+  while(top != node) {
+      depth = depth + 1;
+      node = node.ancestor;
+  }
+  return depth;
+}
+function getYoungAncestor(lowerNode, higherNode, diff) {
+  while(diff > 0) {
+    diff--;
+    lowerNode = lowerNode.ancestor;
+  }
+  while(lowerNode != higherNode) {
+     lowerNode = lowerNode.ancestor;
+     higherNode = higherNode.ancestor;
+  }
+  return lowerNode;
+}
+
+// Do not edit the lines below.
+exports.AncestralTree = AncestralTree;
+exports.getYoungestCommonAncestor = getYoungestCommonAncestor;
+
 
  
   return {
