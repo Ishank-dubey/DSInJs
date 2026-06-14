@@ -6,24 +6,11 @@ function reorderList(head){
         slow = slow.next;
         fast = fast.next.next;
     }
-    let prev = null;z
-    while(slow) {
-        
-    }
-}
-undefined
-function reorderList(head){
-    let slow = head;
-    let fast = head.next;
-    while(fast && fast.next){
-        slow = slow.next;
-        fast = fast.next.next;
-    }
     
     let next = null;
     let secondHead = slow.next;
     let prev = null;
-    slow.next = null;
+    slow.next = null;//Important to prevent a recurssion when the node is to become the last node in the reordered LL
     
     while(secondHead) {
         next = secondHead.next;
