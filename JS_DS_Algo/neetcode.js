@@ -1,5 +1,82 @@
 function neetCode() {
+function reorderList(head){
+    let slow = head;
+    let fast = head.next;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    let prev = null;z
+    while(slow) {
+        
+    }
+}
+undefined
+function reorderList(head){
+    let slow = head;
+    let fast = head.next;
+    while(fast && fast.next){
+        slow = slow.next;
+        fast = fast.next.next;
+    }
+    
+    let next = null;
+    let secondHead = slow.next;
+    let prev = null;
+    slow.next = null;
+    
+    while(secondHead) {
+        next = secondHead.next;
+        secondHead.next = prev;
+        prev = secondHead;
+        secondHead = next;
+    }
+    let first = head;
+    let second = prev;
+    while(second) {
+        let temp1 = first.next;
+        let temp2 = second.next;
+        first.next = second;
+        second.next = temp1;
+        first = temp1;
+        second = temp2;
+    }
+}
 
+function printLL(node){
+    let count = 0;
+    while(node){
+        console.log(node.data);
+        count++;
+        node = node.next;
+        
+    }
+}
+
+let head = null;
+function insertLL(node) {
+    if(!head) {
+        head = node;
+        head.next = null;
+    }
+    else {
+        let curr = head;
+    while(curr.next) {
+        curr = curr.next;
+    }
+    curr.next = node;
+    }
+    
+}
+//insertLL({data:1})
+//insertLL({data:2})
+//insertLL({data:3})
+//insertLL({data:4})
+//printLL(head) - 1,2,3,4
+//reorderList(head);
+//printLL(head) - 1,4,2,3
+
+	
   class LRUCache {
     constructor(capacity) {
         this.cache = {};
