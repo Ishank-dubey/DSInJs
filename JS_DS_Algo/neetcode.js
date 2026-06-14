@@ -1,4 +1,23 @@
 function neetCode() {
+
+	function detectLoopInLLFindDuplicateNumber(array) {
+  let slow = 0;
+  let fast = 0;
+    while(true) {
+        slow = array[slow];
+        fast = array[array[fast]];
+        if(slow == fast) {break;}
+    }
+    let slow2 = 0;
+    while(slow != slow2) {
+        slow = array[slow];
+        slow2 = array[slow2];
+    }
+    return slow2;
+}
+
+//detectLoopInLLFindDuplicateNumber([1,3,4,2,2]) - 2
+	
 function reorderList(head){
     let slow = head;
     let fast = head.next;
