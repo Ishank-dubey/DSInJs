@@ -1,5 +1,24 @@
 function neetCode() {
 
+function wordBreakDisctionary(word, words) {
+    let dp = new Array(word.length + 1).fill(false);
+    dp[word.length] = true;
+    for(let i= word.length - 1;i >=0 ;i--) {
+        for(let item of words) {
+            if(item.length + i <= word.length && item == word.substr(i, i + item.length)) {
+                dp[i] = dp[i + item.length];
+            }
+            if(dp[i]) {
+                break;
+            }
+        }
+    }
+    return dp[0];
+}
+
+
+//wordBreakDisctionary('leetcode', ["leet", "code"]) - true
+	
 	function detectLoopInLLFindDuplicateNumber(array) {
   let slow = 0;
   let fast = 0;
