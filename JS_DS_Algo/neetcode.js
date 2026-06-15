@@ -1,5 +1,36 @@
 function neetCode() {
 
+
+	function palindrom(str){
+   let result = [];
+   let part = [];
+   function isPali(str, i, j) {
+      while(i <= j){
+         if(str[i] != str[j]) {
+             return false;
+            }
+         i++;j--;
+      }
+    return true;
+   }
+   function DFS(i) {
+        if(i >= str.length) {
+            result.push([...part]);
+            return;
+         }
+        for (let j=i; j < str.length;j++) {
+                if(isPali(str, i, j)) {
+                    part.push(str.substring(i, j+1));
+                    DFS(j + 1);
+                    part.pop();
+                }           
+         }
+     }
+DFS(0);
+return result;
+}
+	//palindrom('aab'); - [[a,a,b], [aa, b]]
+
 function wordBreakDisctionary(word, words) {
     let dp = new Array(word.length + 1).fill(false);
     dp[word.length] = true;
