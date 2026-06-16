@@ -1,5 +1,21 @@
 function neetCode() {
 
+function findTheLongestConsecutiveList(array) {
+    let newSet = new Set(array);
+    let result = 0;
+    for(let item of array) {
+        let length = 0;
+        if(!newSet.has(item - 1)) {
+            while(newSet.has( item + length)) {
+                length++;
+            }
+        }
+        result = Math.max(result, length);
+    }
+    return result;
+}//findTheLongestConsecutiveList([0,3,7,2,5,8,4,6,0,1])
+	// 9
+	
 function surroundedRegions(grid) {
     let ROW = grid.length;
     let COL = grid[0].length;
