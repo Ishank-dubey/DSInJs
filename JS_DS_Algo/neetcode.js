@@ -1,5 +1,21 @@
 function neetCode() {
 
+
+	function cloneGraph(root) {
+    let oldToNew = new Map();
+    function cloneDFS(node){
+        if(oldToNew.get(node)) {
+            return oldToNew.get(node);
+        }
+        let newNode = {data: node.data, neighbours:[]};
+        oldToNew.set(node, newNode);
+        for(let neigh of node.neighbours) {
+            newNode.neighbours.push(cloneDFS(neigh));
+        }
+        return newNode;
+    }
+}
+
 function permutations(str) {
     let visited = {};
     let perms = [];
