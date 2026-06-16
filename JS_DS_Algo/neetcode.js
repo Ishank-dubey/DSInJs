@@ -1,5 +1,39 @@
 function neetCode() {
 
+
+function palindromeWithAlphaNumeric(str) {
+    function isAlphaNumeric(char) {
+        const code = char.charCodeAt(0);
+         return (
+        (code > 47 && code < 58) ||   // Numeric (0-9)
+        (code > 64 && code < 91) ||   // Uppercase (A-Z)
+        (code > 96 && code < 123)     // Lowercase (a-z)
+  );
+    }
+
+    let l = 0;
+    let r = str.length - 1;
+    while(l < r) {
+        while(l < r && !isAlphaNumeric(str[l])) {
+            l++;
+        } 
+        while(l < r && !isAlphaNumeric(str[r])) {
+            r--;
+        } 
+        if(str[l].toLowerCase() != str[r].toLowerCase()){
+            return false;
+        }
+        l = l + 1;
+        r = r - 1;
+    }
+    return true;
+}
+//undefined
+//palindromeWithAlphaNumeric('aba')
+//true
+//palindromeWithAlphaNumeric('abA')
+//true
+	
 function findTheLongestConsecutiveList(array) {
     let newSet = new Set(array);
     let result = 0;
