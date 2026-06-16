@@ -1,6 +1,41 @@
 function neetCode() {
 
+function surroundedRegions(grid) {
+    let ROW = grid.length;
+    let COL = grid[0].length;
+    function capture(row, col) {
+        if(row == ROW || row < 0 || col == COL || col <0 || grid[row][col] != 'O') {
+            return;
+        }
+        grid[row][col] = "T";
+        capture(row + 1, col);
+        capture(row - 1, col);
+        capture(row, col - 1);
+        capture(row, col + 1);
+    
+    }
+    for(let r=0;r < ROW;r++) {
+        for(let c=0;c < COL;c++) {
+            if(r ==0 || r == ROW-1 || c ==0 || c == COL - 1 ) {
+                capture(r, c);
+            }
+        }
+    }
+    return grid;
+}
+	//let grid = [
+	//['x','x','x','x'],
+	//['x','O','O','x'],
+	//['x','x','O','x'],
+	//['x','O','x','x']
+	//]
+	//surroundedRegions(grid)
+	//['x', 'x', 'x', 'x']
+	//['x', 'O', 'O', 'x']
+	//['x', 'x', 'O', 'x']
+	//['x', 'T', 'x', 'x']
 
+	
 	function cloneGraph(root) {
     let oldToNew = new Map();
     function cloneDFS(node){
