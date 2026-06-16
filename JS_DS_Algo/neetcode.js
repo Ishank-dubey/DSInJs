@@ -1,6 +1,32 @@
 function neetCode() {
 
-
+function permutations(str) {
+    let visited = {};
+    let perms = [];
+    function permutationInner(index){
+        if(index == str.length) {
+            console.log(perms);
+            return;
+        }
+        for(let j=0;j < str.length;j++) {
+            if(!visited[j]) {
+                visited[j] = 1;
+                perms[index] = str[j];
+                permutationInner(index + 1);
+                visited[j] = 0;
+            }
+        }
+    }
+    permutationInner(0);
+}
+	//permutations('123')
+	//['1', '2', '3']
+//['1', '3', '2']
+//['2', '1', '3']
+//['2', '3', '1']
+//['3', '1', '2']
+//['3', '2', '1']
+	
 	function palindrom(str){
    let result = [];
    let part = [];
