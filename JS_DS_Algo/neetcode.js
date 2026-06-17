@@ -1,5 +1,26 @@
 function neetCode() {
 
+
+function gasStation(gas, cost) {
+    if(gas.reduce((accumulator, currentValue) => accumulator + currentValue, 0) < cost.reduce((accumulator, currentValue) => accumulator + currentValue, 0)) {
+        return false;
+    }
+    let total = 0;
+    let result = 0;
+    for(let i=0;i < cost.length;i++){
+        console.log('ss');
+        total= total + (gas[i] - cost[i]);
+        if(total < 0 ) {
+            total = 0;
+            result = i + 1;
+            
+        }
+    }
+    return result;
+}
+
+//gasStation([1,2,3,4,5], [3,4,5,1,2]) - 3
+	
 class Solution {
     /**
      * @param {string} s
