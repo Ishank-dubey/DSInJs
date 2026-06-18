@@ -1,6 +1,42 @@
 function neetCode() {
 
+function taskSchedular(array, N) {
+    let maxHeapArray = [];
+    let queue = [];
 
+    function createHeap(input) {
+        input.sort((a, b)=> b - a );
+        maxHeapArray = input;
+    }
+    function addToHeap(item) {
+        maxHeapArray.push(item);
+        maxHeapArray.sort((a, b)=> b - a );
+    }
+    function getFromHeap() {
+        return maxHeapArray.shift();
+    }
+    let time = 0;
+    let countMap = {};
+    for(let item of array) {
+        countMap[item] = countMap[item] ? countMap[item] + 1: 1; 
+    }
+    createHeap(Object.values(countMap));//create the max heap, queue is empty
+    while(maxHeapArray.length || queue.length) {
+        time++;
+        if(maxHeapArray.length) {
+            let taskCount = getFromHeap();
+            taskCount = taskCount - 1;
+            if(taskCount) {
+                queue.push([taskCount, time + N]);
+            }
+        }
+        if(queue.length && time == queue[0][1]) {
+            addToHeap(queue.shift()[0]);
+        } 
+    }
+    console.log(countMap);
+    return time;
+}//taskSchedular(['A', 'A', 'A', 'B', 'B', 'B'], 2), 8
 	function formBinaryTree(array) {
     function formBinaryTreeInner(left, right) {
         if(left > right) {
