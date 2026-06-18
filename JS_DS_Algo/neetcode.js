@@ -1,5 +1,14 @@
 function neetCode() {
 
+	function maximumDepthOfTree(root) {
+    if(!node){
+        return 0;
+    }
+    let leftDepth = maximumDepthOfTree(root.left);
+    let rightDepth= maximumDepthOfTree(root.right);
+    return 1 + Math.max(leftDepth, rightDepth);
+}
+
 	function constructBinaryTreefromInorderandPreorderTraversal(preorder, inorder) {
     if(!preorder.length || !inorder.length) {
         return null;
