@@ -1,5 +1,17 @@
 function neetCode() {
 
+	function constructBinaryTreefromInorderandPreorderTraversal(preorder, inorder) {
+    if(!preorder.length || !inorder.length) {
+        return null;
+    }
+    let data =  preorder[0];
+    let node = {data, left:null, right: null};
+    let mid = inorder.indexOf(data);
+    node.left = constructBinaryTreefromInorderandPreorderTraversal(preorder.slice(1, mid + 1), inorder.slice(0, mid));
+    node.right = constructBinaryTreefromInorderandPreorderTraversal(preorder.slice(mid + 1, preorder.length), inorder.slice(mid + 1, inorder.length));
+    return node;
+}
+
 function taskSchedular(array, N) {
     let maxHeapArray = [];
     let queue = [];
