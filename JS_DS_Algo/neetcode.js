@@ -1,5 +1,20 @@
 function neetCode() {
 
+
+	function formBinaryTree(array) {
+    function formBinaryTreeInner(left, right) {
+        if(left > right) {
+            return null;
+        }
+        let mid = Math.floor((left + right) / 2);
+        let node = {data: array[mid], left: null, right : null};
+        node.left = formBinaryTreeInner(left, mid - 1 );
+        node.right = formBinaryTreeInner(mid + 1, right );
+        return node;
+    }
+    formBinaryTreeInner(0, array.length - 1);
+}
+
 function isBalancedBinaryTree(root) {
     function isBalancedBinaryTreeDFS(node) {
         if(!node) {
