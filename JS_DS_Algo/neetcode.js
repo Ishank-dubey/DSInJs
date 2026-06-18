@@ -1,5 +1,31 @@
 function neetCode() {
 
+function distinctSubsequences(src, target) {
+    let cache = {};
+    function dfs(s, t) {
+        if(s == src.length && t == target.length) {
+            return 1;
+        }
+        if(s == src.length){
+            return 0;
+        }
+        if(t == target.length) {
+            return 1;
+        }
+        if(cache[s+''+t]) {
+            return cache[s+''+t];
+        }
+        if(src[s] == target[t]){
+            cache[s+''+t] = dfs( s+1, t) + dfs( s+1, t + 1);
+        } else {
+            cache[s+''+t] = dfs( s+1, t);
+        }
+        return cache[s+''+t];
+    }
+    return dfs(0, 0);
+}//
+	//distinctSubsequences("rabbbit", "rabbit")
+	//3
 
 	function  bestTimetoBuyandSellStock(array) {
     let left = 0;
