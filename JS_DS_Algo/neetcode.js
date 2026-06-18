@@ -1,5 +1,33 @@
 function neetCode() {
 
+function isBalancedBinaryTree(root) {
+    function isBalancedBinaryTreeDFS(node) {
+        if(!node) {
+            return {depth:0, isBalanced : true};
+        }
+        let left = isBalancedBinaryTreeDFS(node.left);
+        let right = isBalancedBinaryTreeDFS(node.right);
+        let isBalanced = left.isBalanced && right.isBalanced && Math.abs(left.depth - right.depth); //the difference in the left and right node depth is the factor for the balanced tree not the depth as it is which can be bigger
+        return {isBalanced, depth: 1 + Math.max(left.depth, right.depth)};
+    }
+}
+
+	function binaryTreeMaxSumPath(root) {
+    let result = 0; 
+    function DFS(node) {
+        if(!node) {
+            return 0;
+        }
+        let leftLength = DFS(node.left);
+        let rightLength = DFS(node.right);
+        leftLength = Math.max(leftLength, 0);
+        rightLength = Math.max(rightLength, 0);
+        result = Math.max(result, node.value + leftLength + rightLength);
+        return Math.max(node.value + leftLength , node.value +  rightLength);
+    }
+}
+
+	
 function distinctSubsequences(src, target) {
     let cache = {};
     function dfs(s, t) {
