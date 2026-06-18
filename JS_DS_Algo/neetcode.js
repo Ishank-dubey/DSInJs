@@ -12,7 +12,7 @@ function neetCode() {
         node.right = formBinaryTreeInner(mid + 1, right );
         return node;
     }
-    formBinaryTreeInner(0, array.length - 1);
+    return formBinaryTreeInner(0, array.length - 1);
 }
 
 function isBalancedBinaryTree(root) {
