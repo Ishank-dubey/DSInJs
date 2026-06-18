@@ -9,6 +9,26 @@ function neetCode() {
     return 1 + Math.max(leftDepth, rightDepth);
 }
 
+
+	function macDepthBFS(root) {
+    let heap = [];
+    let dist = 0;
+    heap.push(root);
+    while(heap.length) {
+        let length = heap.length;
+        for(let i=0;i < length;i++) {
+            let node = heap.shift();
+            if(node.left) {
+                heap.push(node.left);
+            }
+            if(node.right) {
+                heap.push(node.right);
+            }
+        }
+        dist++;
+    }
+    return dist;
+}
 	function constructBinaryTreefromInorderandPreorderTraversal(preorder, inorder) {
     if(!preorder.length || !inorder.length) {
         return null;
