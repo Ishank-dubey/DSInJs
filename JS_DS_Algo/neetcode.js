@@ -1,6 +1,21 @@
 function neetCode() {
 
 
+	function  bestTimetoBuyandSellStock(array) {
+    let left = 0;
+    let right = 0;
+    let result = 0;
+    for(;right < array.length;right++) {
+        if(array[right] > array[left]) {
+            result = Math.max(result, array[right] - array[left]);
+        }else {
+            left = right;
+        }
+    }
+    return result;
+}
+	//bestTimetoBuyandSellStock([7, 1, 5, 3, 6, 4])
+    // 5
 function gasStation(gas, cost) {
     if(gas.reduce((accumulator, currentValue) => accumulator + currentValue, 0) < cost.reduce((accumulator, currentValue) => accumulator + currentValue, 0)) {
         return false;
