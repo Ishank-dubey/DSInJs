@@ -1,5 +1,20 @@
 function neetCode() {
 
+	function lastStoneWeight(stones) {
+    stones.sort((a, b) => b - a);
+    while(stones.length > 1) {
+        let first = stones.shift();
+        let second = stones.shift();
+        if(first - second > 0 ) {
+            stones.push(first - second);
+            stones.sort((a, b) => b - a);
+        }
+    }
+    return stones[0];
+} 
+	//lastStoneWeight([2,7,4,1,8,1]) - 1
+	//lastStoneWeight([2,7,4,1,8,1]) - 1
+
 	function maximumDepthOfTree(root) {
     if(!node){
         return 0;
