@@ -1,5 +1,39 @@
 function neetCode() {
 
+function detectSquare() {
+    let pointsCount = new Map();
+    function add(point) {
+        let key = point[0]+','+point[1];
+        if(pointsCount.get(key)) {
+            pointsCount.set(pointsCount.get(key) + 1);
+        } else {
+            pointsCount.set(key, 1);
+        }
+    }
+    function getPoint(x, y) {
+        let key = x+','+y;
+        return pointsCount.get(key) ? pointsCount.get(key) : 0;
+    }
+    function count(px, py) {
+        let result = 0;
+        console.log('out');
+        for(let [key, value] of pointsCount) {
+            console.log('dd');
+            let [x, y] = key.split(',');
+            x = parseInt(x);
+            y = parseInt(y);
+            if(Math.abs(x - px) != Math.abs(y - py) && x == px && y == py){
+                continue;
+            }
+            result = getPoint(x, py) * getPoint(px, y);
+        }
+        return result;
+    }
+    return {
+        add, count
+    };
+}
+	
 function interLeavingStringsDP(str1, str2, str3) {
     let DP = [];
     for(let i=0;i <= str1.length;i++){
