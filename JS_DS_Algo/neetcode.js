@@ -1,6 +1,28 @@
 function neetCode() {
 
 
+
+	function maxAreaOfIsland(grid) {
+    let ROWS = grid.length;
+    let COLS = grid[0].length;
+    let visited = {};
+    function DFS(row, col) {
+        if(row < 0 || row >= ROWS || col < 0 || col >= COLS || visited[row+''+col]) {
+            return 0;
+        }
+        visited[row+''+col] = true;
+        return 1 + DFS(row + 1, col) + DFS(row - 1, col) + DFS(row, col - 1) + DFS(row, col + 1);
+    }
+    let area = 0;
+    
+    for(let i=0;i < ROWS;i++) {
+       for(let j=0;j < COLS;j++) {
+           area = Math.max(DFS(i, j));
+       }
+    }
+    return area;
+}
+
 	function validBST(root){
     function isValidBST(node, min,max) {
         if(!node) {
