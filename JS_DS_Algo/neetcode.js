@@ -1,6 +1,44 @@
 function neetCode() {
 
+function interLeavingStringsDP(str1, str2, str3) {
+    let DP = [];
+    for(let i=0;i <= str1.length;i++){
+        DP.push(new Array(str2.length + 1).fill(false));
+    }
+    DP[str1.length][str2.length] = true;
+    for(let r=str1.length;r >=0 ;r--) {
+        for(let c=str2.length;c >=0 ;c--) {
+            if(r < str1.length && str1[r] == str3[r + c] && DP[r + 1][c]){
+                DP[i][j] = true;
+            }
+            if(c < str2.length && str2[c] == str3[r + c] && DP[r][c + 1]) {
+                DP[i][j] = true;
+            }
+        }
+    }
+    return DP[0][0];
+}
 
+	function interLeavingStringsRecurssion(str1, str2, str3) {
+    let DP = {};
+    function interLeavingStringsInner(i, j){
+        if(i == str1.length && j == str2.length) {
+            return true;
+        }
+        if(DP[i+''+j] != undefined) {
+            return DP[i+''+j];
+        }
+        if(i < str1.length && str1[i] == str3[i+j] && interLeavingStringsInner(i + 1, j)) {
+            return true;
+        }
+        if(j < str2.length && str2[j] == str3[i+j] && interLeavingStringsInner(i, j + 1)) {
+            return true;
+        }
+        DP[i+''+j] = false;
+        return false;
+    }
+    return interLeavingStringsInner(0, 0);
+}
 
 	function maxAreaOfIsland(grid) {
     let ROWS = grid.length;
