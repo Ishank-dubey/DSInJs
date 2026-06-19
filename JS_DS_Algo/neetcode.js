@@ -1,6 +1,19 @@
 function neetCode() {
 
 
+	function validBST(root){
+    function isValidBST(node, min,max) {
+        if(!node) {
+            return true;
+        }
+        if(node.data > max || node.data < min) {
+            return false;
+        }
+        return isValidBST(node.left, min, node.data) && isValidBST(node.right, node.data, right);
+    }
+        return isValidBST(root, -Infinity, Infinity);
+}
+
 	function sameTree(node1, node2){
     if(!node1 && !node2) {
         return true;
