@@ -1,5 +1,46 @@
 function neetCode() {
 
+
+	function binaryLevelOrderTraversal(root) {
+    let queue = [];
+    let result = [];
+    queue.push(root);
+    while(queue.length){
+        let length = queue.length;
+        let level = [];
+        for(let i=0;i < length;i++) {
+            let node = queue.shift();
+            level.push(node.data);
+            if(node.left){
+                queue.push(node.left);
+            }
+            if(node.right) {
+                queue.push(node.right);
+            }    
+        }
+        result.push(level);
+    }
+}
+
+	function binaryLevelOrderTraversal2(root) {
+    let queue = [];
+    let result = [];
+    queue.push(root);
+    while(queue.length){
+        let length = queue.length;
+        let level = [];
+        for(let i=0;i < length;i++) {
+            let node = queue.shift();
+            if(node) {
+                level.push(node.data);
+                queue.push(node.left);
+                queue.push(node.right);   
+            }    
+        }
+        result.push(level);
+    }
+}
+
 	function lastStoneWeight(stones) {
     stones.sort((a, b) => b - a);
     while(stones.length > 1) {
