@@ -1,6 +1,16 @@
 function neetCode() {
 
 
+	function sameTree(node1, node2){
+    if(!node1 && !node2) {
+        return true;
+    }
+    if(!node1 || !node2 || node1.data != node2.data) {
+        return false;
+    }
+    return sameTree(node1.left, node2.left) && sameTree(node1.right, node2.right);
+}
+
 	function binaryLevelOrderTraversal(root) {
     let queue = [];
     let result = [];
