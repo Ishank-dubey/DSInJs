@@ -1,5 +1,25 @@
 function neetCode() {
 
+	function numDecodings(encoded){
+    let dp = {[encoded.length]: 1};
+    function DFS(i) {
+        if(dp[i]) {
+            return dp[i];
+        }
+        if(encoded[i] == '0') {
+            return 0;
+        }
+        let result = DFS(i + 1);
+        if(i + 1 < encoded.length && ((encoded[i] =='2' && '0123456'.includes(encoded[i + 1])) || encoded[i] == '1')) {
+            result = result + DFS(i + 2);
+        }
+        dp[i] = result;
+        return result;
+    }
+    return DFS(0);
+}// numDecodings('226') - 3
+	// numDecodings('12') - 2
+
 function detectSquare() {
     let pointsCount = new Map();
     function add(point) {
