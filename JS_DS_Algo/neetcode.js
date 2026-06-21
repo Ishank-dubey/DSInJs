@@ -1,5 +1,71 @@
 function neetCode() {
 
+
+	function allNodesDistanceKinBST(root, target, K) {
+    let graph = {};
+
+    function getGraph(node) {
+        let queue = [];
+        queue.push(node);
+
+        while (queue.length) {
+            let n = queue.shift();
+
+            if (!graph[n.data]) {
+                graph[n.data] = [];
+            }
+
+            if (n.left) {
+                graph[n.data].push(n.left.data);
+
+                if (!graph[n.left.data]) {
+                    graph[n.left.data] = [];
+                }
+
+                graph[n.left.data].push(n.data);
+                queue.push(n.left);
+            }
+
+            if (n.right) {
+                graph[n.data].push(n.right.data);
+
+                if (!graph[n.right.data]) {
+                    graph[n.right.data] = [];
+                }
+
+                graph[n.right.data].push(n.data);
+                queue.push(n.right);
+            }
+        }
+    }
+
+    getGraph(root);
+
+    let visited = {};
+    let q = [];
+    let result = [];
+
+    q.push([target, 0]);
+    visited[target] = true;
+
+    while (q.length) {
+        let [node, dist] = q.shift();
+
+        if (dist === K) {
+            result.push(node);
+        } else {
+            for (let neigh of graph[node] || []) {
+                if (!visited[neigh]) {
+                    visited[neigh] = true;
+                    q.push([neigh, dist + 1]);
+                }
+            }
+        }
+    }
+
+    return result;
+}
+	
 	function numDecodings(encoded){
     let dp = {[encoded.length]: 1};
     function DFS(i) {
