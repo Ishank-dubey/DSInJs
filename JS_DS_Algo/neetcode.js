@@ -1,6 +1,73 @@
 function neetCode() {
 
 
+
+class TrieNode {
+    constructor() {
+        this.children = {};
+        this.isWord = false;
+    }
+}
+
+function insert(root, word) {
+    let curr = root;
+
+    for (let ch of word) {
+        if (!curr.children[ch]) {
+            curr.children[ch] = new TrieNode();
+        }
+
+        curr = curr.children[ch];
+    }
+
+    curr.isWord = true;
+}
+
+function wordBreak(s, wordDict) {
+    let root = new TrieNode();
+
+    for (let word of wordDict) {
+        insert(root, word);
+    }
+
+    let n = s.length;
+    let dp = new Array(n + 1).fill(false);
+    dp[0] = true;
+
+    for (let i = 0; i < n; i++) {
+        if (!dp[i]) {
+            continue;
+        }
+
+        let curr = root;
+
+        for (let j = i; j < n; j++) {
+            let ch = s[j];
+
+            if (!curr.children[ch]) {
+                break;
+            }
+
+            curr = curr.children[ch];
+
+            if (curr.isWord) {
+                dp[j + 1] = true;
+            }
+        }
+    }
+
+    return dp[n];
+}
+
+	//console.log(wordBreak("leetcode", ["leet", "code"])); 
+// true
+
+//console.log(wordBreak("applepenapple", ["apple", "pen"])); 
+// true
+
+//console.log(wordBreak("catsandog", ["cats", "dog", "sand", "and", "cat"])); 
+// false
+	
 	function allNodesDistanceKinBST(root, target, K) {
     let graph = {};
 
