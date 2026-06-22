@@ -1,6 +1,36 @@
 function neetCode() {
 
 
+class BST {
+  constructor(value, left = null, right = null) {
+    this.value = value;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function reconstructBst(preOrderTraversalValues) {
+  // Write your code here.
+  if(preOrderTraversalValues.length == 0){
+    return null;
+  }
+  let currentValue = preOrderTraversalValues[0];
+  let rightArrayIdx = preOrderTraversalValues.length;
+  for(let i=1;i < preOrderTraversalValues.length;i++) {
+    if(preOrderTraversalValues[i] >= currentValue){
+      rightArrayIdx = i;
+      break;
+    }
+  }
+  let leftTreeArray = preOrderTraversalValues.slice(1, rightArrayIdx);
+  let rightArray = preOrderTraversalValues.slice(rightArrayIdx);
+
+  let leftTreeRootNode = reconstructBst(leftTreeArray);
+  let rightTreeRootNode = reconstructBst(rightArray);
+  return new BST(currentValue, leftTreeRootNode, rightTreeRootNode);
+}
+	//construct a BST from Pre ordered traversal array
+	
 
 class TrieNode {
     constructor() {
