@@ -1,6 +1,29 @@
 function neetCode() {
 
+function twoSum(array, sum) {
+    let map = {};
+    for(let i=0;i < array.length;i++) {
+        map[array[i]] = i;
+    }
+    let result = [];
+    for(let j=0;j < array.length ;j++) {
+        let diff = sum - array[j];
+        if(map[diff] != undefined && map[diff] != j) {
+            result.push(j);
+            result.push(map[diff]);
+            return result;
+        }
+    }
+    return result;
+}
 
+//twoSum([2,7,11,15], 9)
+// [0, 1]
+//twoSum([3,2,4], 6)
+// [1, 2]
+//twoSum([3,3], 6)
+// [0, 1]
+	
 class BST {
   constructor(value, left = null, right = null) {
     this.value = value;
