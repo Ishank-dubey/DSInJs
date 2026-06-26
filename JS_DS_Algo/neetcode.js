@@ -1,5 +1,23 @@
 function neetCode() {
 
+
+function longestSubstringWithoutRepeating(str) {
+    let left = 0;
+    let right = 0;
+    let set = new Set();
+    let result = 0;
+    for(;right < str.length;right++) {
+        if(set.has(str[right])) {
+            set.delete(str[left]);
+            left++;
+        }
+        set.add(str[right]);
+        result = Math.max(result, right - left + 1);
+    }
+    return result;
+}
+	//longestSubstringWithoutRepeating('abcabcbb'); --- 3
+	
 function twoSum(array, sum) {
     let map = {};
     for(let i=0;i < array.length;i++) {
