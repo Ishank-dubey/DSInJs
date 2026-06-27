@@ -1,5 +1,24 @@
 function neetCode() {
 
+	function addTwoNumbers(head1, head2) {
+    let carry = 0;
+    let outputHead = {};
+    while(head1 || heade2 || carry) {
+        let val1 = head1 ? head1.data: 0;
+        let val2 = head2 ? head2.data: 0;
+
+        let sum = val1 + val2 + carry;
+        carry = Math.floor(sum / 10);
+        let val = sum % 10;
+        outputHead.next = {data: val};
+        
+        outputHead = outputHead.next;
+        head1 = head1 ? head1.next : null;
+        head2 = head2 ? head2.next : null;
+    }
+    return outputHead.next;
+}
+
 	function longestPalindromicSubString(str) {
     let result = '';
     let resLength = 0;
