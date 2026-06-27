@@ -1,5 +1,42 @@
 function neetCode() {
 
+	function longestPalindromicSubString(str) {
+    let result = '';
+    let resLength = 0;
+    for(let i=0;i < str.length;i++) {
+        let left = i;
+        let right = i;
+        while(left >=0 && right < str.length && str[left] == str[right]) {
+            if(right - left + 1 > resLength ){
+                resLength = right - left + 1;
+                result = str.substring(left, right + 1);
+            }
+            left --;
+            right ++;
+            //console.log(result);
+        }
+    }
+
+    //Even length str
+    for(let i=0;i < str.length;i++) {
+        let left = i;
+        let right = i + 1;
+        while(left >=0 && right < str.length && str[left] == str[right]) {
+            if(right - left + 1 > resLength ){
+                resLength = right - left + 1;
+                result = str.substring(left, right + 1);
+            }
+            left --;
+            right ++;
+            //console.log(result);
+        }
+    }
+    return result;
+}
+
+	//longestPalindromicSubString('aba') - aba
+	//longestPalindromicSubString('cbbd') - bb
+
 function mediaOfTwoSortedArrays(array1, array2) {
      let left = array2;
      let right = array1;
