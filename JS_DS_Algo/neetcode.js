@@ -1,6 +1,59 @@
 function neetCode() {
 
+function mediaOfTwoSortedArrays(array1, array2) {
+     let left = array2;
+     let right = array1;
+     if(array1.length < array2.length) {
+         left = array1;
+         right = array2;
+     }
+    let total = array1.length + array2.length;
+    let half = Math.floor(total / 2);
+    let lIdx = 0;
+    let rIdx = left.length - 1;
+    //let k = 1;//debug related code
+    while (true) {
+        
+        let i = Math.floor((lIdx + rIdx) / 2);
+        let j = half - (i + 1) - 1; // i + 1 indicates the length of the left partition of the left array, we need the j to be an index half - (i + 1) is a length so to get the index we do -1
+        
+        let leftLeft = - Infinity;
+        if(i >= 0 ) {
+            leftLeft = left[i];
+        }
+        let leftRight = Infinity;
+        if(i + 1 < left.length) {
+            leftRight = left[i + 1];
+        }
+        
+        let rightLeft = -Infinity;
+        if(j >=0 ) {
+            rightLeft = right[j];
+        }
+        let rightRight = Infinity;
+        if(j + 1 < right.length) {
+            rightRight = right[j + 1];
+        }
+        console.log(leftLeft, leftRight, rightLeft, rightRight, j);
+        if(leftLeft < rightRight && rightLeft < leftRight){
+            if(total % 2 ==0 ) {
+                return (Math.max(leftLeft, rightLeft) + Math.min(leftRight, rightRight)) / 2;
+            } else{
+                return Math.min(leftRight, rightRight);
+            } 
+        } else if(leftLeft > rightRight) {
+            rIdx = i - 1;
+        }else {
+            lIdx = i + 1;
+        }
+    }
+}
+//mediaOfTwoSortedArrays([1, 3], [2]);
 
+//2
+//mediaOfTwoSortedArrays([1, 2], [3, 4]);
+//2.5
+	
 function longestSubstringWithoutRepeating(str) {
     let left = 0;
     let right = 0;
