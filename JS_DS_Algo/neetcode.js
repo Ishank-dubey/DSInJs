@@ -194,7 +194,7 @@ function longestSubstringWithoutRepeating(str) {
     let set = new Set();
     let result = 0;
     for(;right < str.length;right++) {
-        if(set.has(str[right])) {
+        while(set.has(str[right])) {
             set.delete(str[left]);
             left++;
         }
