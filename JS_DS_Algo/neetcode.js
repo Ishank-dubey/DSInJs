@@ -1,5 +1,29 @@
 function neetCode() {
 
+
+	function coinChange2(coins, sum){
+    let cache = {};  
+    function DFS(idx, currentSum){
+        if(currentSum == sum) {
+            return 1;
+        }
+        if(currentSum > sum) {
+              return 0;
+          }
+        if( idx>= coins.length) {
+            return 0;
+        }
+        
+        if(cache[idx+''+currentSum]) {
+            return cache[idx+''+currentSum];
+        }
+        cache[idx+''+currentSum] = DFS(idx, currentSum + coins[idx]) + DFS(idx + 1, currentSum);
+        return cache[idx+''+currentSum];
+      }
+    return DFS(0, 0);
+}//coinChange2([1,2,5], 5)
+// 4
+	
 	function addTwoNumbers(head1, head2) {
     let carry = 0;
     let outputHead = {};
