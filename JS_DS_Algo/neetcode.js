@@ -1,5 +1,59 @@
 function neetCode() {
 
+function isSumRec(array, target) {
+    let caching = {};
+    function DFS(idx, current) {
+        if(current == target ) {
+            return true;
+        }
+        if(idx == array.length || current > target) {
+            return false;
+        } 
+        if(caching[idx+''+current] != undefined) {
+            caching[idx+''+current];
+        }
+        if(array[idx] > target) {
+            caching[idx+''+current] = DFS(idx + 1, current);
+        } else {
+            caching[idx+''+current] =  DFS(idx + 1, current) || DFS(idx + 1, current + array[idx]);
+        }
+    return caching[idx+''+current];
+    }
+    return DFS(0, 0);
+}//isSumRec([3, 34, 4, 12, 5, 2], 9) - true
+
+
+	function createDom(root) {
+  const node = document.createElement(root.type);
+  
+  if(root.attributes != null)
+  for([key, value] of Object.entries(root.attributes)){
+    node.setAttribute(key, value);
+  }
+  root.children?.forEach(child => {
+    node.append(typeof child === 'string' ? child : createDom(child));
+  });
+  return node;
+}
+
+
+	function curry(callback) {
+  return function curriedCallack(...args){
+    if(!args.length){
+      return callback();
+    }
+    return function(...newArgs) {
+      if(!newArgs.length){
+        return callback(...args);
+      }
+      return curriedCallack(...args, ...newArgs);
+    };
+  };
+}
+
+// Do not edit the line below.
+
+
 
 	function coinChange2(coins, sum){
     let cache = {};  
