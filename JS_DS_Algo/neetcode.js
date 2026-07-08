@@ -1,5 +1,49 @@
 function neetCode() {
 
+	function reverseInteger(x) {
+    const MIN = - Math.pow(2, 31);
+    const MAX = Math.pow(2, 31) - 1;
+    let result = 0;
+    while(x) {
+        let digit = x % 10;
+        x = Math.floor(x / 10);
+        if(result == Math.floor(MAX / 10) && digit > MAX % 10 ||
+          result > Math.floor(MAX / 10)
+          ) {
+            return 0;
+          } 
+        if(result == Math.floor(MIN / 10) && digit > MIN % 10 ||
+          result < Math.floor(MIN / 10)
+          ) {
+            return 0;
+          } 
+        result = result * 10 + digit;
+    }
+    return result;
+}
+
+function encode(number) {
+    let   _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let result = '';
+    while(number){
+        let digitIndex = number % 64;
+        let char = _chars[digitIndex];
+        result = char + result;
+        number = Math.floor(number / 64); 
+    }
+    return result;
+}
+function decode(base64Str) {
+    let   _chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let result = 0;
+    for(let i=0;i < base64Str.length;i++){
+        let char = base64Str[i];
+        let index = _chars.indexOf(char);
+        result = result * 64 + index;
+    }
+    return result;
+}
+
 function isSumRec(array, target) {
     let caching = {};
     function DFS(idx, current) {
