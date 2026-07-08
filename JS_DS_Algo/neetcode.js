@@ -436,7 +436,7 @@ function detectSquare() {
             if(Math.abs(x - px) != Math.abs(y - py) && x == px && y == py){
                 continue;
             }
-            result = getPoint(x, py) * getPoint(px, y);
+            result = result  + getPoint(x, py) * getPoint(px, y);
         }
         return result;
     }
