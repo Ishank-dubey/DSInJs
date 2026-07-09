@@ -1,5 +1,41 @@
 function neetCode() {
 
+	function buildBSTFromPostOrderAndInorder(postOrder, inOrder) {
+    function DFS(postO, inO) {
+        if(inO.length == 0) {
+            return null;
+        }
+        let data = postO.pop();
+        let node = {data};
+        let index = inO.indexOf(data);
+        node.right = DFS(postO, inO.slice(index + 1));
+        node.left = DFS(postO, inO.slice(0, index));
+        return node;
+    }
+    return DFS(postOrder, inOrder);
+}//buildBSTFromPostOrderAndInorder([9,15,7,20,3], [9,3,15,20,7])
+/*
+    "data": 3,
+    "right": {
+        "data": 20,
+        "right": {
+            "data": 7,
+            "right": null,
+            "left": null
+        },
+        "left": {
+            "data": 15,
+            "right": null,
+            "left": null
+        }
+    },
+    "left": {
+        "data": 9,
+        "right": null,
+        "left": null
+    }
+}*/
+
 	function containerWithMostWater(array) {
     //array is the list of heights at the indexes coordinate
     let left = 0;
