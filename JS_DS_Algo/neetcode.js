@@ -1,5 +1,25 @@
 function neetCode() {
 
+	function containerWithMostWater(array) {
+    //array is the list of heights at the indexes coordinate
+    let left = 0;
+    let right = array.length - 1;
+    let area = 0;
+    while(left < right) {
+        let currentArea = (right - left) * Math.min(array[left], array[right]);
+        area = Math.max(currentArea, area);
+        if(array[left] < array[right]) {
+            left ++;
+        }
+        else {
+          right --;    
+        }
+    }
+    return area;
+}
+	//containerWithMostWater([1,8,6,2,5,4,8,3,7]); = 49
+
+
 	function goodNodes(root) {
     function DFS(node, currentMax) {
         if(!node) {
