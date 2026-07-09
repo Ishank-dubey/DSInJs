@@ -1,5 +1,41 @@
 function neetCode() {
 
+	function goodNodes(root) {
+    function DFS(node, currentMax) {
+        if(!node) {
+            return 0;
+        }
+        let result = 0;
+        if(node.data >= currentMax){
+            result = 1;
+        }
+        currentMax = Math.max(currentMax, node.data);
+        return result + DFS(node.left, currentMax) + DFS(node.right, currentMax);
+    }
+    return DFS(root, root.data);
+}
+	/*
+	let node1 = {data:1, left:null, right:null};
+let node3 = {data:3, left:null, right:null};
+node3.left = node1;
+root= node3;
+
+
+let node4 = {data:4, left:null, right:null};
+let node12=  {data:1, left:null, right:null};
+let node5 = {data:5,left:null, right:null};
+node4.right = node5;
+node4.left = node12;
+node3.right = node4;
+node1 .left = {data:3, left:null, right:null};
+goodNodes(root);// 4
+O(n) - time
+O(h) - space
+	
+	
+	
+	*/
+
 	function reverseInteger(x) {
     const MIN = - Math.pow(2, 31);
     const MAX = Math.pow(2, 31) - 1;
