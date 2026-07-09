@@ -1,5 +1,41 @@
 function neetCode() {
+function constructBinaryTreefromInorderandPreorderTraversalLinear(preorder, inorder) {
+    const inorderIndex = new Map();
 
+    for (let i = 0; i < inorder.length; i++) {
+        inorderIndex.set(inorder[i], i);
+    }
+
+    function build(p1, p2, i1, i2) {
+        if (p1 > p2 || i1 > i2) {
+            return null;
+        }
+
+        const data = preorder[p1];
+        const node = { data, left: null, right: null };
+
+        const mid = inorderIndex.get(data);
+        const leftSize = mid - i1;
+
+        node.left = build(
+            p1 + 1,
+            p1 + leftSize,
+            i1,
+            mid - 1
+        );
+
+        node.right = build(
+            p1 + leftSize + 1,
+            p2,
+            mid + 1,
+            i2
+        );
+
+        return node;
+    }
+
+    return build(0, preorder.length - 1, 0, inorder.length - 1);
+}
 
 	function bstFromPreorderPostOrder(preorder, postorder) {
     let postOrderMap = {};
