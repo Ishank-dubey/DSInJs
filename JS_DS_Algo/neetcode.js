@@ -1,5 +1,28 @@
 function neetCode() {
 
+
+	function bstFromPreorderPostOrder(preorder, postorder) {
+    let postOrderMap = {};
+    for(let i in postorder) {
+        postOrderMap[postorder[i]] = i;
+    }
+    function DFS(i1, i2, j1, j2) {
+        if(i1 > i2 || j1 > j2) {
+            return null;
+        }
+        let data = preorder[i1];
+        let node = {data};
+        if(i1 != i2) {
+            let left_val = preorder[i1 + 1];
+            let mid = postOrderMap[left_val];
+            let left_size = mid - j1 + 1;
+            node.left = DFS(i1 + 1, i1 + left_size, j1, mid);
+            node.right = DFS(i1 + left_size + 1, i2, mid + 1, j2 - 1);
+        }
+        return node;
+    }
+}
+	
 	function buildBSTFromPostOrderAndInorder(postOrder, inOrder) {
     function DFS(postO, inO) {
         if(inO.length == 0) {
