@@ -1,4 +1,22 @@
 function neetCode() {
+
+	function buildBinaryTreeFromPostOrderAndInOrderLinearTime(post, inorder) {
+    let inorder_map = {};
+    for(let i=0;inorder.length;i++){
+        inorder_map[inorder[i]] = i;
+    }
+    function hepler(l, r) {
+        if(l > r) {
+            return null;
+        }
+        let data = post.pop();
+        let node = {data};
+        let mid = inorder_map[data];
+        node.right = helper(mid+1, r);
+        node.left = helper(l, mid - 1);
+        return node;
+    }
+}
 function constructBinaryTreefromInorderandPreorderTraversalLinear(preorder, inorder) {
     const inorderIndex = new Map();
 
