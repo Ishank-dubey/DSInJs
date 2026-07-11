@@ -1,4 +1,41 @@
 function neetCode() {
+
+	function rottenOranges(grid) {
+    let queue = [];
+    let ROW = grid.length;
+    let COL = grid[0].length; 
+    let fresh = 0;
+    let time = 0;
+    for(let i=0;i < ROW;i++) {
+        for(let j=0;j < COL;j++) {
+            if(grid[i][j] == 1) {
+                fresh ++;
+            } else if(grid[i][j] == 2){
+                queue.push([i, j]);
+            }
+        }
+    }
+    while(queue.length && fresh >0) {
+        let length = queue.length;
+        for(let i=0;i < length;i++) {
+            let [rx, ry] = queue.shift();
+            for([dx, dy] of [[1,0],[-1,0],[0,1],[0,-1]]) {
+                   let newx = rx + dx;
+                    let newy = ry + dy;
+                if( newx >= 0 && newy >=0 && newx < ROW && newy < COL && grid[newx][newy] == 1) {
+                grid[newx][newy] = 2;
+                queue.push([newx, newy]);
+                fresh --;
+            }
+            }
+        }
+        time ++;
+    } 
+    return fresh ==0 ? time : -1;
+}//rottenOranges([[2,1,1,],[1,1,0],[0,1,1]])
+// 4
+
+	
 	function findAllPathsFromSourceToTarget(graph, target, edges, start) {
     	let visited = [];
     	let path = [];
