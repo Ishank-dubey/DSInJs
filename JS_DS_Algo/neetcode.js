@@ -1,5 +1,61 @@
 function neetCode() {
+function findPaths(maze) {
+    const n = maze.length;
+    const result = [];
+    const visited = Array.from({ length: n }, () => Array(n).fill(false));
 
+    const directions = [
+        [1, 0, "D"],
+        [0, -1, "L"],
+        [0, 1, "R"],
+        [-1, 0, "U"]
+    ];
+
+    function dfs(row, col, path) {
+        if (row === n - 1 && col === n - 1) {
+            result.push(path);
+            return;
+        }
+
+        visited[row][col] = true;
+
+        for (const [dr, dc, move] of directions) {
+            const newRow = row + dr;
+            const newCol = col + dc;
+
+            if (
+                newRow >= 0 &&
+                newRow < n &&
+                newCol >= 0 &&
+                newCol < n &&
+                maze[newRow][newCol] === 1 &&
+                !visited[newRow][newCol]
+            ) {
+                dfs(newRow, newCol, path + move);
+            }
+        }
+
+        visited[row][col] = false;
+    }
+
+    if (maze[0][0] === 1) {
+        dfs(0, 0, "");
+    }
+
+    return result;
+}
+	const maze = [
+    [1, 0, 0, 0],
+    [1, 1, 0, 1],
+    [1, 1, 0, 0],
+    [0, 1, 1, 1]
+];
+	//[ 'DDRDRR', 'DRDDRR' ]
+
+
+	
+
+console.log(findPaths(maze));
 	function buildBinaryTreeFromPostOrderAndInOrderLinearTime(post, inorder) {
     let inorder_map = {};
     for(let i=0;inorder.length;i++){
@@ -55,7 +111,7 @@ function constructBinaryTreefromInorderandPreorderTraversalLinear(preorder, inor
     return build(0, preorder.length - 1, 0, inorder.length - 1);
 }
 
-	function bstFromPreorderPostOrder(preorder, postorder) {
+	function buildFromPreorderPostOrder(preorder, postorder) {
     let postOrderMap = {};
     for(let i in postorder) {
         postOrderMap[postorder[i]] = i;
@@ -75,6 +131,7 @@ function constructBinaryTreefromInorderandPreorderTraversalLinear(preorder, inor
         }
         return node;
     }
+		 return DFS(0, preorder.length - 1, 0, postorder.length - 1);
 }
 	
 	function buildBSTFromPostOrderAndInorder(postOrder, inOrder) {
