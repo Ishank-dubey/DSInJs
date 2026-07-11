@@ -1,5 +1,50 @@
 function neetCode() {
 
+	function Sum3(array) {
+    let result = [];
+    let sortedArray = array.sort((a, b) => a - b);
+
+    for (let i = 0; i < sortedArray.length; i++) {
+        if (i >= 1 && sortedArray[i] === sortedArray[i - 1]) {
+            continue;
+        }
+
+        let l = i + 1;
+        let r = sortedArray.length - 1;
+
+        while (l < r) {
+            let sumCurrent = sortedArray[i] + sortedArray[l] + sortedArray[r];
+
+            if (sumCurrent > 0) {
+                r--;
+            } else if (sumCurrent < 0) {
+                l++;
+            } else {
+                result.push([sortedArray[i], sortedArray[l], sortedArray[r]]);
+
+                l++;
+                while (l < r && sortedArray[l] === sortedArray[l - 1]) {
+                    l++;
+                }
+            }
+        }
+    }
+
+    return result;
+}//Sum3([-1,0,1,2,-1,-4])
+/*[
+    [
+        -1,
+        -1,
+        2
+    ],
+    [
+        -1,
+        0,
+        1
+    ]
+]*/
+
 	function rottenOranges(grid) {
     let queue = [];
     let ROW = grid.length;
