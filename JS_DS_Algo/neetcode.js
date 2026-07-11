@@ -1,5 +1,34 @@
 function neetCode() {
-function findPaths(maze) {
+	function findAllPathsFromSourceToTarget(graph, target, edges, start) {
+    	let visited = [];
+    	let path = [];
+    	let paths = [];
+    	for(let [src, dest] of edges) {
+        	if(!graph[src]) {
+            graph[src] = [dest];
+        	} else {
+            	graph[src].push(dest);
+        	}
+    }
+    function DFS(node) {
+        path.push(node);
+        visited[node] = true;
+        if(node == target) {
+            paths.push([...path]);
+        }else {
+        for(let adj of graph[node] || []) {
+            if(!visited[adj]) {
+                DFS(adj);
+            }
+        }
+        }
+        visited[node] = false;
+        path.pop();
+    }
+    DFS(start);
+    return paths;
+}
+	function findPaths(maze) {
     const n = maze.length;
     const result = [];
     const visited = Array.from({ length: n }, () => Array(n).fill(false));
