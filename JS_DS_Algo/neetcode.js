@@ -1,5 +1,44 @@
 function neetCode() {
 
+function letterCombinationOfAPhoneNumber(digits) {
+    let mapOfCharacters = {
+        "2":"abc",
+        "3":"def",
+        "4":"ghi",
+        "5":"jkl",
+        "6":"mno",
+        "7":"pqrs",
+        "8":"tuv",
+        "9":"wxyz"
+    };
+    let result = [];
+    function backtrackingFn(i, currentStr) {
+        if(currentStr.length == digits.length) {
+            result.push(currentStr);
+        } else {
+            for(let char of mapOfCharacters[digits[i]]) {
+                backtrackingFn(i + 1, currentStr + char);
+            }
+        }
+    }
+    if(digits.length) {
+        backtrackingFn(0, "");
+    }
+    return result;
+}//letterCombinationOfAPhoneNumber([2,3]);
+/*[
+    "ad",
+    "ae",
+    "af",
+    "bd",
+    "be",
+    "bf",
+    "cd",
+    "ce",
+    "cf"
+]*/
+
+	
 	function Sum3(array) {
     let result = [];
     let sortedArray = array.sort((a, b) => a - b);
