@@ -25,7 +25,7 @@ function letterCombinationOfAPhoneNumber(digits) {
         backtrackingFn(0, "");
     }
     return result;
-}//letterCombinationOfAPhoneNumber([2,3]);
+}//letterCombinationOfAPhoneNumber([2,3]);//O(4^n) time, O(n) in space
 /*[
     "ad",
     "ae",
