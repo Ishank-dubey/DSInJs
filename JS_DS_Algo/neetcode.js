@@ -1,5 +1,21 @@
 function neetCode() {
 
+	function removeNthNodeFromEndOfAlnkedList(head, N) {
+    let dummy = {data:0, next:head};
+    let left = dymmy;
+    let right = head;
+    while(n > 0 ) {
+        n--;
+        right = right.next;
+    }
+    while(right) {
+        left = left.next;
+        right  = right.next;
+    }
+    left.next = left.next.next;
+    return dummy.next;
+}
+
 function letterCombinationOfAPhoneNumber(digits) {
     let mapOfCharacters = {
         "2":"abc",
