@@ -1,6 +1,20 @@
 function neetCode() {
 
-
+function getDiameterOfTree(root) {
+    let result = 0;
+    function DFS(node) {
+        if(!node) {
+            return 0;
+        }
+        let leftD = DFS(node.left);
+        let rightD = DFS(node.right);
+        result = Math.max(result, leftD + rightD);
+        return 1 + Math.max(leftD, rightD);
+    }
+    DFS(root);
+    return result;
+} 
+	
 	class MergeKSortedLLSolution {
     
     mergeKLists(lists) {
