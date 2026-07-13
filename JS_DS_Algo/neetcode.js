@@ -2,7 +2,7 @@ function neetCode() {
 
 	function removeNthNodeFromEndOfAlnkedList(head, N) {
     let dummy = {data:0, next:head};
-    let left = dymmy;
+    let left = dummy;
     let right = head;
     while(n > 0 ) {
         n--;
@@ -14,7 +14,8 @@ function neetCode() {
     }
     left.next = left.next.next;
     return dummy.next;
-}
+}//spiralMatrix([[1,2,3],[4,5,6],[7,8,9]])
+// [1, 2, 3, 6, 9, 8, 7, 4, 5]
 
 function letterCombinationOfAPhoneNumber(digits) {
     let mapOfCharacters = {
