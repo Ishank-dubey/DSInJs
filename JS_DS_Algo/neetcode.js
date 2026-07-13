@@ -1,5 +1,18 @@
 function neetCode() {
 
+	function jumpGame(array) {
+        
+        let needed = array.length - 1;
+    for(let i=array.length - 1;i >= 0;i--) {
+        if(needed - i <= array[i] ) {
+           needed = i;    
+        }
+    }
+    return needed == 0;
+} 
+//jumpGame([2,3,1,0,4])
+//true
+
 	function removeNthNodeFromEndOfAlnkedList(head, N) {
     let dummy = {data:0, next:head};
     let left = dummy;
