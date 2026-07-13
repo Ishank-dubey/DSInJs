@@ -1,5 +1,33 @@
 function neetCode() {
 
+function searchInRoatedSortedArray(array, target) {
+    let l = 0;
+    let r = array.length - 1;
+    while(l <= r) {
+       let mid = Math.floor((l + r)/2);
+        if(target == array[mid]) {
+            return mid;
+        }
+        if(array[l] <= array[mid]) {/*left sorted portion*/
+            if(target > array[mid] || target < array[l]) {
+                l = mid + 1;
+            } else {
+                r = mid - 1;
+            }
+        }else {/*right sorted portion*/
+             if(target < array[mid] || target > array[r]) {
+                r = mid - 1;
+            } else {
+                l = mid + 1;
+            }   
+        }
+    }
+    return -1;
+}
+
+//searchInRoatedSortedArray([4,5,6,7,0,1,2],0);
+//4
+	
 function getDiameterOfTree(root) {
     let result = 0;
     function DFS(node) {
