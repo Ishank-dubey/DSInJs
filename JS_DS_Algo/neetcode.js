@@ -1,5 +1,30 @@
 function neetCode() {
 
+
+	class MergeKSortedLLSolution {
+    
+    mergeKLists(lists) {
+        if (lists.length === 0) return null;
+        const minHeap = new MinPriorityQueue((x) => x.val);
+        for (let list of lists) {
+            if (list != null) minHeap.enqueue(list);
+        }
+
+        let res = new ListNode(0);
+        let cur = res;
+        while (minHeap.size() > 0) {
+            let node = minHeap.dequeue();
+            cur.next = node;
+            cur = cur.next;
+
+            node = node.next;
+            if (node != null) {
+                minHeap.enqueue(node);
+            }
+        }
+        return res.next;
+    }
+}
 	function mergeTwoSortedLinkedLists(head1, head2) {
     let dummy = {data:-1, next:null};
     let tail = dummy;
