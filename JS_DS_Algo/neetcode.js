@@ -1,5 +1,25 @@
 function neetCode() {
 
+	function generateParanthesis(N) {
+    let result = [];
+    function DFS(open, close, expr) {
+        if(open == N && close == N) {
+            result.push(expr);
+            return 1;
+        }
+        if(open < N) {
+            DFS(open + 1, close, expr + "(");
+        }
+        if(close < open) {
+            DFS(open, close + 1,expr + ")");
+        }
+    }
+    DFS(0,0,"");
+    return result;
+}
+	//generateParanthesis(3)
+	// ['((()))', '(()())', '(())()', '()(())', '()()()']
+
 	function jumpGame(array) {
         
         let needed = array.length - 1;
