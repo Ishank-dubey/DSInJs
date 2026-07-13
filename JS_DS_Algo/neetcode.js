@@ -1,6 +1,6 @@
 function neetCode() {
 
-	function mergeTwoSprtedLinledLists(head1, head2) {
+	function mergeTwoSortedLinkedLists(head1, head2) {
     let dummy = {data:-1, next:null};
     let tail = dummy;
     while(head1 && head2) {
