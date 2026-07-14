@@ -1,5 +1,51 @@
 function neetCode() {
 
+	function validSudoku(grid) {
+    let rowSet = {};
+    let colSet = {};
+    let square = {};
+
+    for (let r = 0; r < 9; r++) {
+        for (let c = 0; c < 9; c++) {
+            let currentVal = grid[r][c];
+
+            if (currentVal === ".") {
+                continue;
+            }
+
+            let squareR = Math.floor(r / 3);
+            let squareC = Math.floor(c / 3);
+            let squareKey = `${squareR},${squareC}`;
+
+            if (
+                rowSet[r]?.has(currentVal) ||
+                colSet[c]?.has(currentVal) ||
+                square[squareKey]?.has(currentVal)
+            ) {
+                return false;
+            }
+
+            if (!rowSet[r]) {
+                rowSet[r] = new Set();
+            }
+
+            if (!colSet[c]) {
+                colSet[c] = new Set();
+            }
+
+            if (!square[squareKey]) {
+                square[squareKey] = new Set();
+            }
+
+            rowSet[r].add(currentVal);
+            colSet[c].add(currentVal);
+            square[squareKey].add(currentVal);
+        }
+    }
+
+    return true;
+}//Time complexity is constant O(1)
+
 function searchInRotaedSortedArray(array, target) {
     let l = 0;
     let r = array.length - 1;
