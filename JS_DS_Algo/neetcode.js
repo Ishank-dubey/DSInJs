@@ -1,5 +1,26 @@
 function neetCode() {
 
+	function findCombinationSum(array, target) {
+    let result = [];
+    function DFS(sum, i, list){
+        if(sum == target) {
+            result.push([...list]);
+            return;
+        }
+        if(i >= array.length || sum > target) {
+            return;
+        }
+        list.push(array[i]);
+        DFS(sum + array[i], i, list);
+        list.pop();
+        DFS(sum, i + 1, list);
+    }
+    DFS(0,0,[]);
+    return result;
+}//findCombinationSum([2,3,6,7], 7)
+//[[2,2,3], [7]]
+
+
 	function validSudoku(grid) {
     let rowSet = {};
     let colSet = {};
