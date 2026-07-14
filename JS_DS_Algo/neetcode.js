@@ -1,5 +1,33 @@
 function neetCode() {
 
+	function combinationSum2(array, target) {
+    let result = [];
+    array.sort((a, b)=> a - b);
+    function DFS(i, sum, list) {
+        if(sum == target) {
+            result.push([...list]);
+            return;
+        }
+        if(i>= array.length || sum > target) {
+            return ;
+        }
+        list.push(array[i]);
+        DFS(i + 1, sum + array[i], list);
+        list.pop();
+        while(i + 1 < array.length && array[i] == array[i + 1]){
+            i ++;
+        }
+        DFS(i + 1, sum, list);
+    }
+    DFS(0,0,[]);
+    return result;
+}//O(2^n * n), n as we are copying the entire array to the results array, space - O(target)
+	/* [[1, 1, 6]
+[1, 2, 5]
+[1, 7]
+[2, 6]
+]	*/
+
 	function findCombinationSum(array, target) {
     let result = [];
     function DFS(sum, i, list){
