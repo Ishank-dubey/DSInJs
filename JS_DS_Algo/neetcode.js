@@ -1,6 +1,6 @@
 function neetCode() {
 
-function searchInRoatedSortedArray(array, target) {
+function searchInRotaedSortedArray(array, target) {
     let l = 0;
     let r = array.length - 1;
     while(l <= r) {
@@ -3299,6 +3299,7 @@ console.log(root);
     while(left <= right) {
         if(array[left] < array[right]) {
             result = Math.min(result, array[left]);
+			break;
         }
         let mid = Math.floor((left + right)/2);
         result = Math.min(result, array[mid]);
