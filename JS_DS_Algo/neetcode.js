@@ -1,5 +1,30 @@
 function neetCode() {
 
+function multiplyStrings(str1, str2) {
+    if(str1 == '0' || str2 == '0') {
+        return '0';
+    }
+    str1 = str1.split('').reverse().join('');
+    str2 = str2.split('').reverse().join('');;
+    
+    let array = new Array(str1.length + str2.length).fill(0);
+    for(let i1=0;i1 <  str1.length ;i1++) {
+        for(let i2=0;i2 < str2.length;i2++) {
+            console.log('test');
+            let digit = parseInt(str1[i1]) * parseInt(str2[i2]);
+            array[i1 + i2] += digit;
+            array[i1 + i2 + 1] += Math.floor(array[i1 + i2] / 10);
+            array[i1 + i2] = array[i1 + i2] % 10;
+        }
+    }
+    let result = array.reverse();
+    let start = 0;
+    while(start < result.length && result[start] == 0) {
+        start++;
+    }
+    return array.slice(start).join('');
+}//O(m * n) in time, space O(m + n)
+	
 	function combinationSum2(array, target) {
     let result = [];
     array.sort((a, b)=> a - b);
