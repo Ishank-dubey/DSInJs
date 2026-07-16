@@ -1,5 +1,23 @@
 function neetCode() {
 
+	function groupAnagrams(array) {
+    let result = [];
+ for (let item of array) {
+     let count = new Array().fill(0);
+     for(let i of item) {
+         count[i.charCodeAt(0) - 97] += 1;
+     }
+     let key = count.join(',');
+     if(!result[key]) {
+         result[key] = [];
+     }
+     result[key].push(item);
+ }
+    return Object.values(result);
+}//groupAnagrams(["eat","tea","tan","ate","nat","bat"])
+//[ ['eat', 'tea', 'ate'], ['tan', 'nat'],['bat']]
+	//O(N * K) in time, O(N * K) in space
+
 	function rotateMatrix(grid) {
     let l = 0;
     let r = grid.length - 1;
