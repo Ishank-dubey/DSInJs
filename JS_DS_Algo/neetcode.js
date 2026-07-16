@@ -1,5 +1,27 @@
 function neetCode() {
 
+	function rotateMatrix(grid) {
+    let l = 0;
+    let r = grid.length - 1;
+    while(l < r) {
+        let top = l;
+        let bottom = r;
+        let diff = r - l;
+        for(let i=0;i < diff;i++) {
+            let topLeft = grid[top][ l + i];
+            grid[top][ l + i] = grid[bottom - i][l];
+            grid[bottom - i][l] = grid[bottom][r - i];
+            grid[bottom][r - i] = grid[top + i][r];
+            grid[top + i][r] = topLeft;
+        }
+        l++;
+        r--;
+    }
+    return grid;
+}//rotateMatrix([[1,2,3],[4,5,6],[7,8,9]])
+	// [[7, 4, 1], [8, 5, 2], [9, 6, 3]]
+	// O(n^2)
+
 	function jumpGameTwoBFS(array) {
     //need to get the min number of jumps
     let result = 0;
