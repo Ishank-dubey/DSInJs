@@ -1,5 +1,23 @@
 function neetCode() {
 
+	function jumpGameTwoBFS(array) {
+    //need to get the min number of jumps
+    let result = 0;
+    let l = 0;
+    let r = 0;
+    
+    while(r < array.length - 1){
+        let farthest = 0;
+        for(let j = l; j < r + 1;j++){
+        farthest = Math.max(farthest, j + array[j]);
+    }
+        l = r + 1;
+        r = farthest;
+        result++;
+    }
+    return result;
+}//O(n) in time, O(1) in memory
+
 function multiplyStrings(str1, str2) {
     if(str1 == '0' || str2 == '0') {
         return '0';
