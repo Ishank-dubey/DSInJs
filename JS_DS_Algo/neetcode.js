@@ -1,5 +1,54 @@
 function neetCode() {
 
+
+	function powerWithNoCacheSepearate(x, n) {
+    function powerInner(N) {
+        if(N == 1) {
+            return x;
+        }
+        if(N == 0) {
+            return 1;
+        } 
+        let result = powerInner(Math.floor(N / 2));
+        if(N % 2 ==0) {
+            return result * result;
+        }else {
+            return x * result * result;
+        }
+    }
+    let result = powerInner(n);
+    if(n < 0){
+        return 1/result;
+    }else {
+        return result;
+    }
+    
+}//powerWithNoCacheSepearate(2,4) = 16
+	//O(Log N) in time and space
+
+	function power(x, n) {
+    let cache = {};
+    console.log('sss');
+    function powerInner(N) {
+        if(N == 0) {
+            return 1;
+        }
+        if(N == 1) {
+            return x;
+        } 
+        if(cache[N]) {
+            return cache[N];
+        }
+        if(N % 2 == 0) {
+          cache[N] = powerInner(N / 2) * powerInner(N / 2);    
+        } else {
+            cache[N] = x * powerInner((N - 1) / 2) * powerInner((N - 1) / 2);
+        }
+        return cache[N]
+    }
+    return powerInner(n);
+}
+
 	function groupAnagrams(array) {
     let result = [];
  for (let item of array) {
