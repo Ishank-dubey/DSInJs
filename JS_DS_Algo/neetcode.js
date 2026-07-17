@@ -15,6 +15,7 @@ function NQueens(N) {
                 array.push(row.join(''));
             }
             result.push(array);
+			return;
         }
         for(let column =0;column < N;column++) {
             if(col.has(column) || positiveDiagonal.has(r + column) || negativeDiagonal.has(r - column)) {
@@ -38,6 +39,9 @@ function NQueens(N) {
 }//NQueens(4)
 	//[['.Q..', '...Q', 'Q...', '..Q.']
     //  ['..Q.', 'Q...', '...Q', '.Q..']]
+
+	//Time: O(N!)
+//Space: O(N^2)
 
 
 
