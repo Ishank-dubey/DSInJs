@@ -1,4 +1,44 @@
 function neetCode() {
+function NQueens(N) {
+    let currentGrid = [];
+    for(let r=0;r < N;r++ ) {
+        currentGrid.push(new Array(N).fill("."));
+    }
+    let result = [];
+    let col = new Set();
+    let positiveDiagonal = new Set(); // r + c is constant
+    let negativeDiagonal = new Set(); //r - c is constant
+    function permutation(r) {
+        if(r == N) {
+            let array = [];
+            for(let row of currentGrid){
+                array.push(row.join(''));
+            }
+            result.push(array);
+        }
+        for(let column =0;column < N;column++) {
+            if(col.has(column) || positiveDiagonal.has(r + column) || negativeDiagonal.has(r - column)) {
+                continue;
+            }
+            col.add(column);
+            positiveDiagonal.add(r + column);
+            negativeDiagonal.add(r - column);
+            currentGrid[r][column] = 'Q'
+            
+            permutation(r + 1);
+
+            col.delete(column);
+            positiveDiagonal.delete(r + column);
+            negativeDiagonal.delete(r - column);
+            currentGrid[r][column] = '.'
+        }
+    }
+    permutation(0);
+    return result;
+}//NQueens(4)
+	//[['.Q..', '...Q', 'Q...', '..Q.']
+    //  ['..Q.', 'Q...', '...Q', '.Q..']]
+
 
 
 	function powerWithNoCacheSepearate(x, n) {
