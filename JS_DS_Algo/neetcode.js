@@ -1,5 +1,26 @@
 function neetCode() {
 
+	function mergeIntervals(array) {
+    array = array.sort((a, b)=> a[0] - b[0]);
+    let result = [];
+    let current = array[0];
+    let max = current[1];
+    let min = current[0];
+    for(let i=1;i < array.length;i++) {
+        if(max >= array[i][0]) {
+            max = Math.max(max, array[i][1]);
+        } else {
+            result.push([min, max]);
+            max = array[i][1];
+            min = array[i][0];
+        }
+    }
+    result.push([min, max]);
+    return result;
+}//O(n * log n)
+//mergeIntervals([[1, 3], [2, 6], [8, 10], [15, 18]]) = [[1, 6], [8, 10] , [15, 18]]
+//mergeIntervals([[1, 4], [4, 5]]); = [1, 5]
+
 	function maxSubArray(array) {
     let result = 0;
     let currentSum = 0;
