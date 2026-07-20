@@ -1,4 +1,21 @@
 function neetCode() {
+
+	function maxSubArray(array) {
+    let result = 0;
+    let currentSum = 0;
+    for(let num of array) {
+       // console.log(num);
+        
+        if(currentSum < 0 ) {
+            currentSum = 0;
+        }
+        currentSum = currentSum + num;
+        result = Math.max(result, currentSum);
+    }
+    return result;
+}// maxSubArray([-2, 1,-3, 4, -1, 2, 1, -5,4])
+//6
+
 function NQueens(N) {
     let currentGrid = [];
     for(let r=0;r < N;r++ ) {
