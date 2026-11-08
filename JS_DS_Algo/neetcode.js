@@ -1,4 +1,30 @@
 function neetCode() {
+
+function createNestedList(label, children) {
+  // 1. Create the parent <li> element
+  const li = document.createElement('li');
+  li.textContent = label;
+
+  // 2. Base case: If there are children, process them recursively
+  if (children && Object.keys(children).length > 0) {
+    const ul = document.createElement('ul');
+
+    for (const key in children) {
+      // Recursively call the function to get the child <li>
+      const childLi = createNestedList(key, children[key]);
+      
+      // Append the child <li> to the sub-<ul>
+      ul.appendChild(childLi);
+    }
+
+    // Append the sub-<ul> to the parent <li> (Valid HTML structure)
+    li.appendChild(ul);
+  }
+
+  // 3. Return the fully constructed <li> element
+  return li;
+}
+	
 function insertInterval(intervals, newInterval) {
     let result = [];
     for(let i=0;i < intervals.length;i++) {
